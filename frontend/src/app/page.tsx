@@ -1600,6 +1600,7 @@ interface DBProductRow {
 }
 
 export default function HomePage() {
+  const [banners, setBanners] = useState<HeroBannerItem[]>([]);
   const [featuredProducts, setFeaturedProducts] = useState<FeaturedProduct[]>([]);
   const [flashSaleProducts, setFlashSaleProducts] = useState<FlashSaleProduct[]>([]);
   const [comparedItems, setComparedItems] = useState<string[]>([]);
@@ -1607,6 +1608,28 @@ export default function HomePage() {
   // Tự động nạp dữ liệu thật từ cơ sở dữ liệu MySQL qua API
   useEffect(() => {
     async function loadData() {
+      // 1. Tải danh sách Banner thật từ MySQL
+      try {
+        const bRes = await fetch("/api/banners");
+        const bJson = await bRes.json();
+        if (bJson.success && Array.isArray(bJson.data) && bJson.data.length > 0) {
+          const mappedBanners: HeroBannerItem[] = bJson.data.map((b: any, idx: number) => ({
+            id: idx + 1,
+            title: b.title,
+            subtitle: b.subtitle || "Khám phá siêu phẩm công nghệ đỉnh cao tại MD Mobile Flagship Store",
+            image: b.image_url,
+            badge: "FLAGSHIP MỚI 2026",
+            ctaText: "Khám Phá Ngay",
+            link: b.link_url || "#featured-section",
+            accentColor: "from-brandViolet/30 via-transparent to-brandCyan/20",
+          }));
+          setBanners(mappedBanners);
+        }
+      } catch (err) {
+        console.error("Lỗi tải banners:", err);
+      }
+
+      // 2. Tải danh sách Sản phẩm thật từ MySQL
       try {
         const res = await fetch("/api/products");
         const json = await res.json();
@@ -1712,7 +1735,7 @@ export default function HomePage() {
       <Header searchProducts={featuredProducts} />
 
       {/* 3. Hero Slider Banner chính */}
-      <HeroSlider />
+      <HeroSlider banners={banners} />
 
       {/* 4. Marquee thương hiệu ủy quyền chính thức */}
       <BrandMarquee />
