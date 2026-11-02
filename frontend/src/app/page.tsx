@@ -1585,6 +1585,17 @@ function FloatingCompareBar({
  * MAIN PAGE COMPONENT: HOMEPAGE FLAGSHIP STORE
  * ======================================================================== */
 
+interface DBBannerRow {
+  id: string;
+  title: string;
+  subtitle: string | null;
+  image_url: string;
+  link_url: string | null;
+  position?: string;
+  sort_order?: number;
+  is_active?: number | boolean;
+}
+
 interface DBProductRow {
   id: string;
   name: string;
@@ -1615,7 +1626,7 @@ export default function HomePage() {
         const bRes = await fetch("/api/banners");
         const bJson = await bRes.json();
         if (bJson.success && Array.isArray(bJson.data) && bJson.data.length > 0) {
-          const mappedBanners: HeroBannerItem[] = bJson.data.map((b: any, idx: number) => ({
+          const mappedBanners: HeroBannerItem[] = (bJson.data as DBBannerRow[]).map((b, idx) => ({
             id: idx + 1,
             title: b.title,
             subtitle: b.subtitle || "Khám phá siêu phẩm công nghệ đỉnh cao tại MD Mobile Flagship Store",
