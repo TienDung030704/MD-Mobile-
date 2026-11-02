@@ -66,7 +66,7 @@ d:\md-mobile\
 │   │   ├── robots.ts          # Dynamic SEO robots.txt
 │   │   └── sitemap.ts         # Dynamic SEO sitemap.xml
 │   ├── components/            # Reusable UI components
-│   │   ├── common/            # Layout dùng chung tách riêng (Header, Footer, CustomCursor)
+│   │   ├── common/            # Layout dùng chung tách riêng (Header, Footer, CustomCursor, LoadingScreen)
 │   │   └── ui/                # Atomic UI elements (Button, Input, Card, Badge, ToastBox)
 │   ├── constants/             # Hằng số cấu hình hệ thống
 │   ├── hooks/                 # Custom React hooks (useDebounce, useLocalStorage, useMediaQuery)
@@ -91,7 +91,7 @@ d:\md-mobile\
 
 **Nhận xét:** Dự án đã được tổ chức tối ưu theo yêu cầu:
 - Tầng giao diện trang chủ (`src/app/page.tsx`) gom toàn bộ nội dung body vào 1 file duy nhất để dễ quản lý và theo dõi logic.
-- `Header` và `Footer` được giữ riêng biệt trong `src/components/common/` để tái sử dụng xuyên suốt toàn bộ ứng dụng (layout).
+- `Header`, `Footer` và `LoadingScreen` được giữ riêng biệt trong `src/components/common/` để tái sử dụng xuyên suốt toàn bộ ứng dụng (layout).
 - Xóa bỏ thư mục `src/components/features/` nhằm loại bỏ sự phân mảnh file không cần thiết.
 
 ---
@@ -202,11 +202,10 @@ d:\md-mobile\
   - Tích hợp kho ảnh Transparent Vector SVG siêu nét trong `public/images/products/` (iPhone 16 Pro Max, Galaxy S24 Ultra, Xiaomi 14 Ultra Leica, Galaxy Z Fold6, ROG Phone 8 Pro, iPhone 16 Plus,...).
   - Đã xóa sạch toàn bộ các file ảnh mock cũ (.png, .jpg) và xóa toàn bộ các file mock data trong `src/constants/` (`hero-slides.ts`, `featured-products-data.ts`, `flash-sale-data.ts`, `reviews-news-data.ts`, `story-data.ts`).
   - Toàn bộ TypeScript interfaces giao diện được chuyển sang `src/types/ui.ts`.
-- [x] **Tái cấu trúc Trang Chủ thành 1 file duy nhất (`src/app/page.tsx`):**
-  - Giữ riêng `Header` và `Footer` trong `src/components/common/` (`header.tsx`, `footer.tsx`).
-  - Gom toàn bộ 10 khối tính năng body (LoadingScreen, AnnouncementBar, HeroSlider, BrandMarquee, BentoSection, FlashSaleSection, FeaturedProductsSection, ScrollStorySection, TradeInSection, NeedAccordionSection, ReviewsSection, FloatingCompareBar) vào trực tiếp `src/app/page.tsx`.
+- [x] **Tái cấu trúc Trang Chủ & tách riêng LoadingScreen:**
+  - Giữ riêng `Header`, `Footer` và `LoadingScreen` trong `src/components/common/` (`header.tsx`, `footer.tsx`, `loading-screen.tsx`).
+  - Gom toàn bộ các khối tính năng nội dung body (AnnouncementBar, HeroSlider, BrandMarquee, BentoSection, FlashSaleSection, FeaturedProductsSection, ScrollStorySection, TradeInSection, NeedAccordionSection, ReviewsSection, FloatingCompareBar) vào trực tiếp `src/app/page.tsx`.
   - Xóa bỏ hoàn toàn thư mục `src/components/features/` để giữ dự án gọn gàng, tránh phân tán code.
-  - Xóa bỏ `announcement-bar.tsx` và `loading-screen.tsx` khỏi `src/components/common/`.
   - Tự động nạp dữ liệu thật từ database MySQL thông qua API `/api/products`.
 - [x] Kiểm tra thành công `npm.cmd run lint` (0 errors, 0 warnings) và `npm.cmd run build` (0 errors, Static & Dynamic compilation 100%).
 - [x] Thực hiện chuỗi Git Commits chuẩn hóa bằng Tiếng Việt cho từng tầng mã nguồn theo đúng yêu cầu.
@@ -255,7 +254,7 @@ d:\md-mobile\
 | `database/schema.sql`      | Script DDL MySQL 8.0+ tạo database `md_mobile` và 14 bảng quan hệ    |
 | `prisma/schema.prisma`     | Schema Prisma ORM chứa 14 models và 6 enums                          |
 | `prisma.config.ts`         | File cấu hình datasource URL cho Prisma CLI (chuẩn Prisma 7/8)       |
-| `src/components/common/`   | Header, Footer, CustomCursor (giữ riêng dùng chung toàn hệ thống)    |
+| `src/components/common/`   | Header, Footer, CustomCursor, LoadingScreen (dùng chung)           |
 | `src/components/ui/`       | Atomic UI components (Button, Input, Card, Badge, ToastBox)          |
 | `src/constants/`           | Cấu hình hệ thống chung (SITE_CONFIG, NAV_LINKS, API_ENDPOINTS)      |
 | `src/lib/`                 | db.ts (MySQL pool), dal.ts (Data Access Layer), utils.ts             |
