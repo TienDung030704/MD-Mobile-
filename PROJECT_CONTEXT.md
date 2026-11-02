@@ -39,60 +39,48 @@
 
 ---
 
-## 3. Project Structure
+## 3. Project Structure (Tách bạch Monorepo: Frontend + Backend)
 
 ```
 d:\md-mobile\
-├── .git/                      # Git repository (branch: design/home)
-├── .next/                     # Build output (auto-generated, gitignored)
-├── database/                  # Cơ sở dữ liệu quan hệ thuần SQL
-│   ├── schema.sql             # DDL MySQL 8.0+ (14 bảng, khóa ngoại, indexes, sample data)
-│   └── update_real_data.sql   # Script cập nhật dữ liệu sản phẩm thật
-├── prisma/                    # Cấu hình ORM Prisma
-│   └── schema.prisma          # Prisma schema (14 models, 6 enums)
-├── public/                    # Static assets (svg logos, icons, public images)
-│   └── images/products/       # Vector SVG sản phẩm sắc nét (iPhone, Galaxy, Xiaomi, ROG...)
-├── src/                       # Toàn bộ mã nguồn ứng dụng (chuẩn doanh nghiệp)
-│   ├── app/                   # Next.js App Router root
-│   │   ├── api/products/      # API Route GET /api/products kết nối MySQL
-│   │   ├── error.tsx          # Error boundary UI cấp ứng dụng
-│   │   ├── favicon.ico        # App favicon
-│   │   ├── global-error.tsx   # Error boundary cấp root layout
-│   │   ├── globals.css        # Global CSS + Tailwind v4 + Glassmorphism + Keyframes
-│   │   ├── layout.tsx         # Root layout (Fonts, Metadata SEO, CustomCursor, ToastBox)
-│   │   ├── loading.tsx        # Suspense loading state UI
-│   │   ├── not-found.tsx      # Custom 404 Not Found UI
-│   │   ├── page.tsx           # Trang chủ ĐƠN NHẤT — Tích hợp toàn bộ 12 khối tính năng Flagship Store
-│   │   ├── robots.ts          # Dynamic SEO robots.txt
-│   │   └── sitemap.ts         # Dynamic SEO sitemap.xml
-│   ├── components/            # Reusable UI components
-│   │   ├── common/            # Layout dùng chung tách riêng (Header, Footer, CustomCursor, LoadingScreen)
-│   │   └── ui/                # Atomic UI elements (Button, Input, Card, Badge, ToastBox)
-│   ├── constants/             # Hằng số cấu hình hệ thống
-│   ├── hooks/                 # Custom React hooks (useDebounce, useLocalStorage, useMediaQuery)
-│   ├── lib/                   # Utility helpers & Database (db.ts, dal.ts, utils.ts)
-│   ├── providers/             # Client Context Providers wrapper
-│   ├── services/              # API clients & data fetching services (apiClient, productService)
-│   └── types/                 # TypeScript type definitions (Product, Cart, Order, User, Api, UI)
-├── node_modules/              # Dependencies (gitignored)
-├── .env.example               # Template biến môi trường
-├── .gitignore
-├── AGENTS.md                  # AI agent rules (auto-generated bởi next dev)
-├── eslint.config.mjs          # ESLint configuration
-├── next-env.d.ts              # Next.js TypeScript declarations
-├── next.config.ts             # Next.js configuration (Turbopack, cacheComponents)
-├── package.json               # Scripts build, dependencies
-├── package-lock.json
-├── prisma.config.ts           # Cấu hình kết nối Prisma 7/8 CLI qua definePrismaConfig
-├── PROJECT_CONTEXT.md         # File ngữ cảnh dự án (đọc trước khi làm việc)
-├── README.md
-└── tsconfig.json              # TypeScript configuration (alias @/* -> ./src/*)
+├── frontend/                  # Next.js 16 + React 19 Frontend
+│   ├── public/                # Static assets, SVG sản phẩm, banners
+│   ├── src/                   # Mã nguồn Frontend Next.js
+│   │   ├── app/               # Next.js App Router (page.tsx, layout, SEO)
+│   │   ├── components/        # Reusable UI components (common, ui)
+│   │   ├── constants/         # Hằng số cấu hình hệ thống
+│   │   ├── hooks/             # Custom React hooks
+│   │   ├── lib/               # Utility helpers (utils.ts)
+│   │   ├── providers/         # React Context Providers
+│   │   ├── services/          # API Client & data fetching (apiClient, productService)
+│   │   └── types/             # TypeScript type definitions (Product, Cart, Api...)
+│   ├── next.config.ts         # Next.js config (rewrites proxy /api -> backend port 5000)
+│   ├── package.json           # Frontend dependencies & scripts
+│   ├── tsconfig.json          # TypeScript config (alias @/* -> ./src/*)
+│   └── .env.local             # Cấu hình API URL (http://localhost:5000)
+│
+├── backend/                   # Express.js + TypeScript Backend API Server (Port 5000)
+│   ├── database/              # DDL MySQL 8.0+ (14 bảng, schema.sql, update_real_data.sql)
+│   ├── prisma/                # Prisma schema & config
+│   ├── src/
+│   │   ├── config/            # Cấu hình kết nối MySQL pool (db.ts)
+│   │   ├── controllers/       # Controller tiếp nhận request (product.controller.ts)
+│   │   ├── routes/            # Khai báo Express router (/api/products...)
+│   │   ├── services/          # Business logic & Database queries (product.service.ts)
+│   │   ├── types/             # TypeScript interfaces cho API & Database rows
+│   │   └── server.ts          # Express entry point (Port 5000, CORS, Logger)
+│   ├── package.json           # Backend dependencies (express, cors, mysql2, zod, tsx)
+│   ├── tsconfig.json          # TypeScript NodeNext configuration
+│   └── .env                   # Biến môi trường Database MySQL, JWT, Port
+│
+├── package.json               # Root package.json điều phối chạy dev song song cả 2 app
+└── README.md
 ```
 
-**Nhận xét:** Dự án đã được tổ chức tối ưu theo yêu cầu:
-- Tầng giao diện trang chủ (`src/app/page.tsx`) gom toàn bộ nội dung body vào 1 file duy nhất để dễ quản lý và theo dõi logic.
-- `Header`, `Footer` và `LoadingScreen` được giữ riêng biệt trong `src/components/common/` để tái sử dụng xuyên suốt toàn bộ ứng dụng (layout).
-- Xóa bỏ thư mục `src/components/features/` nhằm loại bỏ sự phân mảnh file không cần thiết.
+**Nhận xét:** Dự án đã được tổ chức tối ưu thành 2 thư mục riêng biệt:
+- `frontend/`: Phục vụ riêng cho bạn làm giao diện (Next.js, Tailwind, Swiper, Framer Motion).
+- `backend/`: Phục vụ riêng cho bạn làm API & Database (Express.js, MySQL, Prisma).
+- Chạy chung: Chỉ cần chạy `npm run dev` ở thư mục gốc là cả 2 cùng khởi chạy song song (BE port 5000, FE port 3000).
 
 ---
 
