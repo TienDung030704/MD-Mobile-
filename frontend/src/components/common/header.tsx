@@ -101,54 +101,47 @@ export function Header({ cartCount = 2, searchProducts = [] }: HeaderProps) {
   return (
     <header
       id="main-header"
-      className={`fixed top-10 left-0 right-0 z-[100] pointer-events-none transition-all duration-300 ${
-        isScrolled ? "-translate-y-1" : "translate-y-0"
+      className={`sticky top-0 left-0 right-0 w-full z-[100] transition-all duration-300 border-b border-white/10 bg-[#07070F]/90 backdrop-blur-2xl shadow-[0_10px_30px_rgba(0,0,0,0.5)] select-none ${
+        isScrolled ? "h-[58px]" : "h-[66px]"
       }`}
     >
-      <div className="max-w-container mx-auto px-4">
-        <div
-          id="header-pill"
-          className={`pointer-events-auto glass-pill px-6 flex items-center justify-between shadow-[0_20px_50px_rgba(0,0,0,0.45)] transition-all duration-400 ease-expo relative ${
-            isScrolled ? "h-[56px] py-1 bg-[#0F1020]/90 backdrop-blur-2xl" : "h-[64px]"
-          }`}
+      <div className="w-full h-full px-4 sm:px-8 lg:px-12 flex items-center justify-between">
+        {/* Brand Logo */}
+        <Link
+          href="/"
+          className="flex items-center gap-2.5 shrink-0 group focus:outline-none"
         >
-          {/* Brand Logo */}
-          <Link
-            href="/"
-            className="flex items-center gap-2.5 shrink-0 group focus:outline-none"
-          >
-            <div className="w-9 h-9 rounded-full bg-aurora p-[1px] transition-transform duration-400 ease-expo group-hover:rotate-12 group-hover:scale-105">
-              <div className="w-full h-full bg-[#07070F] rounded-full flex items-center justify-center">
-                <svg className="w-5 h-5" viewBox="0 0 40 40" fill="none">
-                  <path
-                    d="M20 5L34 31H27L20 18L13 31H6L20 5Z"
-                    fill="url(#navLogoGrad)"
-                  />
-                  <circle cx="20" cy="27" r="3" fill="#22D3EE" />
-                  <defs>
-                    <linearGradient
-                      id="navLogoGrad"
-                      x1="6"
-                      y1="5"
-                      x2="34"
-                      y2="31"
-                      gradientUnits="userSpaceOnUse"
-                    >
-                      <stop stopColor="#7C3AED" />
-                      <stop offset="0.5" stopColor="#2563EB" />
-                      <stop offset="1" stopColor="#22D3EE" />
-                    </linearGradient>
-                  </defs>
-                </svg>
-              </div>
+          <div className="w-9 h-9 rounded-full bg-aurora p-[1px] transition-transform duration-400 ease-expo group-hover:rotate-12 group-hover:scale-105">
+            <div className="w-full h-full bg-[#07070F] rounded-full flex items-center justify-center">
+              <svg className="w-5 h-5" viewBox="0 0 40 40" fill="none">
+                <path
+                  d="M20 5L34 31H27L20 18L13 31H6L20 5Z"
+                  fill="url(#navLogoGrad)"
+                />
+                <circle cx="20" cy="27" r="3" fill="#22D3EE" />
+                <defs>
+                  <linearGradient
+                    id="navLogoGrad"
+                    x1="6"
+                    y1="5"
+                    x2="34"
+                    y2="31"
+                    gradientUnits="userSpaceOnUse"
+                  >
+                    <stop stopColor="#7C3AED" />
+                    <stop offset="0.5" stopColor="#2563EB" />
+                    <stop offset="1" stopColor="#22D3EE" />
+                  </linearGradient>
+                </defs>
+              </svg>
             </div>
-            <div className="flex flex-col">
-              <span className="font-display font-extrabold text-base tracking-[0.14em] leading-none text-white">
-                MD Mobile
-              </span>
-             
-            </div>
-          </Link>
+          </div>
+          <div className="flex flex-col">
+            <span className="font-display font-extrabold text-base tracking-[0.14em] leading-none text-white">
+              MD Mobile
+            </span>
+          </div>
+        </Link>
 
           {/* Navigation Menu */}
           <nav
@@ -336,7 +329,6 @@ export function Header({ cartCount = 2, searchProducts = [] }: HeaderProps) {
               </span>
             </button>
           </div>
-        </div>
       </div>
     </header>
   );

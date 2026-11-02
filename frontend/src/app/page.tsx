@@ -82,9 +82,9 @@ function HeroSlider({ banners = [] }: HeroSliderProps) {
     return (
       <section
         id="hero-section"
-        className="relative w-full pt-28 md:pt-36 pb-8 md:pb-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto overflow-hidden select-none"
+        className="relative w-full overflow-hidden select-none border-b border-white/10"
       >
-        <div className="w-full h-[320px] sm:h-[420px] rounded-3xl border border-white/10 glass-card flex flex-col items-center justify-center text-center p-6">
+        <div className="w-full h-[360px] sm:h-[460px] bg-gradient-to-br from-[#0F1020] to-[#07070F] flex flex-col items-center justify-center text-center p-6">
           <div className="w-12 h-12 rounded-full bg-brandViolet/20 border border-brandViolet/40 flex items-center justify-center text-brandCyan mb-4">
             <Sparkles className="w-6 h-6 animate-pulse" />
           </div>
@@ -100,11 +100,9 @@ function HeroSlider({ banners = [] }: HeroSliderProps) {
   return (
     <section
       id="hero-section"
-      className="relative w-full pt-28 md:pt-36 pb-8 md:pb-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto overflow-hidden select-none"
+      className="relative w-full overflow-hidden select-none border-b border-white/10"
     >
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[350px] bg-brandViolet/15 blur-[120px] rounded-full pointer-events-none -z-10" />
-
-      <div className="relative rounded-2xl md:rounded-3xl overflow-hidden border border-white/10 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.7)] group">
+      <div className="relative w-full overflow-hidden group">
         <Swiper
           modules={[Autoplay, Pagination, Navigation, EffectFade]}
           effect="fade"
@@ -122,10 +120,10 @@ function HeroSlider({ banners = [] }: HeroSliderProps) {
             bulletActiveClass: "custom-bullet-active",
           }}
           navigation={true}
-          className="w-full h-[380px] sm:h-[460px] md:h-[520px] lg:h-[560px]"
+          className="w-full h-[460px] sm:h-[540px] md:h-[620px] lg:h-[680px] xl:h-[720px]"
         >
           {banners.map((banner) => (
-            <SwiperSlide key={banner.id} className="relative w-full h-full bg-[#0a0a14]">
+            <SwiperSlide key={banner.id} className="relative w-full h-full bg-[#07070F]">
               <div className="relative w-full h-full">
                 <Image
                   src={banner.image}
@@ -133,34 +131,38 @@ function HeroSlider({ banners = [] }: HeroSliderProps) {
                   fill
                   priority={banner.id === 1}
                   className="object-cover object-center transform transition-transform duration-1000 scale-100 hover:scale-105"
-                  sizes="(max-width: 768px) 100vw, 1200px"
+                  sizes="100vw"
                 />
 
+                {/* Dark gradients for readability */}
                 <div className="absolute inset-0 bg-gradient-to-t from-[#07070F] via-[#07070F]/50 to-transparent md:bg-gradient-to-r md:from-[#07070F]/90 md:via-[#07070F]/60 md:to-transparent" />
                 <div className={`absolute inset-0 bg-gradient-to-br ${banner.accentColor} mix-blend-screen pointer-events-none`} />
 
-                <div className="absolute inset-0 flex flex-col justify-end md:justify-center p-6 sm:p-10 md:p-14 lg:p-16 max-w-2xl z-10">
-                  <div className="inline-flex items-center gap-2 self-start px-3 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/15 text-xs sm:text-sm font-medium text-brandCyan mb-3 md:mb-4">
-                    <Sparkles className="w-3.5 h-3.5 text-brandGold animate-pulse" />
-                    <span>{banner.badge}</span>
-                  </div>
+                {/* Content Container aligned with container */}
+                <div className="max-w-7xl mx-auto h-full px-6 sm:px-10 md:px-16 lg:px-20 flex flex-col justify-end md:justify-center relative z-10 pb-14 md:pb-0">
+                  <div className="max-w-2xl">
+                    <div className="inline-flex items-center gap-2 self-start px-3.5 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/15 text-xs sm:text-sm font-medium text-brandCyan mb-3 md:mb-4">
+                      <Sparkles className="w-3.5 h-3.5 text-brandGold animate-pulse" />
+                      <span>{banner.badge}</span>
+                    </div>
 
-                  <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white tracking-tight leading-[1.1] mb-2 md:mb-4 drop-shadow-md">
-                    {banner.title}
-                  </h1>
+                    <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-white tracking-tight leading-[1.08] mb-3 md:mb-4 drop-shadow-md">
+                      {banner.title}
+                    </h1>
 
-                  <p className="text-sm sm:text-base md:text-lg text-slate-300 font-normal leading-relaxed mb-5 md:mb-8 line-clamp-2 sm:line-clamp-none max-w-xl">
-                    {banner.subtitle}
-                  </p>
+                    <p className="text-sm sm:text-base md:text-lg text-slate-300 font-normal leading-relaxed mb-6 md:mb-8 line-clamp-2 sm:line-clamp-none max-w-xl">
+                      {banner.subtitle}
+                    </p>
 
-                  <div className="flex items-center gap-4">
-                    <Link
-                      href={banner.link}
-                      className="inline-flex items-center gap-2 px-6 py-3 md:px-8 md:py-3.5 rounded-xl font-semibold text-sm sm:text-base text-white bg-gradient-to-r from-brandViolet via-brandBlue to-brandCyan hover:opacity-95 shadow-lg shadow-brandViolet/25 hover:shadow-brandCyan/30 hover:scale-[1.02] active:scale-[0.98] transition-all duration-200"
-                    >
-                      <span>{banner.ctaText}</span>
-                      <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5" />
-                    </Link>
+                    <div className="flex items-center gap-4">
+                      <Link
+                        href={banner.link}
+                        className="inline-flex items-center gap-2 px-7 py-3.5 md:px-9 md:py-4 rounded-xl font-semibold text-sm sm:text-base text-white bg-gradient-to-r from-brandViolet via-brandBlue to-brandCyan hover:opacity-95 shadow-xl shadow-brandViolet/30 hover:scale-[1.02] active:scale-[0.98] transition-all duration-200"
+                      >
+                        <span>{banner.ctaText}</span>
+                        <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5" />
+                      </Link>
+                    </div>
                   </div>
                 </div>
               </div>
