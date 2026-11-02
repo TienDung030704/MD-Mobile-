@@ -1,0 +1,123 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 750" fill="none">
+  <defs>
+    <!-- Titanium Desert Gradients -->
+    <linearGradient id="desert-frame" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#E5C7A8"/>
+      <stop offset="25%" stop-color="#CBB196"/>
+      <stop offset="50%" stop-color="#9C8068"/>
+      <stop offset="75%" stop-color="#BA9E83"/>
+      <stop offset="100%" stop-color="#846953"/>
+    </linearGradient>
+    
+    <linearGradient id="desert-back" x1="20%" y1="0%" x2="80%" y2="100%">
+      <stop offset="0%" stop-color="#DBC2A4"/>
+      <stop offset="40%" stop-color="#C2A587"/>
+      <stop offset="70%" stop-color="#AF9274"/>
+      <stop offset="100%" stop-color="#8F7256"/>
+    </linearGradient>
+
+    <linearGradient id="camera-island-desert" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#E8CEB2" stop-opacity="0.85"/>
+      <stop offset="100%" stop-color="#9B7F65" stop-opacity="0.95"/>
+    </linearGradient>
+
+    <!-- Lens Glass Reflection -->
+    <radialGradient id="lens-reflect" cx="35%" cy="30%" r="65%">
+      <stop offset="0%" stop-color="#3A3F58"/>
+      <stop offset="45%" stop-color="#141724"/>
+      <stop offset="85%" stop-color="#08090E"/>
+      <stop offset="100%" stop-color="#020305"/>
+    </radialGradient>
+
+    <radialGradient id="lens-coating-blue" cx="30%" cy="25%" r="70%">
+      <stop offset="0%" stop-color="#22D3EE" stop-opacity="0.35"/>
+      <stop offset="50%" stop-color="#7C3AED" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="transparent"/>
+    </radialGradient>
+
+    <!-- Drop Shadow Filter -->
+    <filter id="soft-shadow" x="-15%" y="-10%" width="130%" height="125%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="28" stdDeviation="24" flood-color="#000000" flood-opacity="0.65"/>
+      <feDropShadow dx="0" dy="6" stdDeviation="10" flood-color="#C5A07E" flood-opacity="0.2"/>
+    </filter>
+  </defs>
+
+  <!-- Group with Soft Shadow -->
+  <g filter="url(#soft-shadow)">
+    <!-- Side Buttons: Left (Action + Volume Up + Volume Down) -->
+    <rect x="74" y="165" width="5" height="34" rx="2.5" fill="#B3977C" />
+    <rect x="74" y="220" width="5" height="58" rx="2.5" fill="#B3977C" />
+    <rect x="74" y="290" width="5" height="58" rx="2.5" fill="#B3977C" />
+    
+    <!-- Side Buttons: Right (Power + Camera Control) -->
+    <rect x="421" y="230" width="5" height="85" rx="2.5" fill="#B3977C" />
+    <!-- Camera Control Sapphire Button -->
+    <rect x="421" y="420" width="5" height="52" rx="2.5" fill="#E8CEB2" stroke="#846953" stroke-width="0.8"/>
+
+    <!-- Outer Titanium Grade 5 Bezel -->
+    <rect x="78" y="45" width="344" height="660" rx="54" fill="url(#desert-frame)" stroke="#FFE8D0" stroke-opacity="0.35" stroke-width="1.5"/>
+
+    <!-- Matte Texture Back Glass -->
+    <rect x="82" y="49" width="336" height="652" rx="50" fill="url(#desert-back)"/>
+    
+    <!-- Back Light Sheen (Top Left to Bottom Right) -->
+    <path d="M84 90 C 84 65, 105 51, 130 51 L 370 51 C 395 51, 416 65, 416 90 L 416 260 L 84 480 Z" fill="#FFFFFF" fill-opacity="0.06"/>
+
+    <!-- Apple Logo (Center) -->
+    <g transform="translate(250, 375) scale(0.95)" opacity="0.38">
+      <path d="M -1.5 -38 C 7 -38 14.5 -33 19 -25 C 13 -21 11 -13 14 -6 C 17 -0.5 24 3 24 3 C 23.5 4.5 21 12 16 19 C 11.5 25.5 6.5 32 -0.5 32 C -7.5 32 -11 26 -17 26 C -23 26 -27.5 31.5 -34.5 32 C -41.5 32.5 -48 24.5 -53 17 C -61 5 -66 -13 -58 -27 C -52 -38 -41 -43 -32 -43 C -24 -43 -17.5 -38 -12 -38 C -7 -38 -4.5 -43 -1.5 -38 Z" fill="#FFFFFF"/>
+      <path d="M 0 -41 C -0.5 -49 5.5 -57 12.5 -61 C 13.5 -52 8.5 -44 0 -41 Z" fill="#FFFFFF"/>
+    </g>
+
+    <!-- Camera Island (Top Left Plateau) -->
+    <g transform="translate(102, 70)">
+      <!-- Plateau Base with Blur Shadow -->
+      <rect x="0" y="0" width="162" height="170" rx="38" fill="url(#camera-island-desert)" stroke="#FFE6CD" stroke-opacity="0.4" stroke-width="1.5"/>
+      <rect x="2" y="2" width="158" height="166" rx="36" fill="#000000" fill-opacity="0.08"/>
+
+      <!-- Top Main Lens (48MP Fusion) -->
+      <g transform="translate(46, 44)">
+        <circle cx="0" cy="0" r="32" fill="url(#desert-frame)" stroke="#664D36" stroke-width="1.5"/>
+        <circle cx="0" cy="0" r="28" fill="#181A22"/>
+        <circle cx="0" cy="0" r="24" fill="url(#lens-reflect)"/>
+        <circle cx="0" cy="0" r="24" fill="url(#lens-coating-blue)"/>
+        <!-- Inner Aperture Ring -->
+        <circle cx="0" cy="0" r="13" stroke="#2D3247" stroke-width="1.8" fill="#05060A"/>
+        <circle cx="-5" cy="-6" r="4.5" fill="#FFFFFF" fill-opacity="0.55" filter="blur(0.5px)"/>
+        <circle cx="4" cy="5" r="2" fill="#22D3EE" fill-opacity="0.4"/>
+      </g>
+
+      <!-- Bottom Main Lens (12MP 5X Telephoto) -->
+      <g transform="translate(46, 126)">
+        <circle cx="0" cy="0" r="32" fill="url(#desert-frame)" stroke="#664D36" stroke-width="1.5"/>
+        <circle cx="0" cy="0" r="28" fill="#181A22"/>
+        <circle cx="0" cy="0" r="24" fill="url(#lens-reflect)"/>
+        <circle cx="0" cy="0" r="24" fill="url(#lens-coating-blue)"/>
+        <!-- Rectangular Prism Core -->
+        <rect x="-8" y="-8" width="16" height="16" rx="3" stroke="#373D56" stroke-width="1.5" fill="#070910"/>
+        <circle cx="-5" cy="-5" r="3.5" fill="#FFFFFF" fill-opacity="0.6"/>
+      </g>
+
+      <!-- Right Ultra-Wide Lens (48MP Ultra-Wide) -->
+      <g transform="translate(116, 85)">
+        <circle cx="0" cy="0" r="32" fill="url(#desert-frame)" stroke="#664D36" stroke-width="1.5"/>
+        <circle cx="0" cy="0" r="28" fill="#181A22"/>
+        <circle cx="0" cy="0" r="24" fill="url(#lens-reflect)"/>
+        <circle cx="0" cy="0" r="24" fill="url(#lens-coating-blue)"/>
+        <circle cx="0" cy="0" r="11" stroke="#2D3247" stroke-width="1.5" fill="#07080E"/>
+        <circle cx="-4" cy="-5" r="3.5" fill="#FFFFFF" fill-opacity="0.6"/>
+      </g>
+
+      <!-- True Tone Flash (Top Right) -->
+      <circle cx="116" cy="36" r="11" fill="#FFF2DC" stroke="#B3977C" stroke-width="1"/>
+      <circle cx="116" cy="36" r="7" fill="#FDE047" fill-opacity="0.8"/>
+
+      <!-- LiDAR Scanner (Bottom Right) -->
+      <circle cx="116" cy="136" r="9.5" fill="#1E2028" stroke="#524336" stroke-width="1.2"/>
+      <circle cx="116" cy="136" r="6" fill="#090A0E"/>
+
+      <!-- Stereo Mic Hole -->
+      <circle cx="86" cy="136" r="2.5" fill="#16181E"/>
+    </g>
+  </g>
+</svg>

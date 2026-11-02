@@ -1,0 +1,121 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 750" fill="none">
+  <defs>
+    <!-- Titanium Gray Gradients -->
+    <linearGradient id="s24-titanium-frame" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#8E929B"/>
+      <stop offset="35%" stop-color="#696D77"/>
+      <stop offset="70%" stop-color="#4C505A"/>
+      <stop offset="100%" stop-color="#34373F"/>
+    </linearGradient>
+
+    <linearGradient id="s24-back-glass" x1="10%" y1="0%" x2="90%" y2="100%">
+      <stop offset="0%" stop-color="#5A5E68"/>
+      <stop offset="50%" stop-color="#444750"/>
+      <stop offset="100%" stop-color="#32353C"/>
+    </linearGradient>
+
+    <radialGradient id="s24-lens-glass" cx="30%" cy="30%" r="70%">
+      <stop offset="0%" stop-color="#2D3345"/>
+      <stop offset="40%" stop-color="#121622"/>
+      <stop offset="85%" stop-color="#070910"/>
+      <stop offset="100%" stop-color="#020306"/>
+    </radialGradient>
+
+    <radialGradient id="s24-sensor-cyan" cx="35%" cy="35%" r="65%">
+      <stop offset="0%" stop-color="#38BDF8" stop-opacity="0.35"/>
+      <stop offset="50%" stop-color="#2563EB" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="transparent"/>
+    </radialGradient>
+
+    <filter id="s24-shadow" x="-15%" y="-10%" width="130%" height="125%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="26" stdDeviation="22" flood-color="#000000" flood-opacity="0.7"/>
+      <feDropShadow dx="0" dy="6" stdDeviation="12" flood-color="#2563EB" flood-opacity="0.22"/>
+    </filter>
+  </defs>
+
+  <g filter="url(#s24-shadow)">
+    <!-- Right Buttons (Volume Rocker + Power Key) -->
+    <rect x="424" y="195" width="4.5" height="115" rx="2" fill="#717580" />
+    <rect x="424" y="340" width="4.5" height="58" rx="2" fill="#717580" />
+
+    <!-- S-Pen Top Clicker (Left Bottom Notch) -->
+    <rect x="98" y="705" width="22" height="6" rx="2" fill="#7B808B" stroke="#2D3038" stroke-width="0.8"/>
+
+    <!-- Angular Boxy Chassis (S24 Ultra Iconic Sharp Edges) -->
+    <rect x="76" y="42" width="348" height="666" rx="16" fill="url(#s24-titanium-frame)" stroke="#B0B5C2" stroke-opacity="0.3" stroke-width="1.5"/>
+
+    <!-- Matte Satin Back Glass (Gorilla Glass Armor) -->
+    <rect x="80" y="46" width="340" height="658" rx="14" fill="url(#s24-back-glass)"/>
+
+    <!-- Light Glare Shimmer -->
+    <path d="M80 80 L 320 46 L 420 46 L 80 500 Z" fill="#FFFFFF" fill-opacity="0.05"/>
+
+    <!-- Samsung Brand Wordmark -->
+    <text x="250" y="660" text-anchor="middle" font-family="'Space Grotesk', system-ui, sans-serif" font-size="14" font-weight="700" letter-spacing="4" fill="#FFFFFF" fill-opacity="0.35">
+      SAMSUNG
+    </text>
+
+    <!-- Floating Camera Column Left (3 Large Lenses) -->
+    <!-- 1. Ultra-Wide 12MP (Top Left) -->
+    <g transform="translate(136, 108)">
+      <circle cx="0" cy="0" r="28" fill="url(#s24-titanium-frame)" stroke="#9DA3B0" stroke-width="1.8"/>
+      <circle cx="0" cy="0" r="23" fill="#141720"/>
+      <circle cx="0" cy="0" r="20" fill="url(#s24-lens-glass)"/>
+      <circle cx="0" cy="0" r="20" fill="url(#s24-sensor-cyan)"/>
+      <circle cx="0" cy="0" r="10" stroke="#2563EB" stroke-width="1.2" fill="#06080F"/>
+      <circle cx="-4" cy="-5" r="3.5" fill="#FFFFFF" fill-opacity="0.6"/>
+    </g>
+
+    <!-- 2. Main 200MP OIS (Middle Left) -->
+    <g transform="translate(136, 188)">
+      <circle cx="0" cy="0" r="31" fill="url(#s24-titanium-frame)" stroke="#C4CAD6" stroke-width="2.2"/>
+      <circle cx="0" cy="0" r="26" fill="#141720"/>
+      <circle cx="0" cy="0" r="22" fill="url(#s24-lens-glass)"/>
+      <circle cx="0" cy="0" r="22" fill="url(#s24-sensor-cyan)"/>
+      <!-- Multi-layer 200MP sensor element -->
+      <circle cx="0" cy="0" r="12" stroke="#38BDF8" stroke-width="1.5" fill="#04060C"/>
+      <circle cx="-5" cy="-6" r="4.5" fill="#FFFFFF" fill-opacity="0.75" filter="blur(0.5px)"/>
+      <circle cx="5" cy="5" r="2" fill="#38BDF8" fill-opacity="0.5"/>
+    </g>
+
+    <!-- 3. Periscope Telephoto 50MP 5X (Bottom Left) -->
+    <g transform="translate(136, 268)">
+      <circle cx="0" cy="0" r="28" fill="url(#s24-titanium-frame)" stroke="#9DA3B0" stroke-width="1.8"/>
+      <circle cx="0" cy="0" r="23" fill="#141720"/>
+      <circle cx="0" cy="0" r="20" fill="url(#s24-lens-glass)"/>
+      <!-- Periscope Square Opening -->
+      <rect x="-8.5" y="-8.5" width="17" height="17" rx="3.5" stroke="#3A4055" stroke-width="1.5" fill="#05070E"/>
+      <circle cx="-4" cy="-4" r="3" fill="#FFFFFF" fill-opacity="0.6"/>
+    </g>
+
+    <!-- Floating Camera Column Right (Sensors + Tele 3X) -->
+    <!-- 1. Laser AF Sensor (Top Right) -->
+    <g transform="translate(196, 108)">
+      <circle cx="0" cy="0" r="14" fill="url(#s24-titanium-frame)" stroke="#6C717C" stroke-width="1.2"/>
+      <circle cx="0" cy="0" r="11" fill="#151720"/>
+      <circle cx="0" cy="0" r="6" fill="#EF4444" fill-opacity="0.7"/>
+    </g>
+
+    <!-- 2. LED Flash (Middle Right) -->
+    <g transform="translate(196, 150)">
+      <circle cx="0" cy="0" r="12" fill="url(#s24-titanium-frame)" stroke="#6C717C" stroke-width="1"/>
+      <circle cx="0" cy="0" r="9" fill="#FFFBEB"/>
+      <circle cx="0" cy="0" r="6" fill="#FACC15" fill-opacity="0.85"/>
+    </g>
+
+    <!-- 3. Telephoto 3X 10MP (Bottom Right) -->
+    <g transform="translate(196, 202)">
+      <circle cx="0" cy="0" r="18" fill="url(#s24-titanium-frame)" stroke="#898E9C" stroke-width="1.4"/>
+      <circle cx="0" cy="0" r="15" fill="#141720"/>
+      <circle cx="0" cy="0" r="12" fill="url(#s24-lens-glass)"/>
+      <circle cx="0" cy="0" r="6" stroke="#2563EB" stroke-width="1" fill="#06080F"/>
+      <circle cx="-2.5" cy="-3" r="2" fill="#FFFFFF" fill-opacity="0.65"/>
+    </g>
+
+    <!-- Galaxy AI Subtle Badge Pill -->
+    <rect x="290" y="80" width="85" height="24" rx="12" fill="#2563EB" fill-opacity="0.15" stroke="#38BDF8" stroke-opacity="0.35" stroke-width="1"/>
+    <text x="332" y="96" text-anchor="middle" font-family="'Space Grotesk', system-ui, sans-serif" font-size="10" font-weight="700" fill="#38BDF8">
+      ✦ Galaxy AI
+    </text>
+  </g>
+</svg>

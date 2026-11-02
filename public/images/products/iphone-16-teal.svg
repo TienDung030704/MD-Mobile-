@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 750" fill="none">
+  <defs>
+    <!-- Teal Gradients -->
+    <linearGradient id="teal-frame" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2DD4BF"/>
+      <stop offset="40%" stop-color="#0D9488"/>
+      <stop offset="80%" stop-color="#0F766E"/>
+      <stop offset="100%" stop-color="#115E59"/>
+    </linearGradient>
+
+    <linearGradient id="teal-back" x1="20%" y1="0%" x2="80%" y2="100%">
+      <stop offset="0%" stop-color="#14B8A6"/>
+      <stop offset="40%" stop-color="#0D9488"/>
+      <stop offset="80%" stop-color="#0F766E"/>
+      <stop offset="100%" stop-color="#042F2E"/>
+    </linearGradient>
+
+    <linearGradient id="teal-camera-island" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2DD4BF" stop-opacity="0.85"/>
+      <stop offset="100%" stop-color="#0D9488" stop-opacity="0.95"/>
+    </linearGradient>
+
+    <radialGradient id="teal-lens-glass" cx="30%" cy="30%" r="70%">
+      <stop offset="0%" stop-color="#1E3A3A"/>
+      <stop offset="45%" stop-color="#081A1A"/>
+      <stop offset="100%" stop-color="#020808"/>
+    </radialGradient>
+
+    <filter id="teal-shadow" x="-15%" y="-10%" width="130%" height="125%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="26" stdDeviation="22" flood-color="#000000" flood-opacity="0.65"/>
+      <feDropShadow dx="0" dy="6" stdDeviation="12" flood-color="#0D9488" flood-opacity="0.25"/>
+    </filter>
+  </defs>
+
+  <g filter="url(#teal-shadow)">
+    <!-- Buttons: Left -->
+    <rect x="74" y="170" width="5" height="34" rx="2.5" fill="#0D9488" />
+    <rect x="74" y="225" width="5" height="58" rx="2.5" fill="#0D9488" />
+    <rect x="74" y="295" width="5" height="58" rx="2.5" fill="#0D9488" />
+
+    <!-- Buttons: Right -->
+    <rect x="421" y="235" width="5" height="85" rx="2.5" fill="#0D9488" />
+    <rect x="421" y="425" width="5" height="52" rx="2.5" fill="#2DD4BF" stroke="#115E59" stroke-width="0.8"/>
+
+    <!-- Aluminum Frame -->
+    <rect x="78" y="45" width="344" height="660" rx="52" fill="url(#teal-frame)" stroke="#99F6E4" stroke-opacity="0.4" stroke-width="1.5"/>
+
+    <!-- Color-infused Back Glass -->
+    <rect x="82" y="49" width="336" height="652" rx="48" fill="url(#teal-back)"/>
+
+    <!-- Glass Highlights -->
+    <path d="M84 90 C 84 65, 105 51, 130 51 L 370 51 C 395 51, 416 65, 416 90 L 416 260 L 84 480 Z" fill="#FFFFFF" fill-opacity="0.08"/>
+
+    <!-- Apple Logo -->
+    <g transform="translate(250, 375) scale(0.95)" opacity="0.32">
+      <path d="M -1.5 -38 C 7 -38 14.5 -33 19 -25 C 13 -21 11 -13 14 -6 C 17 -0.5 24 3 24 3 C 23.5 4.5 21 12 16 19 C 11.5 25.5 6.5 32 -0.5 32 C -7.5 32 -11 26 -17 26 C -23 26 -27.5 31.5 -34.5 32 C -41.5 32.5 -48 24.5 -53 17 C -61 5 -66 -13 -58 -27 C -52 -38 -41 -43 -32 -43 C -24 -43 -17.5 -38 -12 -38 C -7 -38 -4.5 -43 -1.5 -38 Z" fill="#FFFFFF"/>
+      <path d="M 0 -41 C -0.5 -49 5.5 -57 12.5 -61 C 13.5 -52 8.5 -44 0 -41 Z" fill="#FFFFFF"/>
+    </g>
+
+    <!-- Vertical Pill Camera Island -->
+    <g transform="translate(112, 76)">
+      <rect x="0" y="0" width="76" height="152" rx="38" fill="url(#teal-camera-island)" stroke="#5EEAD4" stroke-opacity="0.5" stroke-width="1.2"/>
+
+      <!-- Camera 1: 48MP Main Fusion (Top) -->
+      <g transform="translate(38, 38)">
+        <circle cx="0" cy="0" r="30" fill="url(#teal-frame)" stroke="#115E59" stroke-width="1.5"/>
+        <circle cx="0" cy="0" r="25" fill="#0A1818"/>
+        <circle cx="0" cy="0" r="22" fill="url(#teal-lens-glass)"/>
+        <circle cx="0" cy="0" r="11" stroke="#2DD4BF" stroke-width="1.2" fill="#020808"/>
+        <circle cx="-4" cy="-5" r="3.5" fill="#FFFFFF" fill-opacity="0.6"/>
+      </g>
+
+      <!-- Camera 2: 12MP Ultra-Wide (Bottom) -->
+      <g transform="translate(38, 114)">
+        <circle cx="0" cy="0" r="30" fill="url(#teal-frame)" stroke="#115E59" stroke-width="1.5"/>
+        <circle cx="0" cy="0" r="25" fill="#0A1818"/>
+        <circle cx="0" cy="0" r="22" fill="url(#teal-lens-glass)"/>
+        <circle cx="0" cy="0" r="10" stroke="#2DD4BF" stroke-width="1.2" fill="#020808"/>
+        <circle cx="-4" cy="-5" r="3.5" fill="#FFFFFF" fill-opacity="0.6"/>
+      </g>
+    </g>
+
+    <!-- True Tone Flash Outside Island -->
+    <g transform="translate(210, 152)">
+      <circle cx="0" cy="0" r="12" fill="#FFFBEB" stroke="#0D9488" stroke-width="1.2"/>
+      <circle cx="0" cy="0" r="8" fill="#FDE047" fill-opacity="0.9"/>
+      <circle cx="0" cy="0" r="4" fill="#FFFFFF"/>
+    </g>
+  </g>
+</svg>
