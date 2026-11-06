@@ -9,12 +9,12 @@
   --color-brandGold: #F5C451;
   --color-brandMint: #34D399;
   --color-brandError: #F43F5E;
-  --color-bgDark: #07070F;
-  --color-surfaceDark: #0F1020;
-  --color-bgLight: #F7F7FB;
+  --color-bgDark: var(--bg-primary);
+  --color-surfaceDark: var(--bg-surface);
+  --color-bgLight: #F8FAFC;
   --color-surfaceLight: #FFFFFF;
-  --color-textPrimary: #F8FAFC;
-  --color-textSecondary: #A1A1B5;
+  --color-textPrimary: var(--text-main);
+  --color-textSecondary: var(--text-muted);
 
   --color-brand-violet: #7C3AED;
   --color-brand-blue: #2563EB;
@@ -24,8 +24,8 @@
   --color-brand-gold: #F5C451;
   --color-brand-mint: #34D399;
   --color-brand-error: #F43F5E;
-  --color-bg-dark: #07070F;
-  --color-surface-dark: #0F1020;
+  --color-bg-dark: var(--bg-primary);
+  --color-surface-dark: var(--bg-surface);
 
   --font-display: var(--font-plus-jakarta), "Plus Jakarta Sans", sans-serif;
   --font-sans: var(--font-inter), "Inter", sans-serif;
@@ -41,6 +41,8 @@
   --bg-surface: #0F1020;
   --text-main: #F8FAFC;
   --text-muted: #A1A1B5;
+  --header-bg: rgba(7, 7, 15, 0.88);
+  --header-border: rgba(255, 255, 255, 0.10);
   --glass-bg: rgba(255, 255, 255, 0.06);
   --glass-border: rgba(255, 255, 255, 0.12);
   --glass-hover: rgba(255, 255, 255, 0.10);
@@ -53,13 +55,15 @@
 }
 
 html.light {
-  --bg-primary: #F7F7FB;
+  --bg-primary: #F8FAFC;
   --bg-surface: #FFFFFF;
-  --text-main: #090915;
-  --text-muted: #4A4B65;
-  --glass-bg: rgba(255, 255, 255, 0.78);
-  --glass-border: rgba(15, 16, 32, 0.10);
-  --glass-hover: rgba(255, 255, 255, 0.94);
+  --text-main: #0F172A;
+  --text-muted: #64748B;
+  --header-bg: rgba(255, 255, 255, 0.90);
+  --header-border: rgba(15, 23, 42, 0.08);
+  --glass-bg: rgba(255, 255, 255, 0.88);
+  --glass-border: rgba(15, 23, 42, 0.08);
+  --glass-hover: rgba(255, 255, 255, 0.98);
 }
 
 * {
@@ -106,6 +110,14 @@ body {
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
   border-radius: 9999px;
+}
+
+html.light .glass-card {
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.08);
+}
+
+html.light .glass-pill {
+  box-shadow: 0 4px 16px -4px rgba(0, 0, 0, 0.06);
 }
 
 /* Gradients */

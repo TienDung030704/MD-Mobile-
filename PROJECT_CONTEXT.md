@@ -32,7 +32,7 @@
 | State Management     | `@reduxjs/toolkit` `^2.13.0`, `react-redux`       |
 | Data Fetching / HTTP | `@tanstack/react-query` `^5.105.0`, `axios`       |
 | Form & Validation    | `react-hook-form` `^7.91.0`, `zod` `^4.6.7`       |
-| Database / ORM       | `prisma` `^8.0.0-rc.29`, `@prisma/client` `^7.10.1`, `mysql2` |
+| Database / ORM       | `prisma` `^7.10.1`, `@prisma/client` `^7.10.1`, `mysql2` |
 | Auth & Crypto        | `jsonwebtoken` `^9.0.3`, `bcryptjs` `^3.0.3`      |
 | Utilities            | `dayjs`, `slugify`, `sharp`, `@number-flow/react` |
 
@@ -49,7 +49,7 @@ d:\md-mobile\
 │   ├── src/                   # Mã nguồn Frontend Next.js
 │   │   ├── app/               # Next.js App Router (page.tsx, layout, SEO)
 │   │   ├── components/        # Reusable UI components
-│   │   │   ├── common/        # Header (full-width), Footer, LoadingScreen, CustomCursor
+│   │   │   ├── common/        # Header (full-width), Footer, LoadingScreen, CustomCursor, FloatingActions (speed dial liên hệ Messenger, Zalo, Showroom, Scroll To Top)
 │   │   │   └── ui/            # Atomic elements (Button, Input, Card, Badge, ToastBox)
 │   │   ├── constants/         # Hằng số cấu hình hệ thống (SITE_CONFIG, NAV_LINKS)
 │   │   ├── hooks/             # Custom React hooks (useDebounce, useLocalStorage, useMediaQuery)
@@ -109,8 +109,8 @@ d:\md-mobile\
     3. `HeroSlider`: Thiết kế **Full chiều ngang 100vw**, hiệu ứng fade swiper mượt mà, chiều cao Flagship lên đến 720px, nạp dữ liệu thật từ bảng `banners`.
     4. `BrandMarquee`: Dải thương hiệu đối tác ủy quyền chính thức cuộn vô hạn.
     5. `BentoSection`: Lưới 6 ô đặc quyền với hiệu ứng Spotlight 3D (`--mouse-x`, `--mouse-y`).
-    6. `FlashSaleSection`: Đồng hồ đếm ngược Flip Clock (Giờ : Phút : Giây) và Carousel kéo sản phẩm giảm giá thật từ DB.
-    7. `FeaturedProductsSection`: Tab lọc trượt, thẻ 3D tilt, nút yêu thích và thêm giỏ hàng với sản phẩm thật từ DB.
+    6. `FlashSaleSection`: Khung Flash Sale giờ vàng (Flip Clock đếm ngược + Khung placeholder sẵn sàng).
+    7. `FeaturedProductsSection`: Khung Siêu phẩm nổi bật (Tab phân loại + Khung placeholder sẵn sàng).
     8. `ScrollStorySection`: Bóc tách công nghệ phần cứng 4 bước 3D.
     9. `TradeInSection`: Banner Thu cũ đổi mới trợ giá 5 triệu + Modal định giá AI 30 giây.
     10. `NeedAccordionSection`: Accordion 4 nhu cầu mở rộng theo chiều ngang.
@@ -209,6 +209,12 @@ d:\md-mobile\
   - `index.ts`, `hooks.ts`
   - Slices: `cartSlice.ts`, `authSlice.ts`, `productSlice.ts`, `compareSlice.ts`, `uiSlice.ts`, `orderSlice.ts`
 - [x] Sửa lỗi TypeScript / ESLint no-explicit-any trong `frontend/src/app/page.tsx` (khai báo `DBBannerRow`).
+- [x] Bổ sung cụm Tiện ích nổi bên phải màn hình ([FloatingActions](file:///d:/md-mobile/frontend/src/components/common/floating-actions.tsx)): Gồm 4 nút nổi (Messenger gradient, Zalo, Bản đồ Showroom, Cuộn lên đầu trang `↑`); tự động ẩn khi ở đỉnh trang và lướt xuống (> 220px) sẽ trượt từ bên trong ra với hiệu ứng chuyển động chậm mượt mà (`duration-700`, `ease-[cubic-bezier(0.16,1,0.3,1)]`, hiệu ứng xuất hiện so le delay).
+- [x] Tái cấu trúc & Tinh gọn Trang Chủ ([page.tsx](file:///d:/md-mobile/frontend/src/app/page.tsx)): Giảm từ hơn 1.440 dòng xuống còn ~480 dòng code sạch sẽ, súc tích; gom dữ liệu cấu hình mảng (`.map()`), loại bỏ code thừa không render; phân chia 11 khối section mạch lạc, dễ hiểu và dễ bảo trì.
+- [x] Tinh giản Header: Gỡ bỏ nút toggle ECO (giữ chuyển động luôn mượt mà 60FPS mặc định), thay thế bằng icon Tài khoản cá nhân (`User`).
+- [x] Nâng cấp Giỏ hàng Header: Gỡ bỏ số `2` mock giả lập, chuyển về nút icon giỏ hàng (`ShoppingBag`) chuẩn mực.
+- [x] Khắc phục toàn diện chế độ Sáng / Tối (Theme Light/Dark): Sửa lỗi chỉ sáng thanh tìm kiếm/nút theme do hardcode mã màu `#07070F` và `bg-bgDark`; đồng bộ hệ màu biến CSS Variables (`--bg-primary`, `--bg-surface`, `--text-main`, `--header-bg`) chuyển đổi mượt mà toàn diện trên Header, Body và Trang Chủ; lưu tùy chọn vào `localStorage`.
+- [x] Tạm thời tinh giản các khối sản phẩm trang chủ theo yêu cầu: giữ nguyên khung cấu trúc (Placeholder Frame) của Flash Sale và Featured Products, sẵn sàng để tích hợp lại sau.
 - [x] Kiểm tra thành công `npm run build` trên cả Backend và Frontend: Biên dịch thành công 100%.
 
 ---
@@ -222,6 +228,8 @@ d:\md-mobile\
 ---
 
 ## 10. TODO / Planned Features
+
+- Tích hợp lại các thẻ sản phẩm chi tiết cho Flash Sale và Featured Products trên trang chủ khi cần.
 
 - Hoàn thiện luồng Giỏ hàng (Cart) và Thanh toán (Checkout) với Redux Toolkit.
 - Xây dựng trang danh mục sản phẩm & bộ lọc nâng cao (`/products`).
@@ -294,7 +302,7 @@ d:\md-mobile\
 ## 15. Last Updated
 
 - **Ngày tạo:** 2026-10-22
-- **Cập nhật lần cuối:** 2026-11-02
+- **Cập nhật lần cuối:** 2026-11-05
 - **Người cập nhật:** AI (Antigravity)
 
 ---
