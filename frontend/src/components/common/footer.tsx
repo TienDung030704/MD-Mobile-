@@ -30,7 +30,7 @@ export function Footer() {
         {/* Top Newsletter Card */}
         <div className="glass-card rounded-[28px] p-8 md:p-10 mb-16 flex flex-col lg:flex-row items-center justify-between gap-8 border border-black/10 dark:border-white/15">
           <div className="max-w-xl">
-            <span className="text-xs font-mono uppercase tracking-widest text-brandCyan">
+            <span className="text-xs font-mono uppercase tracking-widest text-brandSage">
               AETHERIA PRIVATE CLUB
             </span>
             <h3 className="font-display font-extrabold text-2xl md:text-3xl mt-1 text-textPrimary">
@@ -51,12 +51,12 @@ export function Footer() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Nhập email cá nhân của bạn..."
-              className="w-full sm:w-80 h-13 px-5 py-3.5 rounded-full glass-card text-sm text-textPrimary placeholder:text-textSecondary focus:outline-none focus:border-brandCyan"
+              className="w-full sm:w-80 h-13 px-5 py-3.5 rounded-full glass-card text-sm text-textPrimary placeholder:text-textSecondary focus:outline-none focus:border-brandSage"
             />
             <button
               type="submit"
               disabled={isSubmitting}
-              className="w-full sm:w-auto h-13 px-7 py-3.5 rounded-full bg-aurora text-white font-display font-bold text-sm tracking-wide flex items-center justify-center gap-2 transition-all duration-400 ease-expo shrink-0 hover:opacity-90 disabled:opacity-50"
+              className="w-full sm:w-auto h-13 px-7 py-3.5 rounded-full bg-brandClay hover:bg-brandClayHover text-white font-display font-bold text-sm tracking-wide flex items-center justify-center gap-2 transition-all duration-400 ease-expo shrink-0 shadow-lg shadow-brandClay/20 disabled:opacity-50"
             >
               {isSubmitting
                 ? "Đang xử lý..."
@@ -76,7 +76,7 @@ export function Footer() {
             <p className="text-textSecondary text-xs leading-relaxed max-w-xs">
               Hệ thống Flagship Experience Store chuẩn quốc tế. Tiên phong phân phối các siêu phẩm di động AI, phụ kiện cao cấp và dịch vụ hậu mãi thượng lưu.
             </p>
-            <div className="text-xs font-mono text-brandCyan">
+            <div className="text-xs font-mono text-brandSage">
               Hotline VIP 24/7: 1800 8888 99 (Miễn cước)
             </div>
           </div>
@@ -155,8 +155,8 @@ export function Footer() {
             <p className="text-xs text-textSecondary">
               • Hải Châu: 12 Bạch Đằng, TP. Đà Nẵng
             </p>
-            <div className="pt-2 flex items-center gap-2 text-[11px] font-mono text-brandMint">
-              <span className="w-2 h-2 rounded-full bg-brandMint animate-ping"></span>{" "}
+            <div className="pt-2 flex items-center gap-2 text-[11px] font-mono text-brandSage">
+              <span className="w-2 h-2 rounded-full bg-brandSage animate-ping"></span>{" "}
               Mở cửa 08:30 — 22:30 mỗi ngày
             </div>
           </div>
@@ -168,7 +168,7 @@ export function Footer() {
         </div>
 
         {/* Bottom Copyright */}
-        <div className="flex flex-col sm:flex-row items-center justify-between text-xs text-textSecondary pt-4 border-t border-white/5 gap-3">
+        <div className="flex flex-col sm:flex-row items-center justify-between text-xs text-textSecondary pt-4 border-t border-black/10 dark:border-white/5 gap-3">
           <span>
             © 2026 MD Mobile STUDIO VIETNAM. Bảo lưu mọi quyền sở hữu trí tuệ.
           </span>

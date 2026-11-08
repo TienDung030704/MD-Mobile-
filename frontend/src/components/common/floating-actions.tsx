@@ -122,11 +122,11 @@ export function FloatingActions() {
         onClick={scrollToTop}
         title="Cuộn lên đầu trang"
         aria-label="Cuộn lên đầu trang"
-        className={`w-12 h-12 rounded-full bg-black text-white border border-white/20 flex items-center justify-center shadow-lg shadow-black/40 hover:border-brandCyan/70 hover:scale-110 active:scale-95 transition-all duration-700 delay-[200ms] ${
+        className={`w-12 h-12 rounded-full bg-surfaceDark text-textPrimary border border-black/10 dark:border-white/20 flex items-center justify-center shadow-lg shadow-black/15 dark:shadow-black/40 hover:border-brandSage/70 hover:scale-110 active:scale-95 transition-all duration-700 delay-[200ms] ${
           isVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-8"
         }`}
       >
-        <ArrowUp className="w-5 h-5 text-white stroke-[2.4]" />
+        <ArrowUp className="w-5 h-5 text-textPrimary stroke-[2.4]" />
       </button>
     </aside>
   );

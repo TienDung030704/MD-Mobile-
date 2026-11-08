@@ -60,7 +60,8 @@ d:\md-mobile\
 │   │   │   ├── index.ts       # Root store config
 │   │   │   ├── hooks.ts       # Typed hooks (useAppDispatch, useAppSelector)
 │   │   │   └── slices/        # Slices: cartSlice, authSlice, productSlice, compareSlice, uiSlice, orderSlice
-│   │   └── types/             # TypeScript type definitions (Product, Cart, Api, UI...)
+│   │   ├── types/             # TypeScript type definitions (Product, Cart, Api, UI...)
+│   │   └── utils/             # Tiện ích dùng chung: theme-toggle (useThemeToggle chuẩn React 19)
 │   ├── next.config.ts         # Next.js config (proxy rewrites /api/:path* -> backend port 5000)
 │   ├── package.json           # Frontend dependencies & scripts
 │   ├── tsconfig.json          # TypeScript config (alias @/* -> ./src/*)
@@ -99,7 +100,13 @@ d:\md-mobile\
   - `frontend/src/app/page.tsx` là Client Component đảm nhiệm toàn bộ trải nghiệm tương tác động mượt mà (Swiper 3D, Flip Clock, Tab lọc sản phẩm, Modal định giá AI, Thanh so sánh cấu hình).
   - Tự động nạp dữ liệu thật 100% từ MySQL qua Backend Express API (`/api/products`, `/api/banners`).
   - Toàn bộ mock data đã được loại bỏ hoàn toàn khỏi dự án.
-- **Frontend Design System:**
+- **Frontend Design System (Bộ nhận diện phong cách Bắc Âu cao cấp — Nordic Sage & Clay):**
+  - **Hệ 3 màu Pastel chủ đạo toàn web** (loại bỏ hoàn toàn hệ màu sặc sỡ violet/cyan/sunset/coral neon cũ):
+    - **Màu 1 (Chính - Brand):** `Sage Green (Xanh Xô Thơm Pastel)` — `#7F9C8B` (biến thể hover: `#668272`, tông sáng: `#E4ECE7`, tông tối: `#1C2621`). Biểu tượng của sự tinh tế, công nghệ bền vững và tự nhiên.
+    - **Màu 2 (Điểm nhấn - CTA/Action):** `Terracotta / Warm Clay (Cam Đất Gốm Pastel)` — `#D87D56` (biến thể hover: `#C26740`, badge: `#F5EBE6`). Dùng cho các nút hành động chính (Mua ngay, Đăng ký, Flash Sale, CTA nổi bật), tạo cảm giác ấm cúng, sang trọng và không trùng lặp với các web bán lẻ truyền thống (như đỏ CellphoneS hay vàng TGDD).
+    - **Màu 3 (Nền / Bề mặt - Sandstone / Warm Oat):**
+      - *Light Mode:* Nền chính `#F4F1EA` (be cát tự nhiên, dịu mắt), card `#FFFFFF`, text chính `#1C1F1D` (xám đen sẫm), text phụ `#5F6863`.
+      - *Dark Mode:* Nền chính `#121513` (đen than ánh xám rêu sẫm), card `#1A1E1B`, text chính `#EDF0EC`, text phụ `#96A099`.
   - Root layout: `frontend/src/app/layout.tsx` — cấu hình 3 bộ font Google (`Plus Jakarta Sans`, `Inter`, `Space Grotesk`), metadata chuẩn SEO OpenGraph tiếng Việt, Custom Cursor và Toast Box.
   - Header: `frontend/src/components/common/header.tsx` — Thiết kế **Full chiều ngang 100vw** (`sticky top-0 w-full`), viền kính mờ sang trọng, thanh tìm kiếm thông minh gợi ý trực tiếp sản phẩm thật.
   - Homepage: `frontend/src/app/page.tsx` — Tích hợp đầy đủ các khối tính năng:
@@ -215,6 +222,12 @@ d:\md-mobile\
 - [x] Nâng cấp Giỏ hàng Header: Gỡ bỏ số `2` mock giả lập, chuyển về nút icon giỏ hàng (`ShoppingBag`) chuẩn mực.
 - [x] Khắc phục toàn diện chế độ Sáng / Tối (Theme Light/Dark): Sửa lỗi chỉ sáng thanh tìm kiếm/nút theme do hardcode mã màu `#07070F` và `bg-bgDark`; đồng bộ hệ màu biến CSS Variables (`--bg-primary`, `--bg-surface`, `--text-main`, `--header-bg`) chuyển đổi mượt mà toàn diện trên Header, Body và Trang Chủ; lưu tùy chọn vào `localStorage`.
 - [x] Tạm thời tinh giản các khối sản phẩm trang chủ theo yêu cầu: giữ nguyên khung cấu trúc (Placeholder Frame) của Flash Sale và Featured Products, sẵn sàng để tích hợp lại sau.
+- [x] Chuẩn hóa toàn bộ hệ thống màu sắc toàn web sang **Hệ 3 màu Pastel Nordic Sage & Clay**:
+  - Tích hợp biến CSS Variables trong `globals.css` cho Light Mode (`#F4F1EA`, `#FFFFFF`, `#141715`, `#525B56`) và Dark Mode (`#121513`, `#1A1E1B`, `#EDF0EC`, `#96A099`).
+  - Đồng bộ màu chủ đạo Sage Green (`#7F9C8B`), màu nhấn Terracotta Clay (`#D87D56`) và bề mặt Sandstone xuyên suốt Header, Hero Slider, Flash Sale, Trade-in, Bento 3D, Need Accordion, Footer, Button và Badge.
+  - Tối ưu triệt để độ tương phản chữ chế độ sáng (Light Mode): Khắc phục lỗi chữ trắng trên nền sáng tại Hero Banner, Need Accordion, bổ sung utility classes tường minh `.text-textPrimary` và `.text-textSecondary`.
+- [x] Tách module hóa hook chuyển đổi Sáng / Tối ([theme-toggle.ts](file:///d:/md-mobile/frontend/src/utils/theme-toggle.ts)) vào thư mục `frontend/src/utils/`: Tích hợp chuẩn `useSyncExternalStore` an toàn SSR React 19 & Next.js 16, tự động đồng bộ `localStorage`, tái sử dụng sạch sẽ trong [header.tsx](file:///d:/md-mobile/frontend/src/components/common/header.tsx).
+- [x] Khắc phục lỗi SyntaxError: `Unexpected token 'I', "Internal S"... is not valid JSON` khi fetch banner: Bổ sung kiểm tra an toàn `if (!res.ok) return;` trước khi gọi `res.json()`, giúp trang chủ hiển thị mượt mà ngay cả khi backend chưa bật.
 - [x] Kiểm tra thành công `npm run build` trên cả Backend và Frontend: Biên dịch thành công 100%.
 
 ---
@@ -243,11 +256,12 @@ d:\md-mobile\
 
 ## 11. Known Bugs / Issues
 
-- Đã khắc phục lỗi `new Date()` trong quá trình prerender của Next.js 16.
-- Đã khắc phục lỗi breaking change datasource URL của Prisma 7/8 qua `prisma.config.ts`.
-- Đã cấu hình `next build --webpack` trong `package.json` xử lý triệt để xung đột font Turbopack.
-- Đã sửa lỗi hiển thị tiếng Việt UTF-8 trong bảng `banners` MySQL.
-- Đã sửa lỗi ESLint no-explicit-any trong `frontend/src/app/page.tsx`.
+- [x] Đã khắc phục lỗi `new Date()` trong quá trình prerender của Next.js 16.
+- [x] Đã khắc phục lỗi breaking change datasource URL của Prisma 7/8 qua `prisma.config.ts`.
+- [x] Đã cấu hình `next build --webpack` trong `package.json` xử lý triệt để xung đột font Turbopack.
+- [x] Đã sửa lỗi hiển thị tiếng Việt UTF-8 trong bảng `banners` MySQL.
+- [x] Đã sửa lỗi ESLint no-explicit-any trong `frontend/src/app/page.tsx`.
+- [x] Đã sửa lỗi SyntaxError `Unexpected token 'I', "Internal S"... is not valid JSON` trong hàm `loadBanners()` khi backend port 5000 offline.
 - Không có lint error hay build error nào tồn tại.
 
 ---

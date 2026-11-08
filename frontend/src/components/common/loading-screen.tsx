@@ -20,7 +20,7 @@ export function LoadingScreen() {
   return (
     <div
       id="loader-screen"
-      className="fixed inset-0 z-[9999] bg-[#07070F] flex flex-col items-center justify-center transition-opacity duration-700 select-none"
+      className="fixed inset-0 z-[9999] bg-[var(--bg-primary)] flex flex-col items-center justify-center transition-opacity duration-700 select-none"
     >
       <div className="relative flex items-center justify-center mb-6">
         <div className="w-24 h-24 rounded-full bg-aurora opacity-30 blur-2xl animate-pulse absolute" />
@@ -30,7 +30,7 @@ export function LoadingScreen() {
               d="M20 4L35 32H27.5L20 17.5L12.5 32H5L20 4Z"
               fill="url(#loaderGrad)"
             />
-            <circle cx="20" cy="27" r="3.5" fill="#22D3EE" />
+            <circle cx="20" cy="27" r="3.5" fill="#D87D56" />
             <defs>
               <linearGradient
                 id="loaderGrad"
@@ -40,9 +40,9 @@ export function LoadingScreen() {
                 y2="32"
                 gradientUnits="userSpaceOnUse"
               >
-                <stop stopColor="#7C3AED" />
-                <stop offset="0.5" stopColor="#2563EB" />
-                <stop offset="1" stopColor="#22D3EE" />
+                <stop stopColor="#7F9C8B" />
+                <stop offset="0.6" stopColor="#688574" />
+                <stop offset="1" stopColor="#D87D56" />
               </linearGradient>
             </defs>
           </svg>

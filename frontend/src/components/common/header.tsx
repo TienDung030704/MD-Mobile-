@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { User, ShoppingBag, Sun, Moon } from "lucide-react";
 import { showToast } from "@/components/ui/toast-box";
+import { useThemeToggle } from "@/utils/theme-toggle";
 import type { FeaturedProduct } from "@/types";
 
 interface NavLinkItem {
@@ -18,30 +19,10 @@ interface HeaderProps {
   searchProducts?: FeaturedProduct[];
 }
 
-function subscribeTheme(callback: () => void) {
-  if (typeof document === "undefined") return () => {};
-  const observer = new MutationObserver(callback);
-  observer.observe(document.documentElement, { attributes: true, attributeFilter: ["class"] });
-  return () => observer.disconnect();
-}
-
-function getThemeSnapshot() {
-  if (typeof document === "undefined") return false;
-  return document.documentElement.classList.contains("light");
-}
-
-function getServerThemeSnapshot() {
-  return false;
-}
-
 export function Header({ cartCount = 0, searchProducts = [] }: HeaderProps) {
   const [searchQuery, setSearchQuery] = useState("");
   const [isSearchOpen, setIsSearchOpen] = useState(false);
-  const isLightMode = React.useSyncExternalStore(
-    subscribeTheme,
-    getThemeSnapshot,
-    getServerThemeSnapshot
-  );
+  const { isLight: isLightMode, toggleTheme: handleToggleTheme } = useThemeToggle();
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeNavIndex, setActiveNavIndex] = useState(0);
   const [underlineStyle, setUnderlineStyle] = useState({ left: 0, width: 0 });
@@ -77,18 +58,6 @@ export function Header({ cartCount = 0, searchProducts = [] }: HeaderProps) {
     return () => clearTimeout(timer);
   }, []);
 
-  // Sync theme preference from localStorage on initial mount
-  useEffect(() => {
-    const savedTheme = localStorage.getItem("md_theme");
-    if (savedTheme === "light") {
-      document.documentElement.classList.add("light");
-      document.documentElement.classList.remove("dark");
-    } else if (savedTheme === "dark") {
-      document.documentElement.classList.add("dark");
-      document.documentElement.classList.remove("light");
-    }
-  }, []);
-
   // Shrink header on scroll
   useEffect(() => {
     const handleScroll = () => {
@@ -98,20 +67,15 @@ export function Header({ cartCount = 0, searchProducts = [] }: HeaderProps) {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Theme toggle
+  // Theme toggle with notification
   const toggleTheme = () => {
-    const nextState = !isLightMode;
-    if (nextState) {
-      document.documentElement.classList.add("light");
-      document.documentElement.classList.remove("dark");
-      localStorage.setItem("md_theme", "light");
-      showToast("Chế độ sáng", "Đã chuyển sang giao diện Light Luxury");
-    } else {
-      document.documentElement.classList.add("dark");
-      document.documentElement.classList.remove("light");
-      localStorage.setItem("md_theme", "dark");
-      showToast("Chế độ tối", "Đã chuyển sang giao diện Dark Flagship");
-    }
+    handleToggleTheme((isDark) => {
+      if (isDark) {
+        showToast("Chế độ tối", "Đã chuyển sang giao diện Dark Flagship");
+      } else {
+        showToast("Chế độ sáng", "Đã chuyển sang giao diện Light Luxury");
+      }
+    });
   };
 
   const filteredProducts = searchQuery.trim()
@@ -134,13 +98,13 @@ export function Header({ cartCount = 0, searchProducts = [] }: HeaderProps) {
           className="flex items-center gap-2.5 shrink-0 group focus:outline-none"
         >
           <div className="w-9 h-9 rounded-full bg-aurora p-[1px] transition-transform duration-400 ease-expo group-hover:rotate-12 group-hover:scale-105">
-            <div className="w-full h-full bg-[#07070F] rounded-full flex items-center justify-center">
+            <div className="w-full h-full bg-[var(--bg-primary)] rounded-full flex items-center justify-center">
               <svg className="w-5 h-5" viewBox="0 0 40 40" fill="none">
                 <path
                   d="M20 5L34 31H27L20 18L13 31H6L20 5Z"
                   fill="url(#navLogoGrad)"
                 />
-                <circle cx="20" cy="27" r="3" fill="#22D3EE" />
+                <circle cx="20" cy="27" r="3" fill="#D87D56" />
                 <defs>
                   <linearGradient
                     id="navLogoGrad"
@@ -150,9 +114,9 @@ export function Header({ cartCount = 0, searchProducts = [] }: HeaderProps) {
                     y2="31"
                     gradientUnits="userSpaceOnUse"
                   >
-                    <stop stopColor="#7C3AED" />
-                    <stop offset="0.5" stopColor="#2563EB" />
-                    <stop offset="1" stopColor="#22D3EE" />
+                    <stop stopColor="#7F9C8B" />
+                    <stop offset="0.6" stopColor="#688574" />
+                    <stop offset="1" stopColor="#D87D56" />
                   </linearGradient>
                 </defs>
               </svg>
@@ -181,14 +145,14 @@ export function Header({ cartCount = 0, searchProducts = [] }: HeaderProps) {
               onMouseEnter={() => updateUnderline(idx)}
               className={`nav-link text-sm font-medium py-1 transition-all ${
                 link.isGold
-                  ? "text-brandGold hover:opacity-100"
+                  ? "text-brandClay hover:opacity-100"
                   : activeNavIndex === idx
                   ? "text-textPrimary font-semibold opacity-100"
                   : "text-textSecondary hover:text-textPrimary opacity-85 hover:opacity-100"
               } flex items-center gap-1.5`}
             >
               {link.isPulse && (
-                <span className="w-1.5 h-1.5 rounded-full bg-brandCoral animate-pulse"></span>
+                <span className="w-1.5 h-1.5 rounded-full bg-brandClay animate-pulse"></span>
               )}
               {link.label}
             </a>
@@ -213,7 +177,7 @@ export function Header({ cartCount = 0, searchProducts = [] }: HeaderProps) {
               id="search-wrapper"
               className={`flex items-center glass-pill px-3.5 py-1.5 transition-all duration-300 ease-out ${
                 isSearchOpen
-                  ? "w-[240px] border-brandCyan/60 bg-[var(--bg-surface)]"
+                  ? "w-[240px] border-brandSage/60 bg-[var(--bg-surface)]"
                   : "w-[150px] sm:w-[160px]"
               }`}
             >
@@ -250,7 +214,7 @@ export function Header({ cartCount = 0, searchProducts = [] }: HeaderProps) {
                   <span className="text-[11px] font-mono uppercase tracking-wider text-textSecondary">
                     Gợi ý AI thông minh
                   </span>
-                  <span className="text-[11px] text-brandCyan font-mono">
+                  <span className="text-[11px] text-brandSage font-mono">
                     Fast Search
                   </span>
                 </div>
@@ -269,7 +233,7 @@ export function Header({ cartCount = 0, searchProducts = [] }: HeaderProps) {
                           AI
                         </div>
                         <div>
-                          <div className="text-xs font-semibold text-textPrimary group-hover:text-brandCyan transition-colors">
+                          <div className="text-xs font-semibold text-textPrimary group-hover:text-brandSage transition-colors">
                             {p.name}
                           </div>
                           <div className="text-[10px] text-textSecondary">
@@ -277,7 +241,7 @@ export function Header({ cartCount = 0, searchProducts = [] }: HeaderProps) {
                           </div>
                         </div>
                       </div>
-                      <div className="font-price font-bold text-xs text-brandGold">
+                      <div className="font-price font-bold text-xs text-brandClay">
                         {p.price}
                       </div>
                     </a>
@@ -287,11 +251,11 @@ export function Header({ cartCount = 0, searchProducts = [] }: HeaderProps) {
             )}
           </div>
 
-          {/* User Profile Button (Thay thế nút ECO, luôn bật chuyển động) */}
+          {/* User Profile Button */}
           <Link
-            href="/profile"
+            href="/login"
             title="Tài khoản cá nhân"
-            className="w-9 h-9 rounded-full glass-card flex items-center justify-center hover:border-brandCyan/50 transition-all text-textSecondary hover:text-brandCyan"
+            className="w-9 h-9 rounded-full glass-card flex items-center justify-center hover:border-brandSage/50 transition-all text-textSecondary hover:text-brandSage"
           >
             <User className="w-4 h-4" />
           </Link>
@@ -300,27 +264,27 @@ export function Header({ cartCount = 0, searchProducts = [] }: HeaderProps) {
           <button
             onClick={toggleTheme}
             aria-label="Chuyển giao diện Sáng / Tối"
-            className="w-9 h-9 rounded-full glass-card flex items-center justify-center hover:border-brandGold/60 transition-all duration-300 text-textSecondary hover:text-brandGold"
+            className="w-9 h-9 rounded-full glass-card flex items-center justify-center hover:border-brandClay/50 transition-all duration-300 text-textSecondary hover:text-brandClay"
           >
             {isLightMode ? (
-              <Sun className="w-4 h-4 text-brandGold" />
+              <Sun className="w-4 h-4 text-brandClay" />
             ) : (
-              <Moon className="w-4 h-4 text-brandCyan" />
+              <Moon className="w-4 h-4 text-brandSage" />
             )}
           </button>
 
-          {/* Cart Button (Bỏ mock số 2, icon giỏ hàng bình thường) */}
+          {/* Cart Button */}
           <Link
             href="/cart"
             id="cart-button"
             title="Giỏ hàng"
-            className="relative w-9 h-9 rounded-full glass-card flex items-center justify-center hover:border-brandViolet/50 transition-all text-textSecondary hover:text-brandViolet"
+            className="relative w-9 h-9 rounded-full glass-card flex items-center justify-center hover:border-brandClay/50 transition-all text-textSecondary hover:text-brandClay"
           >
             <ShoppingBag className="w-4 h-4" />
             {cartCount > 0 && (
               <span
                 id="cart-badge"
-                className="absolute -top-1 -right-1 min-w-[16px] h-4 px-1 rounded-full bg-sunset text-white font-mono font-bold text-[10px] flex items-center justify-center"
+                className="absolute -top-1 -right-1 min-w-[16px] h-4 px-1 rounded-full bg-brandClay text-white font-mono font-bold text-[10px] flex items-center justify-center"
               >
                 {cartCount}
               </span>

@@ -79,7 +79,7 @@ function HeroSlider({ banners = [] }: HeroSliderProps) {
     return (
       <section id="hero-section" className="relative w-full overflow-hidden select-none border-b border-black/10 dark:border-white/10">
         <div className="w-full h-[360px] sm:h-[460px] bg-surfaceDark flex flex-col items-center justify-center text-center p-6">
-          <div className="w-12 h-12 rounded-full bg-brandViolet/20 border border-brandViolet/40 flex items-center justify-center text-brandCyan mb-4">
+          <div className="w-12 h-12 rounded-full bg-brandSage/20 border border-brandSage/40 flex items-center justify-center text-brandSage mb-4">
             <Sparkles className="w-6 h-6 animate-pulse" />
           </div>
           <h2 className="text-xl sm:text-2xl font-bold text-textPrimary mb-2">MD Mobile Flagship Store</h2>
@@ -106,7 +106,7 @@ function HeroSlider({ banners = [] }: HeroSliderProps) {
           className="w-full h-[460px] sm:h-[540px] md:h-[620px] lg:h-[680px] xl:h-[720px]"
         >
           {banners.map((banner) => (
-            <SwiperSlide key={banner.id} className="relative w-full h-full bg-[#07070F]">
+            <SwiperSlide key={banner.id} className="relative w-full h-full bg-[var(--bg-primary)]">
               <div className="relative w-full h-full">
                 <Image
                   src={banner.image}
@@ -118,28 +118,28 @@ function HeroSlider({ banners = [] }: HeroSliderProps) {
                 />
 
                 {/* Dark overlay gradients for readability */}
-                <div className="absolute inset-0 bg-gradient-to-t from-[#07070F] via-[#07070F]/50 to-transparent md:bg-gradient-to-r md:from-[#07070F]/90 md:via-[#07070F]/60 md:to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[var(--bg-primary)] via-[var(--bg-primary)]/50 to-transparent md:bg-gradient-to-r md:from-[var(--bg-primary)]/90 md:via-[var(--bg-primary)]/60 md:to-transparent" />
                 <div className={`absolute inset-0 bg-gradient-to-br ${banner.accentColor} mix-blend-screen pointer-events-none`} />
 
                 {/* Content */}
                 <div className="max-w-7xl mx-auto h-full px-6 sm:px-10 md:px-16 lg:px-20 flex flex-col justify-end md:justify-center relative z-10 pb-14 md:pb-0">
                   <div className="max-w-2xl">
-                    <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/15 text-xs sm:text-sm font-medium text-brandCyan mb-3 md:mb-4">
-                      <Sparkles className="w-3.5 h-3.5 text-brandGold animate-pulse" />
+                    <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-black/5 dark:bg-white/10 backdrop-blur-md border border-black/10 dark:border-white/15 text-xs sm:text-sm font-medium text-brandSage mb-3 md:mb-4">
+                      <Sparkles className="w-3.5 h-3.5 text-brandClay animate-pulse" />
                       <span>{banner.badge}</span>
                     </div>
 
-                    <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-white tracking-tight leading-[1.08] mb-3 md:mb-4 drop-shadow-md">
+                    <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-textPrimary dark:text-white tracking-tight leading-[1.08] mb-3 md:mb-4 drop-shadow-sm">
                       {banner.title}
                     </h1>
 
-                    <p className="text-sm sm:text-base md:text-lg text-slate-300 font-normal leading-relaxed mb-6 md:mb-8 line-clamp-2 sm:line-clamp-none max-w-xl">
+                    <p className="text-sm sm:text-base md:text-lg text-textSecondary dark:text-slate-200 font-normal leading-relaxed mb-6 md:mb-8 line-clamp-2 sm:line-clamp-none max-w-xl">
                       {banner.subtitle}
                     </p>
 
                     <Link
                       href={banner.link}
-                      className="inline-flex items-center gap-2 px-7 py-3.5 md:px-9 md:py-4 rounded-xl font-semibold text-sm sm:text-base text-white bg-gradient-to-r from-brandViolet via-brandBlue to-brandCyan hover:opacity-95 shadow-xl shadow-brandViolet/30 hover:scale-[1.02] active:scale-[0.98] transition-all"
+                      className="inline-flex items-center gap-2 px-7 py-3.5 md:px-9 md:py-4 rounded-xl font-semibold text-sm sm:text-base text-white bg-brandClay hover:bg-brandClayHover shadow-xl shadow-brandClay/25 hover:scale-[1.02] active:scale-[0.98] transition-all"
                     >
                       <span>{banner.ctaText}</span>
                       <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5" />
@@ -160,13 +160,13 @@ function HeroSlider({ banners = [] }: HeroSliderProps) {
  * ======================================================================== */
 
 const BRANDS = [
-  { name: "APPLE AUTHORIZED", color: "#22D3EE", border: "hover:border-brandViolet" },
-  { name: "SAMSUNG GALAXY", color: "#2563EB", border: "hover:border-brandBlue" },
-  { name: "XIAOMI LEICA", color: "#FF5A5F", border: "hover:border-brandCoral" },
-  { name: "OPPO FIND SERIES", color: "#34D399", border: "hover:border-brandMint" },
-  { name: "VIVO ZEISS", color: "#22D3EE", border: "hover:border-brandCyan" },
-  { name: "REALME GT PRO", color: "#F5C451", border: "hover:border-brandGold" },
-  { name: "ASUS ROG PHONE", color: "#EC4899", border: "hover:border-brandPink" },
+  { name: "APPLE AUTHORIZED", color: "#7F9C8B", border: "hover:border-brandSage" },
+  { name: "SAMSUNG GALAXY", color: "#688574", border: "hover:border-brandSage" },
+  { name: "XIAOMI LEICA", color: "#D87D56", border: "hover:border-brandClay" },
+  { name: "OPPO FIND SERIES", color: "#7F9C8B", border: "hover:border-brandSage" },
+  { name: "VIVO ZEISS", color: "#688574", border: "hover:border-brandSage" },
+  { name: "REALME GT PRO", color: "#D87D56", border: "hover:border-brandClay" },
+  { name: "ASUS ROG PHONE", color: "#D87D56", border: "hover:border-brandClay" },
 ];
 
 function BrandMarquee() {
@@ -223,7 +223,7 @@ const BENTO_CARDS = [
     tag: "LIVE GPS TRACKING",
     icon: Zap,
     highlight: "Giao Siêu Tốc 2 Giờ",
-    highlightColor: "text-brandCyan",
+    highlightColor: "text-brandSage",
     title: "Chuyên Viên Kỹ Thuật Giao Tận Tay",
     desc: "Hỗ trợ sao chép dữ liệu, dán kính Sapphire và cài đặt bảo mật tại nhà hoặc văn phòng.",
     footer: "● Thời gian trung bình: 74 phút • Miễn phí bảo hiểm vận chuyển 100%",
@@ -242,7 +242,7 @@ const BENTO_CARDS = [
     tag: "BẢO HIỂM VIP",
     icon: Award,
     highlight: "24 Tháng",
-    highlightColor: "text-brandGold",
+    highlightColor: "text-brandClay",
     title: "Bảo Hành Vàng VIP",
     desc: "Bảo vệ toàn diện cả rơi vỡ màn hình và vào nước, cấp máy dùng tạm miễn phí.",
   },
@@ -251,7 +251,7 @@ const BENTO_CARDS = [
     tag: "TÀI CHÍNH VIP",
     icon: CreditCard,
     highlight: "0% Lãi Suất",
-    highlightColor: "text-brandCyan",
+    highlightColor: "text-brandClay",
     title: "Trả Góp Duyệt 60 Giây",
     desc: "Qua 32 ngân hàng & Apple Pay, không phí ẩn, không cần chứng minh thu nhập.",
   },
@@ -260,7 +260,7 @@ const BENTO_CARDS = [
     tag: "TRỢ GIÁ KHỦNG",
     icon: RefreshCw,
     highlight: "+5 Triệu",
-    highlightColor: "text-brandMint",
+    highlightColor: "text-brandSage",
     title: "Thu Cũ Đổi Mới AI",
     desc: "Chẩn đoán ngoại quan bằng AI trong 30 giây, cam kết giá thu cao nhất thị trường.",
   },
@@ -277,7 +277,7 @@ function BentoSection() {
     <section id="vip-bento-section" className="py-20 max-w-container mx-auto px-4 select-none">
       <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
         <div>
-          <div className="inline-flex items-center gap-2 glass-pill px-3.5 py-1 text-xs font-mono uppercase tracking-widest text-brandCyan mb-3">
+          <div className="inline-flex items-center gap-2 glass-pill px-3.5 py-1 text-xs font-mono uppercase tracking-widest text-brandSage mb-3">
             <span>ĐẶC QUYỀN THƯỢNG LƯU // AETHER CARE+</span>
           </div>
           <h2 className="font-display font-extrabold text-3xl md:text-5xl tracking-tight text-textPrimary">
@@ -299,10 +299,10 @@ function BentoSection() {
               className={`bento-card ${card.col} glass-card rounded-[24px] p-7 flex flex-col justify-between min-h-[250px] border border-black/10 dark:border-white/10`}
             >
               <div className="relative z-10 flex items-center justify-between mb-3">
-                <span className="px-3 py-0.5 rounded-full text-xs font-mono bg-white/5 border border-black/10 dark:border-white/10 text-brandCyan">
+                <span className="px-3 py-0.5 rounded-full text-xs font-mono bg-white/5 border border-black/10 dark:border-white/10 text-brandSage">
                   {card.tag}
                 </span>
-                <Icon className="w-5 h-5 text-brandCyan" />
+                <Icon className="w-5 h-5 text-brandSage" />
               </div>
 
               <div className="relative z-10 my-auto">
@@ -350,15 +350,15 @@ function FlashSaleSection() {
 
   return (
     <section id="flash-sale-section" className="py-12 max-w-container mx-auto px-4 select-none">
-      <div className="rounded-[32px] p-[2px] bg-sunset shadow-[0_25px_90px_-15px_rgba(255,90,95,0.35)]">
+      <div className="rounded-[32px] p-[2px] bg-gradient-to-r from-brandClay via-brandSage to-brandClay shadow-[0_25px_90px_-15px_rgba(216,125,86,0.22)]">
         <div className="rounded-[30px] bg-surfaceDark/95 backdrop-blur-3xl p-6 md:p-10 relative overflow-hidden">
-          <div className="absolute -top-24 -right-24 w-96 h-96 rounded-full bg-brandCoral/20 blur-[110px] pointer-events-none" />
+          <div className="absolute -top-24 -right-24 w-96 h-96 rounded-full bg-brandClay/15 blur-[110px] pointer-events-none" />
 
           {/* Header & Flip Clock */}
           <div className="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-6 mb-8 pb-6 border-b border-black/10 dark:border-white/10">
             <div>
-              <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-brandCoral/20 border border-brandCoral/40 text-brandCoral text-xs font-mono font-bold uppercase mb-2">
-                <span className="w-2 h-2 rounded-full bg-brandCoral animate-ping" />
+              <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-brandClay/15 border border-brandClay/30 text-brandClay text-xs font-mono font-bold uppercase mb-2">
+                <span className="w-2 h-2 rounded-full bg-brandClay animate-ping" />
                 DEAL CHỚP NHOÁNG MỖI NGÀY
               </div>
               <h2 className="font-display font-extrabold text-3xl md:text-4xl text-textPrimary flex items-center gap-3">
@@ -377,12 +377,12 @@ function FlashSaleSection() {
                 { val: seconds, lbl: "Giây", isPulse: true },
               ].map((item, i) => (
                 <React.Fragment key={i}>
-                  {i > 0 && <span className="font-price font-bold text-2xl text-brandCoral">:</span>}
-                  <div className={`flip-unit glass-card px-3.5 py-2 rounded-2xl text-center border min-w-[62px] ${item.isPulse ? "border-brandCoral/50 bg-brandCoral/10" : "border-black/15 dark:border-white/20"}`}>
-                    <div className={`font-price font-bold text-2xl md:text-3xl ${item.isPulse ? "text-brandGold flip-card-pulse" : "text-textPrimary"}`}>
+                  {i > 0 && <span className="font-price font-bold text-2xl text-brandClay">:</span>}
+                  <div className={`flip-unit glass-card px-3.5 py-2 rounded-2xl text-center border min-w-[62px] ${item.isPulse ? "border-brandClay/50 bg-brandClay/10" : "border-black/15 dark:border-white/20"}`}>
+                    <div className={`font-price font-bold text-2xl md:text-3xl ${item.isPulse ? "text-brandClay flip-card-pulse" : "text-textPrimary"}`}>
                       {item.val}
                     </div>
-                    <div className={`text-[10px] font-mono uppercase ${item.isPulse ? "text-brandCoral font-semibold" : "text-textSecondary"}`}>
+                    <div className={`text-[10px] font-mono uppercase ${item.isPulse ? "text-brandClay font-semibold" : "text-textSecondary"}`}>
                       {item.lbl}
                     </div>
                   </div>
@@ -393,7 +393,7 @@ function FlashSaleSection() {
 
           {/* Khung sản phẩm Flash Sale (Placeholder Frame) */}
           <div className="relative z-10 py-16 px-6 rounded-2xl border-2 border-dashed border-black/15 dark:border-white/15 bg-black/[0.02] dark:bg-white/[0.02] flex flex-col items-center justify-center text-center">
-            <div className="w-12 h-12 rounded-2xl bg-brandCoral/10 border border-brandCoral/20 flex items-center justify-center text-brandCoral mb-3">
+            <div className="w-12 h-12 rounded-2xl bg-brandClay/10 border border-brandClay/20 flex items-center justify-center text-brandClay mb-3">
               <Sparkles className="w-6 h-6 animate-pulse" />
             </div>
             <h3 className="font-display font-bold text-lg text-textPrimary">Khung Sản Phẩm Flash Sale</h3>
@@ -427,7 +427,7 @@ function FeaturedProductsSection() {
     <section id="featured-section" className="py-20 max-w-container mx-auto px-4 select-none">
       <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-10">
         <div>
-          <div className="inline-flex items-center gap-2 glass-pill px-3.5 py-1 text-xs font-mono uppercase tracking-widest text-brandViolet mb-3">
+          <div className="inline-flex items-center gap-2 glass-pill px-3.5 py-1 text-xs font-mono uppercase tracking-widest text-brandSage mb-3">
             <span>BỘ SƯU TẬP 2026 // CURATED FLAGSHIPS</span>
           </div>
           <h2 className="font-display font-extrabold text-3xl md:text-5xl tracking-tight text-textPrimary">
@@ -441,7 +441,7 @@ function FeaturedProductsSection() {
               onClick={() => setActiveTab(cat.id)}
               className={`relative z-10 px-5 py-2 rounded-full text-xs font-display font-bold tracking-wide transition-all ${
                 activeTab === cat.id
-                  ? "bg-aurora text-white shadow-lg"
+                  ? "bg-brandSage text-white shadow-lg"
                   : "text-textSecondary hover:text-textPrimary"
               }`}
             >
@@ -453,7 +453,7 @@ function FeaturedProductsSection() {
 
       {/* Khung danh sách sản phẩm nổi bật (Placeholder Frame) */}
       <div className="py-20 px-6 rounded-3xl border-2 border-dashed border-black/15 dark:border-white/15 bg-black/[0.02] dark:bg-white/[0.02] flex flex-col items-center justify-center text-center">
-        <div className="w-14 h-14 rounded-2xl bg-brandViolet/10 border border-brandViolet/20 flex items-center justify-center text-brandViolet mb-3">
+        <div className="w-14 h-14 rounded-2xl bg-brandSage/10 border border-brandSage/20 flex items-center justify-center text-brandSage mb-3">
           <Sparkles className="w-7 h-7 animate-pulse" />
         </div>
         <h3 className="font-display font-bold text-xl text-textPrimary">Khung Danh Sách Sản Phẩm</h3>
@@ -486,13 +486,13 @@ function TradeInSection() {
           {/* Card 1: Thu Cũ */}
           <div
             className="col-span-12 lg:col-span-6 rounded-[28px] p-8 md:p-10 border border-black/10 dark:border-white/15 flex flex-col justify-between min-h-[340px]"
-            style={{ background: "linear-gradient(135deg, rgba(124,58,237,0.28) 0%, rgba(15,16,32,0.92) 60%, rgba(236,72,153,0.25) 100%)" }}
+            style={{ background: "linear-gradient(135deg, rgba(216,125,86,0.22) 0%, var(--bg-surface) 60%, rgba(127,156,139,0.18) 100%)" }}
           >
             <div className="space-y-3 max-w-md">
-              <span className="px-3.5 py-1 rounded-full text-xs font-mono font-bold bg-brandGold/20 text-brandGold border border-brandGold/40">
+              <span className="px-3.5 py-1 rounded-full text-xs font-mono font-bold bg-brandClay/20 text-brandClay border border-brandClay/40">
                 THU CŨ ĐỔI MỚI AI 30 GIÂY
               </span>
-              <h3 className="font-display font-extrabold text-3xl md:text-4xl leading-tight text-white">
+              <h3 className="font-display font-extrabold text-3xl md:text-4xl leading-tight text-textPrimary">
                 Lên Đời Siêu Phẩm <br />
                 <span className="text-sunset">Trợ Giá Đến 5 Triệu</span>
               </h3>
@@ -504,7 +504,7 @@ function TradeInSection() {
             <div className="pt-6 flex items-center gap-4">
               <button
                 onClick={() => setIsModalOpen(true)}
-                className="px-6 py-3.5 rounded-full bg-sunset text-white font-display font-bold text-xs uppercase tracking-wider shadow-lg hover:scale-105 transition-transform"
+                className="px-6 py-3.5 rounded-full bg-brandClay hover:bg-brandClayHover text-white font-display font-bold text-xs uppercase tracking-wider shadow-lg shadow-brandClay/20 hover:scale-105 transition-all"
               >
                 Định Giá Máy Cũ Ngay →
               </button>
@@ -514,13 +514,13 @@ function TradeInSection() {
           {/* Card 2: Trả Góp */}
           <div
             className="col-span-12 lg:col-span-6 rounded-[28px] p-8 md:p-10 border border-black/10 dark:border-white/15 flex flex-col justify-between min-h-[340px]"
-            style={{ background: "linear-gradient(135deg, rgba(37,99,235,0.28) 0%, rgba(15,16,32,0.92) 60%, rgba(34,211,238,0.25) 100%)" }}
+            style={{ background: "linear-gradient(135deg, rgba(127,156,139,0.22) 0%, var(--bg-surface) 60%, rgba(216,125,86,0.15) 100%)" }}
           >
             <div className="space-y-3 max-w-md">
-              <span className="px-3.5 py-1 rounded-full text-xs font-mono font-bold bg-brandCyan/20 text-brandCyan border border-brandCyan/40">
+              <span className="px-3.5 py-1 rounded-full text-xs font-mono font-bold bg-brandSage/20 text-brandSage border border-brandSage/40">
                 TÀI CHÍNH LINH HOẠT VIP
               </span>
-              <h3 className="font-display font-extrabold text-3xl md:text-4xl leading-tight text-white">
+              <h3 className="font-display font-extrabold text-3xl md:text-4xl leading-tight text-textPrimary">
                 Trả Trước <span className="text-aurora">0 Đồng</span> <br />
                 Kỳ Hạn Đến 24 Tháng
               </h3>
@@ -532,7 +532,7 @@ function TradeInSection() {
             <div className="pt-6 flex items-center gap-4">
               <a
                 href="#featured-section"
-                className="px-6 py-3.5 rounded-full bg-aurora text-white font-display font-bold text-xs uppercase tracking-wider shadow-lg hover:scale-105 transition-transform"
+                className="px-6 py-3.5 rounded-full bg-brandSage hover:bg-brandSageHover text-white font-display font-bold text-xs uppercase tracking-wider shadow-lg shadow-brandSage/20 hover:scale-105 transition-all"
               >
                 Tính Khoản Trả Hàng Tháng →
               </a>
@@ -551,7 +551,7 @@ function TradeInSection() {
             >
               <X className="w-4 h-4" />
             </button>
-            <div className="text-xs font-mono uppercase tracking-widest text-brandGold">
+            <div className="text-xs font-mono uppercase tracking-widest text-brandSage">
               CHẨN ĐOÁN GIÁ THU CŨ AI 30 GIÂY
             </div>
             <h3 className="font-display font-extrabold text-2xl text-textPrimary">
@@ -564,7 +564,7 @@ function TradeInSection() {
               <select
                 value={selectedValuation}
                 onChange={(e) => setSelectedValuation(Number(e.target.value))}
-                className="w-full h-12 rounded-xl bg-surfaceDark border border-black/10 dark:border-white/15 px-4 text-sm text-textPrimary focus:outline-none focus:border-brandCyan"
+                className="w-full h-12 rounded-xl bg-surfaceDark border border-black/10 dark:border-white/15 px-4 text-sm text-textPrimary focus:outline-none focus:border-brandSage"
               >
                 <option value={24500000}>iPhone 15 Pro Max 256GB (Thu tới 24.500.000₫ + Trợ giá 5Tr)</option>
                 <option value={21000000}>Samsung Galaxy S24 Ultra (Thu tới 21.000.000₫ + Trợ giá 5Tr)</option>
@@ -572,20 +572,20 @@ function TradeInSection() {
                 <option value={14800000}>OPPO Find X7 Ultra (Thu tới 14.800.000₫ + Trợ giá 4Tr)</option>
               </select>
             </div>
-            <div className="p-4 rounded-2xl bg-brandMint/10 border border-brandMint/30 flex items-center justify-between">
+            <div className="p-4 rounded-2xl bg-brandSage/10 border border-brandSage/30 flex items-center justify-between">
               <div>
                 <div className="text-xs text-textSecondary">Tổng giá trị thu + trợ giá dự kiến:</div>
-                <div className="font-price font-bold text-2xl text-brandMint mt-0.5">
+                <div className="font-price font-bold text-2xl text-brandSage mt-0.5">
                   {totalValuation.toLocaleString("vi-VN")}₫
                 </div>
               </div>
-              <span className="px-3 py-1 rounded-full text-xs font-mono bg-brandMint/20 text-brandMint">
+              <span className="px-3 py-1 rounded-full text-xs font-mono bg-brandSage/20 text-brandSage">
                 Nhận tiền ngay
               </span>
             </div>
             <button
               onClick={handleConfirmTradeIn}
-              className="w-full h-12 py-3 rounded-full bg-aurora text-white font-display font-bold text-sm hover:opacity-90 transition-opacity"
+              className="w-full h-12 py-3 rounded-full bg-brandClay hover:bg-brandClayHover text-white font-display font-bold text-sm transition-opacity"
             >
               Đặt Lịch Kỹ Thuật Viên Thu Tận Nhà
             </button>
@@ -605,41 +605,41 @@ const NEEDS = [
     id: 0,
     code: "01 // PHOTOGRAPHY",
     badge: "200MP LEICA / ZEISS",
-    badgeColor: "text-brandCoral",
+    badgeColor: "text-brandClay",
     title: "Nhiếp Ảnh & Quay Phim 8K",
     desc: "Cảm biến 1-inch, chống rung Gimbal OIS và màu film điện ảnh chân thực cho nhà sáng tạo.",
     suggest: "Xiaomi 15 Ultra • iPhone 16 Pro Max",
-    bg: "radial-gradient(circle at 70% 30%, rgba(255,90,95,0.45), rgba(15,16,32,0.95) 75%)",
+    bg: "radial-gradient(circle at 70% 30%, rgba(216,125,86,0.35), var(--bg-surface) 75%)",
   },
   {
     id: 1,
     code: "02 // GAMING",
     badge: "144HZ + TẢN NHIỆT KHÍ",
-    badgeColor: "text-brandCyan",
+    badgeColor: "text-brandSage",
     title: "Hardcore Gaming Không Giật Lag",
     desc: "Tản nhiệt buồng hơi 3D, phím trigger siêu âm và khung hình khóa cứng 144FPS suốt 6 giờ.",
     suggest: "ROG Phone 9 Pro • RedMagic 9S Pro",
-    bg: "radial-gradient(circle at 70% 30%, rgba(34,211,238,0.45), rgba(15,16,32,0.95) 75%)",
+    bg: "radial-gradient(circle at 70% 30%, rgba(127,156,139,0.35), var(--bg-surface) 75%)",
   },
   {
     id: 2, 
     code: "03 // EXECUTIVE AI",
     badge: "BẢO MẬT DOANH NHÂN",
-    badgeColor: "text-brandGold",
+    badgeColor: "text-brandClay",
     title: "Doanh Nhân & Trợ Lý AI",
     desc: "Dịch thuật cuộc gọi trực tiếp 42 ngôn ngữ, tóm tắt họp bằng AI và khung Titan siêu bền.",
     suggest: "Galaxy Z Fold6 • Galaxy S25 Ultra",
-    bg: "radial-gradient(circle at 70% 30%, rgba(124,58,237,0.45), rgba(15,16,32,0.95) 75%)",
+    bg: "radial-gradient(circle at 70% 30%, rgba(216,125,86,0.28), var(--bg-surface) 75%)",
   },
   {
     id: 3,
     code: "04 // BATTERY LIFE",
     badge: "6.500MAH + 120W",
-    badgeColor: "text-brandMint",
+    badgeColor: "text-brandSage",
     title: "Pin 3 Ngày & Sạc Siêu Tốc",
     desc: "Công nghệ pin Silicon-Carbon thế hệ mới siêu mỏng, sạc đầy 100% chỉ trong 17 phút.",
     suggest: "Vivo X200 Pro • OPPO Find X8 Pro",
-    bg: "radial-gradient(circle at 70% 30%, rgba(52,211,153,0.42), rgba(15,16,32,0.95) 75%)",
+    bg: "radial-gradient(circle at 70% 30%, rgba(127,156,139,0.28), var(--bg-surface) 75%)",
   },
 ];
 
@@ -649,7 +649,7 @@ function NeedAccordionSection() {
   return (
     <section className="py-20 max-w-container mx-auto px-4 select-none">
       <div className="mb-10">
-        <div className="inline-flex items-center gap-2 glass-pill px-3.5 py-1 text-xs font-mono uppercase tracking-widest text-brandPink mb-3">
+        <div className="inline-flex items-center gap-2 glass-pill px-3.5 py-1 text-xs font-mono uppercase tracking-widest text-brandSage mb-3">
           <span>CÁ NHÂN HÓA TRẢI NGHIỆM // AI ADVISOR</span>
         </div>
         <h2 className="font-display font-extrabold text-3xl md:text-5xl tracking-tight text-textPrimary">
@@ -669,7 +669,7 @@ function NeedAccordionSection() {
             style={{ background: item.bg }}
           >
             <div className="relative z-10 flex items-center justify-between">
-              <span className="px-3 py-1 rounded-full text-xs font-mono bg-white/10 text-white">
+              <span className="px-3 py-1 rounded-full text-xs font-mono bg-black/5 dark:bg-white/10 text-textPrimary">
                 {item.code}
               </span>
               <span className={`font-mono text-xs ${item.badgeColor}`}>
@@ -678,11 +678,11 @@ function NeedAccordionSection() {
             </div>
 
             <div className="relative z-10 space-y-2">
-              <h3 className="font-display font-extrabold text-2xl md:text-3xl text-white">
+              <h3 className="font-display font-extrabold text-2xl md:text-3xl text-textPrimary">
                 {item.title}
               </h3>
-              <p className="text-sm text-white/80 max-w-md">{item.desc}</p>
-              <div className="pt-2 text-xs font-mono text-brandCyan">
+              <p className="text-sm text-textSecondary max-w-md">{item.desc}</p>
+              <div className="pt-2 text-xs font-mono text-brandSage">
                 Gợi ý: {item.suggest}
               </div>
             </div>
@@ -703,21 +703,21 @@ const ARTICLES = [
     category: "Phân tích phần cứng",
     date: "12 Tháng 05, 2026 • 6 phút đọc",
     tag: "3nm NPU",
-    color: "from-brandViolet/60 via-[#0F1020] to-brandCyan/60",
+    color: "from-brandSage/60 via-surfaceDark to-brandClay/40",
   },
   {
     title: "Đọ sức Zoom quang 10X tại Sài Gòn về đêm: Khi Flagship vượt qua máy ảnh Mirrorless",
     category: "Nhiếp ảnh di động",
     date: "09 Tháng 05, 2026 • 8 phút đọc",
     tag: "200MP PERISCOPE",
-    color: "from-brandCoral/60 via-[#0F1020] to-brandGold/60",
+    color: "from-brandClay/60 via-surfaceDark to-brandSage/40",
   },
   {
     title: "Bí mật đằng sau viên pin Silicon-Carbon 6.000mAh trong thân máy mỏng chỉ 8.1mm",
     category: "Công nghệ Pin",
     date: "04 Tháng 05, 2026 • 5 phút đọc",
     tag: "6.000mAh Si-C",
-    color: "from-brandMint/60 via-[#0F1020] to-brandBlue/60",
+    color: "from-brandSage/60 via-surfaceDark to-brandClay/60",
   },
 ];
 
@@ -726,7 +726,7 @@ function ArticlesSection() {
     <section className="py-20 max-w-container mx-auto px-4 select-none">
       <div className="flex items-end justify-between mb-10">
         <div>
-          <span className="text-xs font-mono uppercase tracking-widest text-brandCyan">
+          <span className="text-xs font-mono uppercase tracking-widest text-brandSage">
             TẠP CHÍ CÔNG NGHỆ // MD JOURNAL
           </span>
           <h3 className="font-display font-extrabold text-3xl md:text-4xl mt-1 text-textPrimary">
@@ -735,7 +735,7 @@ function ArticlesSection() {
         </div>
         <button
           onClick={() => showToast("MD Journal", "Toàn bộ bài viết chuyên sâu đang được đồng bộ hóa.")}
-          className="text-xs font-mono uppercase tracking-wider text-brandCyan hover:underline flex items-center gap-1"
+          className="text-xs font-mono uppercase tracking-wider text-brandSage hover:text-brandClay hover:underline flex items-center gap-1 transition-colors"
         >
           <span>Xem tất cả bài viết</span>
           <ArrowRight className="w-4 h-4" />
@@ -749,7 +749,7 @@ function ArticlesSection() {
             onClick={() => showToast("Đang mở bài viết", article.title)}
             className="col-span-12 md:col-span-4 glass-card rounded-[24px] overflow-hidden group cursor-pointer flex flex-col justify-between border border-black/10 dark:border-white/10 hover:-translate-y-1 transition-all"
           >
-            <div className="h-48 overflow-hidden relative bg-[#111328]">
+            <div className="h-48 overflow-hidden relative bg-[var(--bg-surface)]">
               <div className={`w-full h-full bg-gradient-to-br ${article.color} flex items-center justify-center transition-transform duration-700 ease-expo group-hover:scale-110`}>
                 <span className="font-price font-bold text-xl text-white px-4 py-2 rounded-2xl glass-card border border-white/20">
                   {article.tag}
@@ -763,11 +763,11 @@ function ArticlesSection() {
             <div className="p-6 flex-1 flex flex-col justify-between">
               <div>
                 <div className="text-xs font-mono text-textSecondary mb-2">{article.date}</div>
-                <h4 className="font-display font-bold text-base md:text-lg group-hover:text-brandCyan transition-colors text-textPrimary line-clamp-2">
+                <h4 className="font-display font-bold text-base md:text-lg group-hover:text-brandSage transition-colors text-textPrimary line-clamp-2">
                   {article.title}
                 </h4>
               </div>
-              <div className="pt-4 mt-4 border-t border-black/10 dark:border-white/10 text-xs font-semibold text-brandCyan flex items-center justify-between">
+              <div className="pt-4 mt-4 border-t border-black/10 dark:border-white/10 text-xs font-semibold text-brandSage flex items-center justify-between">
                 <span>Đọc bài phân tích</span>
                 <span className="transition-transform group-hover:translate-x-1">→</span>
               </div>
@@ -799,6 +799,7 @@ export default function HomePage() {
     async function loadBanners() {
       try {
         const res = await fetch("/api/banners");
+        if (!res.ok) return;
         const json = await res.json();
         if (json.success && Array.isArray(json.data) && json.data.length > 0) {
           const mapped: HeroBannerItem[] = (json.data as DBBannerRow[]).map((b, idx) => ({
@@ -809,7 +810,7 @@ export default function HomePage() {
             badge: "FLAGSHIP MỚI 2026",
             ctaText: "Khám Phá Ngay",
             link: b.link_url || "#featured-section",
-            accentColor: "from-brandViolet/30 via-transparent to-brandCyan/20",
+            accentColor: "from-brandSage/30 via-transparent to-brandClay/20",
           }));
           setBanners(mapped);
         }

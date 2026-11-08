@@ -10,9 +10,9 @@ export interface ButtonProps
 
 const variantStyles: Record<NonNullable<ButtonProps["variant"]>, string> = {
   primary:
-    "bg-red-600 text-white hover:bg-red-700 active:bg-red-800 focus-visible:ring-red-500 shadow-sm",
+    "bg-brandClay text-white hover:bg-brandClayHover active:scale-[0.98] focus-visible:ring-brandClay shadow-sm",
   secondary:
-    "bg-zinc-100 text-zinc-900 hover:bg-zinc-200 dark:bg-zinc-800 dark:text-zinc-100 dark:hover:bg-zinc-700",
+    "bg-brandSage text-white hover:bg-brandSageHover active:scale-[0.98] focus-visible:ring-brandSage shadow-sm",
   outline:
     "border border-zinc-300 bg-transparent hover:bg-zinc-100 text-zinc-900 dark:border-zinc-700 dark:text-zinc-100 dark:hover:bg-zinc-800",
   ghost:
