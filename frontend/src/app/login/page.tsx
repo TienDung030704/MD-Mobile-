@@ -101,21 +101,21 @@ export default function LoginPage() {
   return (
     <div
       className={`min-h-screen w-full transition-colors duration-300 relative overflow-hidden flex flex-col justify-between py-6 px-4 sm:px-6 lg:px-8 ${
-        isDark ? "bg-[#07070F] text-[#F8FAFC]" : "bg-[#F7F7FB] text-[#090915]"
+        isDark ? "bg-[#121513] text-[#EDF0EC]" : "bg-[#F4F1EA] text-[#141715]"
       }`}
     >
-      {/* Vầng sáng nền Aurora mờ */}
+      {/* Vầng sáng nền Nordic Sage & Clay mờ */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
         <div
           className="absolute -top-32 -left-32 w-[500px] h-[500px] rounded-full blur-[140px] opacity-20"
           style={{
-            background: "radial-gradient(circle, #7C3AED 0%, #2563EB 60%, transparent 100%)",
+            background: "radial-gradient(circle, #7F9C8B 0%, #688574 60%, transparent 100%)",
           }}
         />
         <div
           className="absolute -bottom-32 -right-32 w-[500px] h-[500px] rounded-full blur-[140px] opacity-20"
           style={{
-            background: "radial-gradient(circle, #22D3EE 0%, #EC4899 70%, transparent 100%)",
+            background: "radial-gradient(circle, #D87D56 0%, #C26740 70%, transparent 100%)",
           }}
         />
       </div>
@@ -125,24 +125,24 @@ export default function LoginPage() {
         {/* Nút chuyển đổi Sáng / Tối */}
         <button
           type="button"
-          onClick={toggleTheme}
+          onClick={() => toggleTheme()}
           aria-label="Chuyển chế độ Sáng hoặc Tối"
           className={`h-9 px-3.5 rounded-full border flex items-center gap-2 text-xs font-semibold backdrop-blur-md transition-all cursor-pointer ${
             isDark
-              ? "bg-white/5 border-white/15 text-[#22D3EE] hover:bg-white/10"
-              : "bg-white border-gray-300 text-amber-600 hover:bg-gray-50 shadow-sm"
+              ? "bg-white/5 border-white/15 text-[#7F9C8B] hover:bg-white/10"
+              : "bg-white border-black/10 text-[#D87D56] hover:bg-black/5 shadow-sm"
           }`}
         >
           {isDark ? (
             <>
-              <svg className="w-4 h-4 fill-[#22D3EE]/20" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+              <svg className="w-4 h-4 fill-[#7F9C8B]/20" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
                 <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
               </svg>
               <span>Chế độ Tối</span>
             </>
           ) : (
             <>
-              <svg className="w-4 h-4 text-amber-500 fill-amber-500/20" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+              <svg className="w-4 h-4 text-[#D87D56] fill-[#D87D56]/20" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
                 <circle cx="12" cy="12" r="4" />
                 <path d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32l1.41 1.41M2 12h2m16 0h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41" />
               </svg>
@@ -165,8 +165,8 @@ export default function LoginPage() {
           <div
             className={`w-full max-w-[560px] rounded-3xl p-4 sm:p-6 backdrop-blur-xl transition-all shadow-xl flex items-center justify-center ${
               isDark
-                ? "bg-[#0E1022]/90 border border-white/10"
-                : "bg-white border border-gray-200"
+                ? "bg-[#1A1E1B]/95 border border-white/10"
+                : "bg-white border border-black/10"
             }`}
           >
             <div className="relative w-full aspect-[1100/1300] flex items-center justify-center overflow-hidden rounded-2xl">
@@ -193,20 +193,20 @@ export default function LoginPage() {
           <div
             className={`w-full max-w-[460px] rounded-3xl p-7 sm:p-10 backdrop-blur-2xl transition-all shadow-xl ${
               isDark
-                ? "bg-[#0F1020]/95 border border-white/15"
-                : "bg-white border border-gray-200"
+                ? "bg-[#1A1E1B]/95 border border-white/10"
+                : "bg-white border border-black/10"
             }`}
           >
             {/* Tiêu đề */}
             <div className="text-center mb-6">
-              <h1 className="font-extrabold text-2xl sm:text-[28px] tracking-tight bg-gradient-to-r from-[#FF5A5F] via-[#F59E0B] to-[#EC4899] bg-clip-text text-transparent">
+              <h1 className="font-extrabold text-2xl sm:text-[28px] tracking-tight bg-gradient-to-r from-[#D87D56] via-[#E29574] to-[#7F9C8B] bg-clip-text text-transparent">
                 Đăng nhập MD-MEMBER
               </h1>
-              <p className={`text-xs sm:text-sm mt-1.5 ${isDark ? "text-gray-400" : "text-gray-500"}`}>
+              <p className={`text-xs sm:text-sm mt-1.5 ${isDark ? "text-[#96A099]" : "text-[#525B56]"}`}>
                 Chưa có tài khoản?{" "}
                 <Link
                   href="/register"
-                  className="font-bold text-[#FF5A5F] hover:underline"
+                  className="font-bold text-[#D87D56] hover:underline"
                 >
                   Đăng ký ngay
                 </Link>
@@ -232,7 +232,7 @@ export default function LoginPage() {
                 <div
                   className={`relative h-[56px] rounded-2xl transition-all flex items-center ${
                     phoneFocused
-                      ? "ring-2 ring-[#22D3EE] shadow-[0_0_20px_rgba(124,58,237,0.25)] " +
+                      ? "ring-2 ring-[#7F9C8B] shadow-[0_0_20px_rgba(127,156,139,0.25)] " +
                         (isDark ? "bg-white/[0.08]" : "bg-white")
                       : phoneValue.trim()
                       ? isDark
@@ -240,11 +240,11 @@ export default function LoginPage() {
                         : "bg-white border border-gray-300"
                       : isDark
                       ? "bg-white/[0.04] border border-white/10 hover:border-white/20"
-                      : "bg-gray-50 border border-gray-200 hover:border-gray-300"
+                      : "bg-[#F4F1EA]/60 border border-black/10 hover:border-black/20"
                   } ${errors.phone ? "!ring-2 !ring-red-500 !border-transparent" : ""}`}
                 >
                   {/* Icon Điện thoại bên trái */}
-                  <span className={`pl-4 pr-2 ${isDark ? "text-gray-400" : "text-gray-400"}`}>
+                  <span className={`pl-4 pr-2 ${isDark ? "text-[#96A099]" : "text-[#525B56]"}`}>
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="1.8" viewBox="0 0 24 24">
                       <rect x="5" y="2" width="14" height="20" rx="2" ry="2" />
                       <line x1="12" y1="18" x2="12.01" y2="18" />
@@ -264,7 +264,7 @@ export default function LoginPage() {
                       phoneField.onBlur(e);
                     }}
                     className={`w-full h-full pt-4 pb-1 pr-11 bg-transparent text-sm font-medium outline-none ${
-                      isDark ? "text-white" : "text-gray-900"
+                      isDark ? "text-[#EDF0EC]" : "text-[#141715]"
                     }`}
                   />
 
@@ -273,9 +273,9 @@ export default function LoginPage() {
                     htmlFor="phone"
                     className={`absolute left-11 transition-all duration-200 pointer-events-none select-none ${
                       phoneFocused || phoneValue.trim().length > 0
-                        ? "top-1.5 text-[10px] font-bold text-[#22D3EE]"
+                        ? "top-1.5 text-[10px] font-bold text-[#7F9C8B]"
                         : "top-1/2 -translate-y-1/2 text-xs sm:text-sm " +
-                          (isDark ? "text-gray-400" : "text-gray-400")
+                          (isDark ? "text-[#96A099]" : "text-[#525B56]")
                     }`}
                   >
                     Số điện thoại
@@ -283,7 +283,7 @@ export default function LoginPage() {
 
                   {/* Dấu tích xanh khi SĐT đúng 10 số */}
                   {isPhoneValidFormat && (
-                    <span className="absolute right-3.5 top-1/2 -translate-y-1/2 text-[#34D399]">
+                    <span className="absolute right-3.5 top-1/2 -translate-y-1/2 text-[#7F9C8B]">
                       <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                       </svg>
@@ -297,7 +297,7 @@ export default function LoginPage() {
                 <div
                   className={`relative h-[56px] rounded-2xl transition-all flex items-center ${
                     passFocused
-                      ? "ring-2 ring-[#22D3EE] shadow-[0_0_20px_rgba(124,58,237,0.25)] " +
+                      ? "ring-2 ring-[#7F9C8B] shadow-[0_0_20px_rgba(127,156,139,0.25)] " +
                         (isDark ? "bg-white/[0.08]" : "bg-white")
                       : passwordValue.trim()
                       ? isDark
@@ -305,11 +305,11 @@ export default function LoginPage() {
                         : "bg-white border border-gray-300"
                       : isDark
                       ? "bg-white/[0.04] border border-white/10 hover:border-white/20"
-                      : "bg-gray-50 border border-gray-200 hover:border-gray-300"
+                      : "bg-[#F4F1EA]/60 border border-black/10 hover:border-black/20"
                   } ${errors.password ? "!ring-2 !ring-red-500 !border-transparent" : ""}`}
                 >
                   {/* Icon Khóa bên trái */}
-                  <span className={`pl-4 pr-2 ${isDark ? "text-gray-400" : "text-gray-400"}`}>
+                  <span className={`pl-4 pr-2 ${isDark ? "text-[#96A099]" : "text-[#525B56]"}`}>
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="1.8" viewBox="0 0 24 24">
                       <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
                       <path d="M7 11V7a5 5 0 0 1 10 0v4" />
@@ -329,7 +329,7 @@ export default function LoginPage() {
                       passField.onBlur(e);
                     }}
                     className={`w-full h-full pt-4 pb-1 pr-11 bg-transparent text-sm font-medium outline-none ${
-                      isDark ? "text-white" : "text-gray-900"
+                      isDark ? "text-[#EDF0EC]" : "text-[#141715]"
                     }`}
                   />
 
@@ -338,9 +338,9 @@ export default function LoginPage() {
                     htmlFor="password"
                     className={`absolute left-11 transition-all duration-200 pointer-events-none select-none ${
                       passFocused || passwordValue.trim().length > 0
-                        ? "top-1.5 text-[10px] font-bold text-[#22D3EE]"
+                        ? "top-1.5 text-[10px] font-bold text-[#7F9C8B]"
                         : "top-1/2 -translate-y-1/2 text-xs sm:text-sm " +
-                          (isDark ? "text-gray-400" : "text-gray-400")
+                          (isDark ? "text-[#96A099]" : "text-[#525B56]")
                     }`}
                   >
                     Mật khẩu
@@ -352,7 +352,7 @@ export default function LoginPage() {
                     onClick={togglePassword}
                     aria-label={showPassword ? "Ẩn mật khẩu" : "Hiện mật khẩu"}
                     className={`absolute right-3 top-1/2 -translate-y-1/2 w-8 h-8 rounded-lg flex items-center justify-center transition cursor-pointer ${
-                      isDark ? "text-gray-400 hover:text-white" : "text-gray-400 hover:text-gray-800"
+                      isDark ? "text-[#96A099] hover:text-[#EDF0EC]" : "text-[#525B56] hover:text-[#141715]"
                     }`}
                   >
                     {showPassword ? (
@@ -371,14 +371,14 @@ export default function LoginPage() {
                 </div>
               </div>
 
-              {/* Nút Đăng nhập: Giữ nguyên màu Sunset, KHÔNG đưa qua đưa lại khi hover */}
+              {/* Nút Đăng nhập: Màu Terracotta Clay, hover êm dịu */}
               <div className="pt-2">
                 <button
                   type="submit"
                   disabled={isLoading}
                   style={{
-                    background: "linear-gradient(135deg, #FF5A5F 0%, #F59E0B 50%, #EC4899 100%)",
-                    boxShadow: "0 10px 25px -5px rgba(255, 90, 95, 0.4)",
+                    background: "linear-gradient(135deg, #D87D56 0%, #E29574 50%, #C26740 100%)",
+                    boxShadow: "0 10px 25px -5px rgba(216, 125, 86, 0.35)",
                   }}
                   className="w-full h-[56px] rounded-2xl text-white font-bold text-sm sm:text-base flex items-center justify-center gap-2 cursor-pointer transition hover:opacity-95 active:scale-[0.99] disabled:opacity-75"
                 >
@@ -401,7 +401,7 @@ export default function LoginPage() {
                 <button
                   type="button"
                   onClick={() => setIsForgotModalOpen(true)}
-                  className="text-xs sm:text-sm text-blue-500 hover:text-blue-400 hover:underline font-medium transition cursor-pointer"
+                  className="text-xs sm:text-sm text-[#D87D56] hover:underline font-medium transition cursor-pointer"
                 >
                   Quên mật khẩu?
                 </button>
@@ -410,11 +410,11 @@ export default function LoginPage() {
               {/* Đường kẻ phân cách */}
               <div className="relative my-4 flex items-center justify-center">
                 <div className="absolute inset-0 flex items-center">
-                  <div className={`w-full border-t ${isDark ? "border-white/10" : "border-gray-200"}`} />
+                  <div className={`w-full border-t ${isDark ? "border-white/10" : "border-black/10"}`} />
                 </div>
                 <div
                   className={`relative px-3 text-xs font-medium select-none ${
-                    isDark ? "bg-[#0F1020] text-gray-400" : "bg-white text-gray-400"
+                    isDark ? "bg-[#1A1E1B] text-[#96A099]" : "bg-white text-[#525B56]"
                   }`}
                 >
                   Hoặc đăng nhập bằng
@@ -429,7 +429,7 @@ export default function LoginPage() {
                   className={`h-11 rounded-2xl border flex items-center justify-center gap-2.5 text-xs sm:text-sm font-semibold transition cursor-pointer ${
                     isDark
                       ? "bg-white/5 border-white/10 hover:bg-white/10 text-white"
-                      : "bg-white border-gray-200 hover:bg-gray-50 text-gray-800 shadow-sm"
+                      : "bg-white border-black/10 hover:bg-[#F4F1EA] text-[#141715] shadow-sm"
                   }`}
                 >
                   <svg className="w-4 h-4 shrink-0" viewBox="0 0 24 24">
@@ -447,7 +447,7 @@ export default function LoginPage() {
                   className={`h-11 rounded-2xl border flex items-center justify-center gap-2.5 text-xs sm:text-sm font-semibold transition cursor-pointer ${
                     isDark
                       ? "bg-white/5 border-white/10 hover:bg-white/10 text-white"
-                      : "bg-white border-gray-200 hover:bg-gray-50 text-gray-800 shadow-sm"
+                      : "bg-white border-black/10 hover:bg-[#F4F1EA] text-[#141715] shadow-sm"
                   }`}
                 >
                   <span className="w-5 h-5 rounded-full bg-[#0068FF] text-white font-extrabold text-[11px] flex items-center justify-center shrink-0">
@@ -458,11 +458,11 @@ export default function LoginPage() {
               </div>
 
               {/* Đăng ký ngay */}
-              <div className={`text-center text-xs sm:text-sm pt-2 ${isDark ? "text-gray-400" : "text-gray-500"}`}>
+              <div className={`text-center text-xs sm:text-sm pt-2 ${isDark ? "text-[#96A099]" : "text-[#525B56]"}`}>
                 Bạn chưa có tài khoản?{" "}
                 <Link
                   href="/register"
-                  className="font-bold text-[#FF5A5F] hover:underline"
+                  className="font-bold text-[#D87D56] hover:underline"
                 >
                   Đăng ký ngay
                 </Link>
@@ -472,14 +472,14 @@ export default function LoginPage() {
             {/* Footer ghi chú */}
             <div
               className={`mt-6 pt-4 border-t text-center text-xs space-y-1 ${
-                isDark ? "border-white/10 text-gray-400" : "border-gray-200 text-gray-400"
+                isDark ? "border-white/10 text-[#96A099]" : "border-black/10 text-[#525B56]"
               }`}
             >
               <div>Mua sắm, sửa chữa tại</div>
               <div className="font-semibold">
-                <span className="text-[#22D3EE] hover:underline cursor-pointer">mdmobile.com.vn</span>{" "}
+                <span className="text-[#7F9C8B] hover:underline cursor-pointer">mdmobile.com.vn</span>{" "}
                 và{" "}
-                <span className="text-[#FF5A5F] hover:underline cursor-pointer">mdcare.com.vn</span>
+                <span className="text-[#D87D56] hover:underline cursor-pointer">mdcare.com.vn</span>
               </div>
             </div>
           </div>
@@ -487,7 +487,7 @@ export default function LoginPage() {
       </main>
 
       {/* Footer nhỏ bản quyền */}
-      <footer className={`relative z-10 text-center text-xs py-2 ${isDark ? "text-gray-500" : "text-gray-400"}`}>
+      <footer className={`relative z-10 text-center text-xs py-2 ${isDark ? "text-[#96A099]" : "text-[#525B56]"}`}>
         © 2026 MD Mobile Việt Nam. Bản quyền thuộc về MD Group.
       </footer>
 
@@ -499,8 +499,8 @@ export default function LoginPage() {
           <div
             className={`w-full max-w-md rounded-3xl p-6 sm:p-8 shadow-2xl relative border ${
               isDark
-                ? "bg-[#0F1020] border-white/20 text-white"
-                : "bg-white border-gray-200 text-gray-900"
+                ? "bg-[#1A1E1B] border-white/20 text-[#EDF0EC]"
+                : "bg-white border-black/10 text-[#141715]"
             }`}
           >
             <button
@@ -516,10 +516,10 @@ export default function LoginPage() {
               </svg>
             </button>
 
-            <h2 className="text-xl font-bold bg-gradient-to-r from-[#FF5A5F] to-[#EC4899] bg-clip-text text-transparent mb-2">
+            <h2 className="text-xl font-bold bg-gradient-to-r from-[#D87D56] to-[#7F9C8B] bg-clip-text text-transparent mb-2">
               Khôi phục mật khẩu
             </h2>
-            <p className={`text-xs sm:text-sm mb-5 ${isDark ? "text-gray-400" : "text-gray-500"}`}>
+            <p className={`text-xs sm:text-sm mb-5 ${isDark ? "text-[#96A099]" : "text-[#525B56]"}`}>
               Nhập số điện thoại đã đăng ký để nhận mã xác thực OTP khôi phục tài khoản.
             </p>
 
@@ -530,10 +530,10 @@ export default function LoginPage() {
                   type="tel"
                   placeholder="Nhập số điện thoại của bạn"
                   {...registerForgot("forgotPhone")}
-                  className={`w-full h-12 px-4 rounded-xl text-sm outline-none border focus:ring-2 focus:ring-[#22D3EE] ${
+                  className={`w-full h-12 px-4 rounded-xl text-sm outline-none border focus:ring-2 focus:ring-[#7F9C8B] ${
                     isDark
-                      ? "bg-white/5 border-white/15 text-white placeholder:text-gray-500"
-                      : "bg-gray-50 border-gray-200 text-gray-900"
+                      ? "bg-white/5 border-white/15 text-white placeholder:text-[#96A099]"
+                      : "bg-[#F4F1EA]/60 border-black/10 text-[#141715]"
                   } ${forgotErrors.forgotPhone ? "!border-red-500 !ring-red-500" : ""}`}
                 />
                 {forgotErrors.forgotPhone && (
@@ -547,7 +547,7 @@ export default function LoginPage() {
                 type="submit"
                 disabled={forgotSent}
                 style={{
-                  background: "linear-gradient(135deg, #FF5A5F 0%, #F59E0B 50%, #EC4899 100%)",
+                  background: "linear-gradient(135deg, #D87D56 0%, #E29574 50%, #C26740 100%)",
                 }}
                 className="w-full h-12 text-white font-bold rounded-xl text-sm transition hover:opacity-90 active:scale-[0.99] cursor-pointer"
               >
@@ -564,19 +564,19 @@ export default function LoginPage() {
           role="status"
           className={`fixed bottom-6 right-6 z-50 px-4 py-3 rounded-2xl shadow-2xl border backdrop-blur-xl flex items-center gap-2.5 text-xs sm:text-sm font-semibold animate-bounce transition-all ${
             toast.type === "error"
-              ? "bg-[#1E1120]/95 border-[#F43F5E]/60 text-[#F43F5E]"
+              ? "bg-[#1E1715]/95 border-[#D87D56]/60 text-[#D87D56]"
               : toast.type === "info"
-              ? "bg-[#0E1524]/95 border-[#22D3EE]/60 text-[#22D3EE]"
-              : "bg-[#0E1E22]/95 border-[#34D399]/60 text-[#34D399]"
+              ? "bg-[#141A17]/95 border-[#7F9C8B]/60 text-[#7F9C8B]"
+              : "bg-[#141A17]/95 border-[#7F9C8B]/60 text-[#7F9C8B]"
           }`}
         >
           <span
             className={`w-2 h-2 rounded-full ${
               toast.type === "error"
-                ? "bg-[#F43F5E]"
+                ? "bg-[#D87D56]"
                 : toast.type === "info"
-                ? "bg-[#22D3EE]"
-                : "bg-[#34D399]"
+                ? "bg-[#7F9C8B]"
+                : "bg-[#7F9C8B]"
             }`}
           />
           <span>{toast.message}</span>
