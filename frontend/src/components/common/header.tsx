@@ -287,10 +287,10 @@ export function Header({ cartCount = 0, searchProducts = [] }: HeaderProps) {
             )}
           </div>
 
-          {/* User Profile Button (Thay thế nút ECO, luôn bật chuyển động) */}
+          {/* User Profile Button (Thay thế nút ECO, dẫn đến trang Đăng nhập) */}
           <Link
-            href="/profile"
-            title="Tài khoản cá nhân"
+            href="/login"
+            title="Đăng nhập tài khoản"
             className="w-9 h-9 rounded-full glass-card flex items-center justify-center hover:border-brandCyan/50 transition-all text-textSecondary hover:text-brandCyan"
           >
             <User className="w-4 h-4" />
