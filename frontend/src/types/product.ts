@@ -77,3 +77,22 @@ export interface ProductFilterParams {
   limit?: number;
   query?: string;
 }
+
+/**
+ * Chế độ hiển thị danh sách sản phẩm: Lưới (Grid) hoặc Danh sách ngang (List)
+ */
+export type ProductViewMode = "grid" | "list";
+
+/**
+ * Trạng thái đóng / mở của các mục accordion trong bộ lọc sản phẩm
+ */
+export interface ProductFilterAccordionState {
+  brand: boolean;
+  price: boolean;
+  ram: boolean;
+  storage: boolean;
+  specs: boolean;
+  features: boolean;
+  colors: boolean;
+}
+

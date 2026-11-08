@@ -50,11 +50,11 @@ export function Header({ cartCount = 0, searchProducts = [] }: HeaderProps) {
   const navItemsRef = useRef<(HTMLAnchorElement | null)[]>([]);
 
   const navLinks: NavLinkItem[] = [
-    { href: "#hero-section", label: "Flagship", isPulse: false },
-    { href: "#flash-sale-section", label: "Flash Sale", isPulse: true },
-    { href: "#featured-section", label: "Sản phẩm", isPulse: false },
-    { href: "#scroll-story-section", label: "Công nghệ AI", isPulse: false },
-    { href: "#trade-in-section", label: "Thu cũ đổi mới", isPulse: false },
+    { href: "/#hero-section", label: "Flagship", isPulse: false },
+    { href: "/#flash-sale-section", label: "Flash Sale", isPulse: true },
+    { href: "/products", label: "Sản phẩm", isPulse: false },
+    { href: "/#scroll-story-section", label: "Công nghệ AI", isPulse: false },
+    { href: "/#trade-in-section", label: "Thu cũ đổi mới", isPulse: false },
   ];
 
   // Update underline position
@@ -172,7 +172,7 @@ export function Header({ cartCount = 0, searchProducts = [] }: HeaderProps) {
           className="relative hidden lg:flex items-center gap-[28px] whitespace-nowrap py-2"
         >
           {navLinks.map((link, idx) => (
-            <a
+            <Link
               key={link.href}
               ref={(el) => {
                 navItemsRef.current[idx] = el;
@@ -191,7 +191,7 @@ export function Header({ cartCount = 0, searchProducts = [] }: HeaderProps) {
                 <span className="w-1.5 h-1.5 rounded-full bg-brandCoral animate-pulse"></span>
               )}
               {link.label}
-            </a>
+            </Link>
           ))}
 
           {/* Sliding Underline */}
