@@ -1,10 +1,9 @@
-import pool from "../config/db.js";
-import { ProductRow } from "../types/index.js";
+import prisma from "../config/prisma.js";
 
 /**
  * ========================================================================
- * PRODUCT SERVICE — Tầng xử lý truy vấn dữ liệu Sản phẩm từ MySQL
- * Tất cả các hàm đều viết dạng hàm thuần (pure function) đơn giản, dễ hiểu
+ * PRODUCT SERVICE — Tầng xử lý truy vấn dữ liệu Sản phẩm dùng PRISMA ORM
+ * Code ngắn gọn, cú pháp chuẩn ORM, dễ hiểu và dễ bảo trì
  * ========================================================================
  */
 
@@ -12,72 +11,107 @@ import { ProductRow } from "../types/index.js";
  * 1. Lấy tất cả sản phẩm đang mở bán (PUBLISHED)
  */
 export async function getAllProducts() {
-  const [rows] = await pool.query<ProductRow[]>(`
-    SELECT 
-      p.*, 
-      b.name AS brand_name, 
-      c.name AS category_name
-    FROM products p
-    LEFT JOIN brands b ON p.brand_id = b.id
-    LEFT JOIN categories c ON p.category_id = c.id
-    WHERE p.status = 'PUBLISHED'
-    ORDER BY p.created_at DESC
-  `);
-  return rows;
+  const products = await prisma.product.findMany({
+    where: { status: "PUBLISHED" },
+    include: {
+      brand: {
+        select: { id: true, name: true, slug: true, logoUrl: true },
+      },
+      category: {
+        select: { id: true, name: true, slug: true },
+      },
+      variants: true,
+    },
+    orderBy: { createdAt: "desc" },
+  });
+
+  // Gắn thêm brand_name và category_name để tương thích với Frontend
+  return products.map((p) => ({
+    ...p,
+    brand_name: p.brand?.name,
+    category_name: p.category?.name,
+  }));
 }
 
 /**
- * 2. Lấy danh sách sản phẩm nổi bật cho trang chủ (is_featured = 1)
+ * 2. Lấy danh sách sản phẩm nổi bật cho trang chủ (isFeatured = true)
  */
 export async function getFeaturedProducts() {
-  const [rows] = await pool.query<ProductRow[]>(`
-    SELECT 
-      p.*, 
-      b.name AS brand_name, 
-      c.name AS category_name
-    FROM products p
-    LEFT JOIN brands b ON p.brand_id = b.id
-    LEFT JOIN categories c ON p.category_id = c.id
-    WHERE p.status = 'PUBLISHED' AND p.is_featured = 1
-    ORDER BY p.rating DESC, p.created_at DESC
-  `);
-  return rows;
+  const products = await prisma.product.findMany({
+    where: {
+      status: "PUBLISHED",
+      isFeatured: true,
+    },
+    include: {
+      brand: {
+        select: { id: true, name: true, slug: true, logoUrl: true },
+      },
+      category: {
+        select: { id: true, name: true, slug: true },
+      },
+    },
+    orderBy: [{ rating: "desc" }, { createdAt: "desc" }],
+  });
+
+  return products.map((p) => ({
+    ...p,
+    brand_name: p.brand?.name,
+    category_name: p.category?.name,
+  }));
 }
 
 /**
- * 3. Lấy sản phẩm Flash Sale (có giảm giá discount_percentage > 0)
+ * 3. Lấy sản phẩm Flash Sale (có giảm giá discountPercentage > 0)
  */
 export async function getFlashSaleProducts() {
-  const [rows] = await pool.query<ProductRow[]>(`
-    SELECT 
-      p.*, 
-      b.name AS brand_name, 
-      c.name AS category_name
-    FROM products p
-    LEFT JOIN brands b ON p.brand_id = b.id
-    LEFT JOIN categories c ON p.category_id = c.id
-    WHERE p.status = 'PUBLISHED' AND p.discount_percentage > 0
-    ORDER BY p.discount_percentage DESC
-    LIMIT 8
-  `);
-  return rows;
+  const products = await prisma.product.findMany({
+    where: {
+      status: "PUBLISHED",
+      discountPercentage: { gt: 0 },
+    },
+    include: {
+      brand: {
+        select: { id: true, name: true, slug: true },
+      },
+      category: {
+        select: { id: true, name: true, slug: true },
+      },
+    },
+    orderBy: { discountPercentage: "desc" },
+    take: 8,
+  });
+
+  return products.map((p) => ({
+    ...p,
+    brand_name: p.brand?.name,
+    category_name: p.category?.name,
+  }));
 }
 
 /**
- * 4. Lấy chi tiết 1 sản phẩm theo slug (URL thân thiện)
+ * 4. Lấy chi tiết 1 sản phẩm theo slug
  */
 export async function getProductBySlug(slug: string) {
-  const [rows] = await pool.query<ProductRow[]>(`
-    SELECT 
-      p.*, 
-      b.name AS brand_name, 
-      c.name AS category_name
-    FROM products p
-    LEFT JOIN brands b ON p.brand_id = b.id
-    LEFT JOIN categories c ON p.category_id = c.id
-    WHERE p.slug = ? AND p.status = 'PUBLISHED'
-    LIMIT 1
-  `, [slug]);
+  const product = await prisma.product.findFirst({
+    where: {
+      slug,
+      status: "PUBLISHED",
+    },
+    include: {
+      brand: true,
+      category: true,
+      images: true,
+      variants: true,
+    },
+  });
 
-  return rows[0] || null;
+  if (!product) {
+    return null;
+  }
+
+  return {
+    ...product,
+    brand_name: product.brand?.name,
+    category_name: product.category?.name,
+  };
 }

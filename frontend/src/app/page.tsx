@@ -108,14 +108,16 @@ function HeroSlider({ banners = [] }: HeroSliderProps) {
           {banners.map((banner) => (
             <SwiperSlide key={banner.id} className="relative w-full h-full bg-[#07070F]">
               <div className="relative w-full h-full">
-                <Image
-                  src={banner.image}
-                  alt={banner.title}
-                  fill
-                  priority={banner.id === 1}
-                  className="object-cover object-center transform transition-transform duration-1000 scale-100 hover:scale-105"
-                  sizes="100vw"
-                />
+                {banner.image ? (
+                  <Image
+                    src={banner.image}
+                    alt={banner.title}
+                    fill
+                    priority={banner.id === 1}
+                    className="object-cover object-center transform transition-transform duration-1000 scale-100 hover:scale-105"
+                    sizes="100vw"
+                  />
+                ) : null}
 
                 {/* Dark overlay gradients for readability */}
                 <div className="absolute inset-0 bg-gradient-to-t from-[#07070F] via-[#07070F]/50 to-transparent md:bg-gradient-to-r md:from-[#07070F]/90 md:via-[#07070F]/60 md:to-transparent" />
@@ -786,9 +788,12 @@ function ArticlesSection() {
 interface DBBannerRow {
   id: string;
   title: string;
-  subtitle: string | null;
-  image_url: string;
-  link_url: string | null;
+  subtitle?: string | null;
+  imageUrl?: string;
+  image_url?: string;
+  image?: string;
+  linkUrl?: string | null;
+  link_url?: string | null;
 }
 
 export default function HomePage() {
@@ -805,10 +810,10 @@ export default function HomePage() {
             id: idx + 1,
             title: b.title,
             subtitle: b.subtitle || "Khám phá siêu phẩm công nghệ đỉnh cao tại MD Mobile Flagship Store",
-            image: b.image_url,
+            image: b.imageUrl || b.image_url || b.image || "/images/banners/banner-1.jpg",
             badge: "FLAGSHIP MỚI 2026",
             ctaText: "Khám Phá Ngay",
-            link: b.link_url || "#featured-section",
+            link: b.linkUrl || b.link_url || "#featured-section",
             accentColor: "from-brandViolet/30 via-transparent to-brandCyan/20",
           }));
           setBanners(mapped);

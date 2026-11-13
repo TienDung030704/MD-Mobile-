@@ -1,37 +1,55 @@
-/**
- * Product Service for fetching catalog and product details
- */
-import { apiClient } from "./api-client";
-import type { Product, ProductFilterParams, PaginatedResponse, Category } from "@/types";
+import { createAsyncThunk } from "@reduxjs/toolkit";
+import http from "./http";
+import type { Product, ProductFilterParams, ApiResponse } from "@/types";
 
-export const productService = {
-  /**
-   * Get all products with optional filters
-   */
-  async getProducts(params?: ProductFilterParams) {
-    return apiClient.get<PaginatedResponse<Product>>("/api/products", {
-      params: params as Record<string, string | number | boolean | undefined>,
-    });
-  },
+// 1. Lấy tất cả sản phẩm
+export const fetchProducts = createAsyncThunk(
+  "product/fetchProducts",
+  async (_, { rejectWithValue }) => {
+    try {
+      const res = await http.get<unknown, ApiResponse<Product[]>>("/api/products");
+      return res.data;
+    } catch (error) {
+      return rejectWithValue((error as Error).message || "Lỗi tải danh sách sản phẩm");
+    }
+  }
+);
 
-  /**
-   * Get product detail by slug
-   */
-  async getProductBySlug(slug: string) {
-    return apiClient.get<Product>(`/api/products/${slug}`);
-  },
+// 2. Lấy chi tiết sản phẩm theo slug hoặc id
+export const fetchProductById = createAsyncThunk(
+  "product/fetchProductById",
+  async (slug: string, { rejectWithValue }) => {
+    try {
+      const res = await http.get<unknown, ApiResponse<Product>>(`/api/products/${slug}`);
+      return res.data;
+    } catch (error) {
+      return rejectWithValue((error as Error).message || "Lỗi tải chi tiết sản phẩm");
+    }
+  }
+);
 
-  /**
-   * Get featured products for homepage
-   */
-  async getFeaturedProducts() {
-    return apiClient.get<Product[]>("/api/products/featured");
-  },
+// 3. Lọc sản phẩm theo tiêu chí
+export const fetchFilterProduct = createAsyncThunk(
+  "product/fetchFilterProduct",
+  async (params: ProductFilterParams, { rejectWithValue }) => {
+    try {
+      const res = await http.get<unknown, ApiResponse<Product[]>>("/api/products", { params });
+      return res.data;
+    } catch (error) {
+      return rejectWithValue((error as Error).message || "Lỗi lọc sản phẩm");
+    }
+  }
+);
 
-  /**
-   * Get product categories list
-   */
-  async getCategories() {
-    return apiClient.get<Category[]>("/api/categories");
-  },
-};
+// 4. Lấy sản phẩm nổi bật
+export const fetchFeaturedProducts = createAsyncThunk(
+  "product/fetchFeaturedProducts",
+  async (_, { rejectWithValue }) => {
+    try {
+      const res = await http.get<unknown, ApiResponse<Product[]>>("/api/products/featured");
+      return res.data;
+    } catch (error) {
+      return rejectWithValue((error as Error).message || "Lỗi tải sản phẩm nổi bật");
+    }
+  }
+);

@@ -1,5 +1,5 @@
 /**
  * Barrel export for services
  */
-export * from "./api-client";
+export * from "./http";
 export * from "./product.service";

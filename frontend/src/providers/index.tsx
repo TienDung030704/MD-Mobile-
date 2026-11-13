@@ -1,6 +1,8 @@
 "use client";
 
 import * as React from "react";
+import { Provider } from "react-redux";
+import { store } from "@/store/store";
 
 interface ProvidersProps {
   children: React.ReactNode;
@@ -8,13 +10,8 @@ interface ProvidersProps {
 
 /**
  * Root Client Providers Wrapper
- * Ready to integrate ThemeProvider, QueryClientProvider, CartProvider, ToastProvider, etc.
+ * Cung cấp Redux Store cho toàn bộ các component trong ứng dụng Next.js
  */
 export function Providers({ children }: ProvidersProps) {
-  return (
-    <>
-      {/* Add 3rd-party or context providers here (e.g. SessionProvider, CartProvider, ThemeProvider) */}
-      {children}
-    </>
-  );
+  return <Provider store={store}>{children}</Provider>;
 }

@@ -40,31 +40,48 @@ export interface Brand {
   name: string;
   slug: string;
   logoUrl?: string;
+  description?: string;
+  isActive?: boolean;
 }
 
 export interface Product {
   id: string;
   name: string;
   slug: string;
-  brand: Brand | string;
-  category: Category | string;
-  price: number;
+  brand?: Brand | string;
+  category?: Category | string;
+  brand_id?: string;
+  category_id?: string;
+  brand_name?: string;
+  category_name?: string;
+  price: number | string;
   originalPrice?: number;
+  original_price?: number | string;
   discountPercentage?: number;
+  discount_percentage?: number;
   thumbnail: string;
-  images: string[];
-  description: string;
-  rating: number;
-  reviewCount: number;
-  inStock: boolean;
-  stockQuantity: number;
-  isFeatured?: boolean;
-  isNewArrival?: boolean;
-  isBestSeller?: boolean;
+  images?: string[];
+  description?: string;
+  rating?: number | string;
+  reviewCount?: number;
+  review_count?: number;
+  inStock?: boolean | number;
+  in_stock?: boolean | number;
+  stockQuantity?: number;
+  stock_quantity?: number;
+  isFeatured?: boolean | number;
+  is_featured?: boolean | number;
+  isNewArrival?: boolean | number;
+  is_new_arrival?: boolean | number;
+  isBestSeller?: boolean | number;
+  is_best_seller?: boolean | number;
+  status?: string;
   variants?: ProductVariant[];
-  specifications?: ProductSpecification;
+  specifications?: ProductSpecification | string;
   createdAt?: string;
+  created_at?: string;
   updatedAt?: string;
+  updated_at?: string;
 }
 
 export interface ProductFilterParams {
@@ -95,4 +112,3 @@ export interface ProductFilterAccordionState {
   features: boolean;
   colors: boolean;
 }
-
