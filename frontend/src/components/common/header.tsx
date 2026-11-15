@@ -1,73 +1,88 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState } from "react";
 import Link from "next/link";
-import { User, ShoppingBag, Sun, Moon } from "lucide-react";
+import {
+  Search,
+  Phone,
+  Truck,
+  ShoppingBag,
+  User,
+  Sun,
+  Moon,
+  Smartphone,
+  Tablet,
+  Watch,
+  Laptop,
+  Headphones,
+  Cable,
+  ArrowLeftRight,
+  Newspaper,
+} from "lucide-react";
 import { showToast } from "@/components/ui/toast-box";
 import { useThemeToggle } from "@/utils/theme-toggle";
 import type { FeaturedProduct } from "@/types";
-
-interface NavLinkItem {
-  href: string;
-  label: string;
-  isPulse?: boolean;
-  isGold?: boolean;
-}
 
 interface HeaderProps {
   cartCount?: number;
   searchProducts?: FeaturedProduct[];
 }
 
+// Danh mục menu hàng 2 (Chuẩn theo bố cục và icon của MD Mobile)
+const NAV_CATEGORIES = [
+  {
+    label: "iPhone đã qua sử dụng",
+    href: "/products?type=used",
+    icon: Smartphone,
+  },
+  {
+    label: "iPhone New",
+    href: "/products?type=new",
+    icon: Smartphone,
+  },
+  {
+    label: "iPad",
+    href: "/products?category=ipad",
+    icon: Tablet,
+  },
+  {
+    label: "Watch",
+    href: "/products?category=watch",
+    icon: Watch,
+  },
+  {
+    label: "Mac",
+    href: "/products?category=mac",
+    icon: Laptop,
+  },
+  {
+    label: "AirPods",
+    href: "/products?category=airpods",
+    icon: Headphones,
+  },
+  {
+    label: "Phụ kiện",
+    href: "/products?category=accessories",
+    icon: Cable,
+  },
+  {
+    label: "Trade-In",
+    href: "/#trade-in-section",
+    icon: ArrowLeftRight,
+  },
+  {
+    label: "Tin Tức",
+    href: "/news",
+    icon: Newspaper,
+  },
+];
+
 export function Header({ cartCount = 0, searchProducts = [] }: HeaderProps) {
   const [searchQuery, setSearchQuery] = useState("");
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const { isLight: isLightMode, toggleTheme: handleToggleTheme } = useThemeToggle();
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [activeNavIndex, setActiveNavIndex] = useState(0);
-  const [underlineStyle, setUnderlineStyle] = useState({ left: 0, width: 0 });
 
-  const navRef = useRef<HTMLElement>(null);
-  const navItemsRef = useRef<(HTMLAnchorElement | null)[]>([]);
-
-  const navLinks: NavLinkItem[] = [
-    { href: "#hero-section", label: "Flagship", isPulse: false },
-    { href: "#flash-sale-section", label: "Flash Sale", isPulse: true },
-    { href: "#featured-section", label: "Sản phẩm", isPulse: false },
-    { href: "#scroll-story-section", label: "Công nghệ AI", isPulse: false },
-    { href: "#trade-in-section", label: "Thu cũ đổi mới", isPulse: false },
-  ];
-
-  // Update underline position
-  const updateUnderline = (index: number) => {
-    const el = navItemsRef.current[index];
-    const nav = navRef.current;
-    if (el && nav) {
-      const navRect = nav.getBoundingClientRect();
-      const elRect = el.getBoundingClientRect();
-      setUnderlineStyle({
-        left: elRect.left - navRect.left,
-        width: elRect.width,
-      });
-      setActiveNavIndex(index);
-    }
-  };
-
-  useEffect(() => {
-    const timer = setTimeout(() => updateUnderline(0), 300);
-    return () => clearTimeout(timer);
-  }, []);
-
-  // Shrink header on scroll
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 40);
-    };
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  // Theme toggle with notification
+  // Bật/tắt Dark Mode kèm Toast thông báo
   const toggleTheme = () => {
     handleToggleTheme((isDark) => {
       if (isDark) {
@@ -78,6 +93,7 @@ export function Header({ cartCount = 0, searchProducts = [] }: HeaderProps) {
     });
   };
 
+  // Gợi ý tìm kiếm nhanh
   const filteredProducts = searchQuery.trim()
     ? searchProducts.filter((p) =>
         p.name.toLowerCase().includes(searchQuery.toLowerCase())
@@ -87,132 +103,82 @@ export function Header({ cartCount = 0, searchProducts = [] }: HeaderProps) {
   return (
     <header
       id="main-header"
-      className={`sticky top-0 left-0 right-0 w-full z-[100] transition-all duration-300 border-b border-[var(--header-border)] bg-[var(--header-bg)] backdrop-blur-2xl shadow-sm dark:shadow-[0_10px_30px_rgba(0,0,0,0.5)] select-none ${
-        isScrolled ? "h-[58px]" : "h-[66px]"
-      }`}
+      className="sticky top-0 left-0 right-0 w-full z-[100] transition-colors duration-300 shadow-sm select-none"
     >
-      <div className="w-full h-full px-4 sm:px-8 lg:px-12 flex items-center justify-between">
-        {/* Brand Logo */}
-        <Link
-          href="/"
-          className="flex items-center gap-2.5 shrink-0 group focus:outline-none"
-        >
-          <div className="w-9 h-9 rounded-full bg-aurora p-[1px] transition-transform duration-400 ease-expo group-hover:rotate-12 group-hover:scale-105">
-            <div className="w-full h-full bg-[var(--bg-primary)] rounded-full flex items-center justify-center">
-              <svg className="w-5 h-5" viewBox="0 0 40 40" fill="none">
-                <path
-                  d="M20 5L34 31H27L20 18L13 31H6L20 5Z"
-                  fill="url(#navLogoGrad)"
-                />
-                <circle cx="20" cy="27" r="3" fill="#D87D56" />
-                <defs>
-                  <linearGradient
-                    id="navLogoGrad"
-                    x1="6"
-                    y1="5"
-                    x2="34"
-                    y2="31"
-                    gradientUnits="userSpaceOnUse"
-                  >
-                    <stop stopColor="#7F9C8B" />
-                    <stop offset="0.6" stopColor="#688574" />
-                    <stop offset="1" stopColor="#D87D56" />
-                  </linearGradient>
-                </defs>
-              </svg>
+      {/* =======================================================================
+          HÀNG 1: LOGO + THANH TÌM KIẾM + HOTLINE + GIỎ HÀNG + TIỆN ÍCH
+          ======================================================================= */}
+      <div className="w-full bg-surfaceDark/95 backdrop-blur-xl border-b border-[var(--header-border)]">
+        <div className="w-full max-w-[1440px] mx-auto px-3 sm:px-6 lg:px-8 h-18 sm:h-20 flex items-center justify-between gap-3 sm:gap-6">
+          {/* 1. Logo Thương hiệu */}
+          <Link
+            href="/"
+            className="flex items-center gap-2.5 shrink-0 group focus:outline-none"
+          >
+            <div className="w-10 h-10 rounded-full bg-aurora p-[1.5px] transition-transform duration-300 group-hover:scale-105">
+              <div className="w-full h-full bg-[var(--bg-primary)] rounded-full flex items-center justify-center">
+                <svg className="w-5 h-5" viewBox="0 0 40 40" fill="none">
+                  <path
+                    d="M20 5L34 31H27L20 18L13 31H6L20 5Z"
+                    fill="url(#headerLogoGrad)"
+                  />
+                  <circle cx="20" cy="27" r="3" fill="#D87D56" />
+                  <defs>
+                    <linearGradient
+                      id="headerLogoGrad"
+                      x1="6"
+                      y1="5"
+                      x2="34"
+                      y2="31"
+                      gradientUnits="userSpaceOnUse"
+                    >
+                      <stop stopColor="#7F9C8B" />
+                      <stop offset="0.6" stopColor="#688574" />
+                      <stop offset="1" stopColor="#D87D56" />
+                    </linearGradient>
+                  </defs>
+                </svg>
+              </div>
             </div>
-          </div>
-          <div className="flex flex-col">
-            <span className="font-display font-extrabold text-base tracking-[0.14em] leading-none text-textPrimary">
-              MD Mobile
-            </span>
-          </div>
-        </Link>
+            <div className="flex flex-col">
+              <span className="font-display font-black text-lg sm:text-xl tracking-wider text-textPrimary uppercase">
+                MD <span className="text-brandClay">Mobile</span>
+              </span>
+              <span className="text-[9px] font-semibold tracking-widest text-textSecondary uppercase hidden sm:block">
+                Flagship Store
+              </span>
+            </div>
+          </Link>
 
-        {/* Navigation Menu */}
-        <nav
-          ref={navRef}
-          id="header-nav"
-          className="relative hidden lg:flex items-center gap-[28px] whitespace-nowrap py-2"
-        >
-          {navLinks.map((link, idx) => (
-            <a
-              key={link.href}
-              ref={(el) => {
-                navItemsRef.current[idx] = el;
-              }}
-              href={link.href}
-              onMouseEnter={() => updateUnderline(idx)}
-              className={`nav-link text-sm font-medium py-1 transition-all ${
-                link.isGold
-                  ? "text-brandClay hover:opacity-100"
-                  : activeNavIndex === idx
-                  ? "text-textPrimary font-semibold opacity-100"
-                  : "text-textSecondary hover:text-textPrimary opacity-85 hover:opacity-100"
-              } flex items-center gap-1.5`}
-            >
-              {link.isPulse && (
-                <span className="w-1.5 h-1.5 rounded-full bg-brandClay animate-pulse"></span>
-              )}
-              {link.label}
-            </a>
-          ))}
-
-          {/* Sliding Underline */}
-          <div
-            id="nav-underline"
-            className="absolute bottom-0 h-[2.5px] rounded-full bg-aurora transition-all duration-300 ease-out pointer-events-none"
-            style={{
-              left: `${underlineStyle.left}px`,
-              width: `${underlineStyle.width}px`,
-            }}
-          />
-        </nav>
-
-        {/* Right Actions */}
-        <div className="flex items-center gap-2.5 shrink-0">
-          {/* Expanding Search Input */}
-          <div className="relative">
+          {/* 2. Thanh tìm kiếm tiêu chuẩn (Rộng rãi, cố định, không co giãn khi bấm) */}
+          <div className="relative w-[200px] sm:w-[300px] md:w-[380px] lg:w-[420px] mx-1 sm:mx-2">
             <div
               id="search-wrapper"
-              className={`flex items-center glass-pill px-3.5 py-1.5 transition-all duration-300 ease-out ${
-                isSearchOpen
-                  ? "w-[240px] border-brandSage/60 bg-[var(--bg-surface)]"
-                  : "w-[150px] sm:w-[160px]"
-              }`}
+              className="flex items-center w-full rounded-full border border-[var(--header-border)] bg-bgDark px-3.5 sm:px-4 py-2 hover:border-brandSage/60 focus-within:border-brandSage focus-within:ring-2 focus-within:ring-brandSage/20 transition-all shadow-inner"
             >
-              <svg
-                className="w-4 h-4 text-textSecondary shrink-0 mr-2"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                viewBox="0 0 24 24"
-              >
-                <circle cx="11" cy="11" r="8"></circle>
-                <path d="m21 21-4.3-4.3"></path>
-              </svg>
+              <Search className="w-4 h-4 text-textSecondary shrink-0 mr-2 sm:mr-2.5" />
               <input
                 id="search-input"
                 type="text"
-                placeholder="Tìm flagship..."
+                placeholder="Tìm kiếm điện thoại, phụ kiện..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 onFocus={() => setIsSearchOpen(true)}
                 onBlur={() => setTimeout(() => setIsSearchOpen(false), 250)}
-                className="bg-transparent text-xs focus:outline-none w-full placeholder:text-textSecondary text-textPrimary"
+                className="bg-transparent text-xs sm:text-sm focus:outline-none w-full placeholder:text-textSecondary/70 text-textPrimary"
                 autoComplete="off"
               />
             </div>
 
-            {/* Live Search Suggestions Dropdown */}
+            {/* Menu gợi ý sản phẩm khi tìm kiếm */}
             {isSearchOpen && (
               <div
                 id="search-dropdown"
-                className="absolute right-0 mt-3 w-[320px] sm:w-[350px] glass-card rounded-2xl p-3 shadow-2xl z-50 border border-[var(--header-border)] bg-[var(--bg-surface)] backdrop-blur-2xl animate-in fade-in slide-in-from-top-2 duration-200"
+                className="absolute left-0 right-0 top-full mt-2 w-full glass-card rounded-2xl p-3 shadow-2xl z-50 border border-[var(--header-border)] bg-[var(--bg-surface)] backdrop-blur-2xl animate-in fade-in slide-in-from-top-2 duration-200"
               >
                 <div className="flex items-center justify-between px-2 pb-2 mb-2 border-b border-[var(--header-border)]">
                   <span className="text-[11px] font-mono uppercase tracking-wider text-textSecondary">
-                    Gợi ý AI thông minh
+                    Gợi ý sản phẩm
                   </span>
                   <span className="text-[11px] text-brandSage font-mono">
                     Fast Search
@@ -220,9 +186,9 @@ export function Header({ cartCount = 0, searchProducts = [] }: HeaderProps) {
                 </div>
                 <div className="space-y-1.5 max-h-[280px] overflow-y-auto">
                   {filteredProducts.map((p) => (
-                    <a
+                    <Link
                       key={p.id}
-                      href="#featured-section"
+                      href="/products"
                       className="flex items-center justify-between p-2 rounded-xl hover:bg-black/5 dark:hover:bg-white/5 transition-colors group"
                     >
                       <div className="flex items-center gap-2.5">
@@ -230,7 +196,7 @@ export function Header({ cartCount = 0, searchProducts = [] }: HeaderProps) {
                           className="w-7 h-7 rounded-lg flex items-center justify-center text-xs font-bold text-white shrink-0"
                           style={{ backgroundColor: p.blob }}
                         >
-                          AI
+                          MD
                         </div>
                         <div>
                           <div className="text-xs font-semibold text-textPrimary group-hover:text-brandSage transition-colors">
@@ -244,54 +210,129 @@ export function Header({ cartCount = 0, searchProducts = [] }: HeaderProps) {
                       <div className="font-price font-bold text-xs text-brandClay">
                         {p.price}
                       </div>
-                    </a>
+                    </Link>
                   ))}
                 </div>
               </div>
             )}
           </div>
 
-          {/* User Profile Button */}
-          <Link
-            href="/login"
-            title="Tài khoản cá nhân"
-            className="w-9 h-9 rounded-full glass-card flex items-center justify-center hover:border-brandSage/50 transition-all text-textSecondary hover:text-brandSage"
-          >
-            <User className="w-4 h-4" />
-          </Link>
+          {/* 3. Khu vực bên phải: HOTLINE + GIỎ HÀNG + CHUYỂN THEME / USER */}
+          <div className="flex items-center gap-2 sm:gap-4 shrink-0">
+            {/* Widget HOTLINE */}
+            <a
+              href="tel:0903232323"
+              className="flex items-center gap-2.5 p-1 sm:px-2 sm:py-1 rounded-xl hover:bg-black/5 dark:hover:bg-white/5 transition-colors group cursor-pointer"
+              title="Gọi Hotline tư vấn"
+            >
+              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-br from-brandClay/25 to-brandClay/10 border border-brandClay/30 flex items-center justify-center text-brandClay group-hover:scale-105 transition-transform shrink-0 shadow-xs">
+                <Phone className="w-4 h-4 sm:w-5 sm:h-5" />
+              </div>
+              <div className="hidden xl:flex flex-col text-left">
+                <span className="text-[10px] font-black uppercase text-textSecondary tracking-wider leading-none mb-1">
+                  HOTLINE
+                </span>
+                <span className="text-xs sm:text-sm font-black text-brandClay tracking-tight leading-none group-hover:underline">
+                  0903 23 23 23
+                </span>
+              </div>
+            </a>
 
-          {/* Light / Dark Mode Switch */}
-          <button
-            onClick={toggleTheme}
-            aria-label="Chuyển giao diện Sáng / Tối"
-            className="w-9 h-9 rounded-full glass-card flex items-center justify-center hover:border-brandClay/50 transition-all duration-300 text-textSecondary hover:text-brandClay"
-          >
-            {isLightMode ? (
-              <Sun className="w-4 h-4 text-brandClay" />
-            ) : (
-              <Moon className="w-4 h-4 text-brandSage" />
-            )}
-          </button>
+            {/* Widget TRA CỨU ĐƠN HÀNG */}
+            <Link
+              href="/orders"
+              className="flex items-center gap-2.5 p-1 sm:px-2 sm:py-1 rounded-xl hover:bg-black/5 dark:hover:bg-white/5 transition-colors group cursor-pointer"
+              title="Tra cứu tình trạng đơn hàng"
+            >
+              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-br from-brandSage/25 to-brandSage/10 border border-brandSage/30 flex items-center justify-center text-brandSage group-hover:scale-105 transition-transform shrink-0 shadow-xs">
+                <Truck className="w-4 h-4 sm:w-5 sm:h-5" />
+              </div>
+              <div className="hidden lg:flex flex-col text-left">
+                <span className="text-[10px] font-black uppercase text-textSecondary tracking-wider leading-none mb-1">
+                  TRA CỨU
+                </span>
+                <span className="text-xs sm:text-sm font-black text-brandSage tracking-tight leading-none group-hover:underline">
+                  ĐƠN HÀNG
+                </span>
+              </div>
+            </Link>
 
-          {/* Cart Button */}
-          <Link
-            href="/cart"
-            id="cart-button"
-            title="Giỏ hàng"
-            className="relative w-9 h-9 rounded-full glass-card flex items-center justify-center hover:border-brandClay/50 transition-all text-textSecondary hover:text-brandClay"
-          >
-            <ShoppingBag className="w-4 h-4" />
-            {cartCount > 0 && (
-              <span
-                id="cart-badge"
-                className="absolute -top-1 -right-1 min-w-[16px] h-4 px-1 rounded-full bg-brandClay text-white font-mono font-bold text-[10px] flex items-center justify-center"
-              >
-                {cartCount}
-              </span>
-            )}
-          </Link>
+            {/* Widget GIỎ HÀNG */}
+            <Link
+              href="/cart"
+              id="cart-button"
+              className="flex items-center gap-2.5 p-1 sm:px-2 sm:py-1 rounded-xl hover:bg-black/5 dark:hover:bg-white/5 transition-colors group cursor-pointer"
+              title="Xem giỏ hàng"
+            >
+              <div className="relative w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-br from-brandSage/25 to-brandSage/10 border border-brandSage/30 flex items-center justify-center text-brandSage group-hover:scale-105 transition-transform shrink-0 shadow-xs">
+                <ShoppingBag className="w-4 h-4 sm:w-5 sm:h-5" />
+                {cartCount > 0 && (
+                  <span
+                    id="cart-badge"
+                    className="absolute -top-1 -right-1 min-w-[18px] h-[18px] px-1 rounded-full bg-brandClay text-white font-mono font-bold text-[10px] flex items-center justify-center shadow-sm"
+                  >
+                    {cartCount}
+                  </span>
+                )}
+              </div>
+              <div className="hidden md:flex flex-col text-left">
+                <span className="text-[10px] font-black uppercase text-brandClay tracking-wider leading-none mb-1">
+                  GIỎ HÀNG
+                </span>
+                <span className="text-xs sm:text-sm font-bold text-textPrimary tracking-tight leading-none">
+                  CỦA BẠN
+                </span>
+              </div>
+            </Link>
+
+            {/* Phím đổi giao diện Sáng / Tối */}
+            <button
+              onClick={toggleTheme}
+              aria-label="Chuyển giao diện Sáng / Tối"
+              className="w-9 h-9 rounded-xl border border-[var(--header-border)] bg-bgDark flex items-center justify-center hover:border-brandClay/50 transition-all text-textSecondary hover:text-brandClay cursor-pointer"
+            >
+              {isLightMode ? (
+                <Sun className="w-4 h-4 text-brandClay" />
+              ) : (
+                <Moon className="w-4 h-4 text-brandSage" />
+              )}
+            </button>
+
+            {/* Nút Đăng nhập / Tài khoản */}
+            <Link
+              href="/login"
+              title="Tài khoản cá nhân"
+              className="w-9 h-9 rounded-xl border border-[var(--header-border)] bg-bgDark flex items-center justify-center hover:border-brandSage/50 transition-all text-textSecondary hover:text-brandSage"
+            >
+              <User className="w-4 h-4" />
+            </Link>
+          </div>
         </div>
       </div>
+
+      {/* =======================================================================
+          HÀNG 2: THANH DANH MỤC SẢN PHẨM (MÀU CHỦ ĐẠO GRADIENT BRAND CLAY & SAGE)
+          ======================================================================= */}
+      <nav
+        aria-label="Danh mục sản phẩm"
+        className="w-full bg-gradient-to-r from-brandClay via-[#B8846E] to-brandSage text-white shadow-md overflow-x-auto scrollbar-none"
+      >
+        <div className="w-full max-w-[1440px] mx-auto px-2 sm:px-6 lg:px-8 py-2.5 flex items-center justify-start lg:justify-between gap-1 sm:gap-2 whitespace-nowrap min-w-max lg:min-w-0">
+          {NAV_CATEGORIES.map((item) => {
+            const Icon = item.icon;
+            return (
+              <Link
+                key={item.label}
+                href={item.href}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold text-white/95 hover:text-white hover:bg-white/20 active:bg-white/25 transition-all cursor-pointer drop-shadow-xs"
+              >
+                <Icon className="w-3.5 h-3.5 shrink-0 opacity-90" />
+                <span>{item.label}</span>
+              </Link>
+            );
+          })}
+        </div>
+      </nav>
     </header>
   );
 }

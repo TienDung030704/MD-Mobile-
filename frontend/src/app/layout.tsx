@@ -3,7 +3,6 @@ import { Plus_Jakarta_Sans, Inter, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import { SITE_CONFIG } from "@/constants";
 import { Providers } from "@/providers";
-import { CustomCursor } from "@/components/common/custom-cursor";
 import { ToastBox } from "@/components/ui/toast-box";
 
 const plusJakartaSans = Plus_Jakarta_Sans({
@@ -68,7 +67,6 @@ export default function RootLayout({
     >
       <body className="bg-bgDark text-textPrimary font-sans antialiased selection:bg-brandViolet selection:text-white relative">
         <Providers>
-          <CustomCursor />
           {children}
           <ToastBox />
         </Providers>

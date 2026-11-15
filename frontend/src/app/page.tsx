@@ -35,36 +35,6 @@ import "swiper/css/pagination";
 import "swiper/css/navigation";
 import "swiper/css/effect-fade";
 
-/* ========================================================================
- * 1. ANNOUNCEMENT BAR — Thanh thông báo chạy chữ vô hạn
- * ======================================================================== */
-
-const ANNOUNCEMENT_ITEMS = [
-  "Miễn phí giao hàng hỏa tốc toàn quốc",
-  "Trả góp 0% lãi suất — Duyệt hồ sơ AI trong 60 giây",
-  "Tặng gói Bảo Hành Vàng 24 tháng (Rơi vỡ & Vào nước)",
-  "Thu cũ đổi mới trợ giá lên đời đến 5.000.000đ",
-];
-
-function AnnouncementBar() {
-  return (
-    <div className="w-full bg-sunset text-white text-xs font-semibold tracking-wider uppercase py-2 overflow-hidden relative z-[90] marquee-container select-none">
-      <div className="marquee-track flex items-center gap-12">
-        {[0, 1].map((copy) => (
-          <div key={copy} className="flex items-center gap-12 shrink-0">
-            {ANNOUNCEMENT_ITEMS.map((text, idx) => (
-              <span key={idx} className="flex items-center gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-white animate-ping" />
-                <span>{text}</span>
-                <span className="opacity-60 ml-8">|</span>
-              </span>
-            ))}
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
 
 /* ========================================================================
  * 2. HERO SLIDER — Banner Swiper chính (dữ liệu thật từ /api/banners)
@@ -827,10 +797,7 @@ export default function HomePage() {
       {/* 0. Màn hình loading chuyển cảnh */}
       <LoadingScreen />
 
-      {/* 1. Thanh thông báo chạy vô hạn */}
-      <AnnouncementBar />
-
-      {/* 2. Header cố định tràn viền */}
+      {/* 1. Header cố định */}
       <Header />
 
       {/* 3. Hero Slider Banner chính */}
