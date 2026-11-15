@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import routes from "./routes/index.js";
+import { errorHandler } from "./middlewares/error.middleware.js";
 
 dotenv.config();
 
@@ -37,6 +38,9 @@ app.use((_req, res) => {
     message: "Endpoint không tồn tại",
   });
 });
+
+// Global Error Handler Middleware (luôn đặt ở cuối cùng)
+app.use(errorHandler);
 
 // Start Server
 app.listen(PORT, () => {

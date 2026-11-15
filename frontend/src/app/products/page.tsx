@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import {
@@ -10,12 +10,11 @@ import {
   FilterSidebarProducts,
 } from "@/components/common";
 import {
-  ShoppingCart,
   Smartphone,
-  Sparkles,
   Star,
   ChevronLeft,
   ChevronRight,
+  Sparkles,
 } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState, AppDispatch } from "@/store/store";
@@ -25,298 +24,224 @@ import usePagination from "@/hooks/usePagination";
 
 export default function ProductsPage() {
   const dispatch = useDispatch<AppDispatch>();
-  const getProducts = useSelector((state: RootState) => state.product.products);
-  const loading = useSelector((state: RootState) => state.product.loading);
 
-  // Phân trang 9 sản phẩm mỗi trang (lưới 3x3)
-  const { page, totalPages, currentItems, handlePageChange } = usePagination(
-    getProducts,
-    9
-  );
+  // 1. Lấy dữ liệu sản phẩm gốc từ Redux Store
+  const products = useSelector((state: RootState) => state.product.products);
+  const loading = useSelector((state: RootState) => state.product.loading);
 
   useEffect(() => {
     dispatch(fetchProducts());
   }, [dispatch]);
 
+  // 2. State lưu danh sách các Hãng được chọn (chọn nhiều hãng cùng lúc)
+  const [selectedBrands, setSelectedBrands] = useState<string[]>([]);
+
+  // Bấm chọn hoặc bỏ chọn một Hãng
+  const handleToggleBrand = (brandName: string) => {
+    setSelectedBrands(
+      (prev) =>
+        prev.includes(brandName)
+          ? prev.filter((item) => item !== brandName) // Đã có thì bỏ ra
+          : [...prev, brandName], // Chưa có thì thêm vào
+    );
+  };
+
+  // =========================================================================
+  // 3. LOGIC LỌC TỰ ĐỘNG THEO HÃNG BẰNG useMemo (CỰC KỲ ĐƠN GIẢN)
+  // =========================================================================
+  const filteredProducts = useMemo(() => {
+    // Nếu chưa chọn hãng nào (mảng rỗng) -> Lấy tất cả sản phẩm
+    if (selectedBrands.length === 0) {
+      return products;
+    }
+
+    // Nếu có chọn -> Chỉ lấy các sản phẩm thuộc hãng nằm trong selectedBrands
+    return products.filter((product) =>
+      selectedBrands.includes(product.brand_name || ""),
+    );
+  }, [products, selectedBrands]);
+
+  // 4. Phân trang 10 sản phẩm mỗi trang theo danh sách đã lọc
+  const { page, totalPages, currentItems, handlePageChange } = usePagination(
+    filteredProducts,
+    10,
+  );
+
   return (
-    <div className="min-h-screen bg-bgDark text-textPrimary flex flex-col justify-between selection:bg-brandSage selection:text-white">
-      {/* 1. Header dùng chung của trang web */}
+    <div className="min-h-screen bg-bgDark text-textPrimary flex flex-col justify-between selection:bg-brandSage selection:text-white transition-colors duration-300">
+      {/* Header dùng chung */}
       <Header />
 
-      {/* 2. Nội dung chính của trang sản phẩm */}
-      <main className="w-full max-w-[1440px] mx-auto pt-24 pb-16 px-4 md:px-6">
-        <div className="max-w-[1240px] mx-auto">
-          {/* =========================================================
-              PHẦN A: BREADCRUMB (THANH ĐIỀU HƯỚNG VỊ TRÍ)
-              ========================================================= */}
-          <nav
-            aria-label="Breadcrumb"
-            className="flex items-center gap-2 text-xs text-textSecondary mb-5"
-          >
-            <Link href="/" className="hover:text-brandSage transition-colors">
-              Trang chủ
-            </Link>
-            <span>/</span>
-            <span className="text-textSecondary">Điện thoại</span>
-            <span>/</span>
-            <span className="text-brandClay font-semibold">
-              Tất cả sản phẩm
+      {/* Nội dung chính */}
+      <main className="w-full max-w-[1440px] mx-auto pt-6 pb-16 px-3 sm:px-6 lg:px-8">
+        {/* =========================================================
+            1. BREADCRUMB
+            ========================================================= */}
+        <nav
+          aria-label="Breadcrumb"
+          className="flex items-center gap-2 text-xs text-textSecondary mb-4"
+        >
+          <Link href="/" className="hover:text-brandSage transition-colors">
+            Trang chủ
+          </Link>
+          <span>/</span>
+          <span className="text-textSecondary">Điện thoại</span>
+          <span>/</span>
+          <span className="font-semibold text-textPrimary">
+            Tất cả sản phẩm
+          </span>
+        </nav>
+
+        {/* =========================================================
+            2. KHUNG BỘ LỌC NGANG (LỌC THEO NHIỀU HÃNG)
+            ========================================================= */}
+        <FilterSidebarProducts
+          selectedBrands={selectedBrands}
+          onToggleBrand={handleToggleBrand}
+          onClearBrands={() => setSelectedBrands([])}
+        />
+
+        {/* =========================================================
+            3. KHUNG SẢN PHẨM (LƯỚI 5 CỘT CÓ HEADER GRADIENT)
+            ========================================================= */}
+        <section className="rounded-2xl border border-[var(--header-border)] overflow-hidden bg-surfaceDark shadow-sm mb-8 transition-colors duration-300">
+          {/* Thanh tiêu đề tông màu chuẩn Nordic Sage & Clay của website */}
+          <div className="w-full px-5 py-3.5 sm:py-4 bg-gradient-to-r from-brandClay via-[#B8846E] to-brandSage flex items-center justify-between shadow-inner">
+            <h2 className="text-base sm:text-xl font-black text-white tracking-wide uppercase drop-shadow-sm flex items-center gap-2">
+              <Sparkles className="w-5 h-5 text-yellow-200 animate-pulse" />
+              <span>
+                {selectedBrands.length > 0
+                  ? `${selectedBrands.join(" & ")} Series`
+                  : "Điện Thoại Flagship Series"}
+              </span>
+            </h2>
+            <span className="text-xs font-bold text-white/90 bg-black/20 px-3 py-1 rounded-full backdrop-blur-sm">
+              {filteredProducts.length} sản phẩm
             </span>
-          </nav>
-
-          {/* =========================================================
-              PHẦN B: BANNER DANH MỤC (NORDIC SAGE & CLAY PALETTE)
-              ========================================================= */}
-          <section className="relative w-full rounded-2xl overflow-hidden mb-6 p-6 md:p-8 bg-surfaceDark border border-white/10 dark:border-white/10 border-stone-200 shadow-xl">
-            {/* Lớp nền phát sáng nhẹ tone Sage và Clay */}
-            <div className="absolute top-0 right-0 w-80 h-80 bg-brandSage/15 rounded-full blur-3xl pointer-events-none" />
-            <div className="absolute bottom-0 left-1/3 w-80 h-80 bg-brandClay/15 rounded-full blur-3xl pointer-events-none" />
-
-            <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
-              <div className="max-w-2xl">
-                {/* Huy hiệu nhỏ trên tiêu đề */}
-                <div className="flex items-center gap-2.5 mb-2.5">
-                  <span className="px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider bg-brandSage/20 text-brandSage border border-brandSage/30">
-                    Flagship Store Chính Hãng
-                  </span>
-                </div>
-
-                {/* Tiêu đề danh mục */}
-                <h1 className="text-2xl md:text-4xl font-extrabold tracking-tight text-textPrimary mb-2">
-                  Bộ Sưu Tập Điện Thoại Cao Cấp
-                </h1>
-
-                {/* Mô tả danh mục */}
-                <p className="text-sm text-textSecondary leading-relaxed">
-                  Trải nghiệm công nghệ AI đỉnh cao cùng đặc quyền mua sắm: Trả
-                  góp 0%, Bảo hành 1 đổi 1 trong 30 ngày và Thu cũ trợ giá đến 5
-                  Triệu đồng.
-                </p>
-              </div>
-
-              {/* Nút hành động xem nhanh */}
-              <div className="hidden lg:flex items-center gap-2">
-                <span className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-semibold bg-brandClay/15 text-brandClay border border-brandClay/30">
-                  <Sparkles className="w-3.5 h-3.5" />
-                  Ưu đãi độc quyền hôm nay
-                </span>
-              </div>
-            </div>
-          </section>
-
-          {/* =========================================================
-              PHẦN C: BỐ CỤC 2 CỘT CHÍNH (SIDEBAR TRÁI + NỘI DUNG PHẢI)
-              ========================================================= */}
-          <div className="flex flex-col lg:flex-row items-start gap-6">
-            {/* -------------------------------------------------------
-                CỘT TRÁI (288PX): BỘ LỌC CHUYÊN SÂU (SIDEBAR)
-                ------------------------------------------------------- */}
-            <FilterSidebarProducts />
-
-            {/* -------------------------------------------------------
-                CỘT PHẢI (FLEX-1): TOOLBAR + KHUNG DANH SÁCH SẢN PHẨM
-                ------------------------------------------------------- */}
-            <div className="flex-1 w-full min-w-0">
-              {/* TOOLBAR: TIÊU ĐỀ KHUNG + SẮP XẾP + CHUYỂN GRID/LIST */}
-              <div className="bg-surfaceDark border border-white/10 dark:border-white/10 border-stone-200 rounded-2xl px-5 py-3.5 mb-5 flex flex-wrap items-center justify-between gap-4">
-                {/* Tiêu đề khung danh sách & số lượng sản phẩm */}
-                <div className="text-sm font-semibold text-textPrimary flex items-center gap-2">
-                  <span>Danh sách sản phẩm</span>
-                  {getProducts.length > 0 && (
-                    <span className="text-xs text-textSecondary font-normal">
-                      ({getProducts.length} sản phẩm — Trang {page}/{totalPages})
-                    </span>
-                  )}
-                </div>
-
-                {/* Hành động: Dropdown sắp xếp và nút chuyển dạng xem */}
-                <div className="flex items-center gap-3">
-                  {/* Dropdown sắp xếp */}
-                  <div className="flex items-center gap-2 text-xs">
-                    <span className="text-textSecondary hidden sm:inline">
-                      Sắp xếp:
-                    </span>
-                    <select
-                      defaultValue="featured"
-                      aria-label="Sắp xếp sản phẩm"
-                      className="h-9 px-3 rounded-xl bg-white/5 border border-white/15 dark:border-white/15 border-stone-300 text-textPrimary focus:outline-none focus:border-brandSage text-xs cursor-pointer"
-                    >
-                      <option
-                        value="featured"
-                        className="bg-surfaceDark text-textPrimary"
-                      >
-                        Nổi bật nhất
-                      </option>
-                      <option
-                        value="price-asc"
-                        className="bg-surfaceDark text-textPrimary"
-                      >
-                        Giá: Thấp đến Cao
-                      </option>
-                      <option
-                        value="price-desc"
-                        className="bg-surfaceDark text-textPrimary"
-                      >
-                        Giá: Cao đến Thấp
-                      </option>
-                      <option
-                        value="newest"
-                        className="bg-surfaceDark text-textPrimary"
-                      >
-                        Mới nhất
-                      </option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-
-              {/* KHUNG THẺ SẢN PHẨM: SKELETON / EMPTY / DANH SÁCH THỰC TẾ (LƯỚI 3 CỘT) */}
-              {loading && getProducts.length === 0 ? (
-                /* 1. Trạng thái đang tải dữ liệu (Skeleton) */
-                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
-                  {Array.from({ length: 6 }).map((_, index) => (
-                    <div
-                      key={index}
-                      className="bg-surfaceDark border border-white/10 rounded-2xl p-5 animate-pulse flex flex-col justify-between"
-                    >
-                      <div className="h-44 rounded-xl bg-white/5 mb-4" />
-                      <div className="h-4 w-3/4 rounded bg-white/10 mb-2" />
-                      <div className="h-3 w-1/2 rounded bg-white/5 mb-4" />
-                      <div className="h-6 w-1/3 rounded bg-white/10 mb-4" />
-                      <div className="h-10 rounded-xl bg-white/10" />
-                    </div>
-                  ))}
-                </div>
-              ) : getProducts.length === 0 ? (
-                /* 2. Trạng thái không tìm thấy sản phẩm */
-                <div className="bg-surfaceDark border border-white/10 rounded-2xl p-12 text-center">
-                  <Smartphone className="w-12 h-12 text-brandSage/40 mx-auto mb-3" />
-                  <p className="text-sm font-semibold text-textPrimary">
-                    Chưa có sản phẩm nào
-                  </p>
-                  <p className="text-xs text-textSecondary mt-1">
-                    Hệ thống đang cập nhật danh mục sản phẩm.
-                  </p>
-                </div>
-              ) : (
-                /* 3. Render danh sách sản phẩm dạng lưới 3 cột */
-                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
-                  {currentItems.map((product) => (
-                    <article
-                      key={product.id}
-                      className="group bg-surfaceDark border border-white/10 dark:border-white/10 border-stone-200 rounded-2xl p-5 hover:border-brandSage/50 hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
-                    >
-                      {/* Ảnh sản phẩm */}
-                      <Link
-                        href={`/products/${product.slug}`}
-                        className="relative w-full h-44 rounded-xl bg-white/5 flex items-center justify-center overflow-hidden mb-3"
-                      >
-                        {product.thumbnail ? (
-                          <Image
-                            src={product.thumbnail}
-                            alt={product.name}
-                            fill
-                            sizes="(max-width: 768px) 100vw, 33vw"
-                            className="object-contain p-2 group-hover:scale-105 transition-transform duration-300"
-                            unoptimized
-                          />
-                        ) : (
-                          <Smartphone className="w-8 h-8 text-textSecondary/50" />
-                        )}
-                      </Link>
-
-                      {/* Thông tin sản phẩm */}
-                      <div className="flex-1 w-full flex flex-col justify-between">
-                        <div>
-                          <p className="text-[11px] font-semibold text-brandSage uppercase mb-1">
-                            {product.brand_name || "MD Mobile"}
-                          </p>
-                          <Link
-                            href={`/products/${product.slug}`}
-                            className="font-bold text-sm text-textPrimary hover:text-brandSage line-clamp-2 transition-colors leading-snug"
-                          >
-                            {product.name}
-                          </Link>
-                        </div>
-
-                        <div className="mt-4">
-                          {/* Đánh giá sao & Giá tiền */}
-                          <div className="flex items-center justify-between text-xs mb-3">
-                            <span className="text-base font-extrabold text-brandClay">
-                              {formatPrice(product.price)}
-                            </span>
-                            <div className="flex items-center gap-1 text-amber-400 font-bold">
-                              <Star className="w-3.5 h-3.5 fill-amber-400" />
-                              <span>{product.rating || "5.0"}</span>
-                            </div>
-                          </div>
-
-                          {/* Nút thêm vào giỏ */}
-                          <button
-                            type="button"
-                            className="w-full h-10 rounded-xl bg-brandClay/15 text-brandClay hover:bg-brandClay hover:text-white border border-brandClay/30 transition-all font-bold text-xs flex items-center justify-center gap-2 cursor-pointer active:scale-[0.98]"
-                          >
-                            <ShoppingCart className="w-4 h-4" />
-                            <span>Thêm vào giỏ hàng</span>
-                          </button>
-                        </div>
-                      </div>
-                    </article>
-                  ))}
-                </div>
-              )}
-
-              {/* BỘ ĐIỀU HƯỚNG PHÂN TRANG (PAGINATION) */}
-              {totalPages > 1 && (
-                <div className="mt-10 flex items-center justify-center gap-2">
-                  {/* Nút trang trước */}
-                  <button
-                    type="button"
-                    onClick={() => handlePageChange(page - 1)}
-                    disabled={page <= 1}
-                    aria-label="Trang trước"
-                    className="w-10 h-10 rounded-xl bg-surfaceDark border border-white/10 dark:border-white/10 border-stone-200 flex items-center justify-center text-textPrimary hover:border-brandSage hover:text-brandSage disabled:opacity-30 disabled:cursor-not-allowed transition-all"
-                  >
-                    <ChevronLeft className="w-4 h-4" />
-                  </button>
-
-                  {/* Danh sách các số trang */}
-                  {Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => (
-                    <button
-                      key={p}
-                      type="button"
-                      onClick={() => handlePageChange(p)}
-                      className={`w-10 h-10 rounded-xl text-xs font-bold transition-all ${
-                        p === page
-                          ? "bg-brandSage text-white shadow-lg shadow-brandSage/25 border border-brandSage"
-                          : "bg-surfaceDark border border-white/10 dark:border-white/10 border-stone-200 text-textPrimary hover:border-brandSage hover:text-brandSage"
-                      }`}
-                    >
-                      {p}
-                    </button>
-                  ))}
-
-                  {/* Nút trang sau */}
-                  <button
-                    type="button"
-                    onClick={() => handlePageChange(page + 1)}
-                    disabled={page >= totalPages}
-                    aria-label="Trang sau"
-                    className="w-10 h-10 rounded-xl bg-surfaceDark border border-white/10 dark:border-white/10 border-stone-200 flex items-center justify-center text-textPrimary hover:border-brandSage hover:text-brandSage disabled:opacity-30 disabled:cursor-not-allowed transition-all"
-                  >
-                    <ChevronRight className="w-4 h-4" />
-                  </button>
-                </div>
-              )}
-            </div>
           </div>
-        </div>
+
+          {/* Trạng thái đang tải dữ liệu (Skeleton) */}
+          {loading && products.length === 0 ? (
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 divide-x divide-y divide-[var(--header-border)]">
+              {Array.from({ length: 10 }).map((_, i) => (
+                <div
+                  key={i}
+                  className="p-4 sm:p-5 animate-pulse flex flex-col justify-between h-72"
+                >
+                  <div className="w-full h-40 bg-bgDark rounded-xl mb-3" />
+                  <div className="h-4 bg-bgDark rounded w-3/4 mb-2" />
+                  <div className="h-4 bg-bgDark rounded w-1/2" />
+                </div>
+              ))}
+            </div>
+          ) : currentItems.length === 0 ? (
+            /* Trạng thái chưa có sản phẩm khớp hãng chọn */
+            <div className="py-20 text-center">
+              <Smartphone className="w-12 h-12 text-textSecondary/40 mx-auto mb-3" />
+              <p className="text-base font-bold text-textPrimary">
+                Chưa có sản phẩm thuộc hãng này
+              </p>
+              <p className="text-xs text-textSecondary mt-1">
+                Hãy thử bấm chọn các hãng khác hoặc chọn &quot;Tất cả&quot;.
+              </p>
+            </div>
+          ) : (
+            /* Lưới danh sách sản phẩm: 5 cột chia ô bằng border */
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 divide-x divide-y divide-[var(--header-border)] border-b border-[var(--header-border)]">
+              {currentItems.map((product) => (
+                <Link
+                  key={product.id}
+                  href={`/products/${product.slug}`}
+                  className="group relative p-3 sm:p-4 lg:p-5 flex flex-col justify-between bg-surfaceDark hover:bg-black/[0.02] dark:hover:bg-white/[0.04] transition-colors"
+                >
+                  {/* Ảnh sản phẩm ở giữa */}
+                  <div className="relative w-full h-40 sm:h-48 flex items-center justify-center overflow-hidden mb-3">
+                    {product.thumbnail ? (
+                      <Image
+                        src={product.thumbnail}
+                        alt={product.name}
+                        fill
+                        sizes="(max-width: 640px) 50vw, (max-width: 1024px) 25vw, 20vw"
+                        className="object-contain p-1 group-hover:scale-105 transition-transform duration-300"
+                        unoptimized
+                      />
+                    ) : (
+                      <Smartphone className="w-12 h-12 text-textSecondary/40" />
+                    )}
+                  </div>
+
+                  {/* Thông tin tên và giá bán */}
+                  <div className="w-full text-center sm:text-left mt-1">
+                    <h3 className="font-bold text-xs sm:text-sm text-textPrimary group-hover:text-brandClay transition-colors line-clamp-2 leading-snug min-h-[2.5rem]">
+                      {product.name}
+                    </h3>
+
+                    <div className="mt-2.5 flex flex-col sm:flex-row sm:items-baseline justify-between gap-1">
+                      <span className="font-black text-sm sm:text-base text-brandClay">
+                        {formatPrice(product.price)}
+                      </span>
+                      <div className="flex items-center justify-center sm:justify-start gap-0.5 text-amber-400 text-[11px] font-bold">
+                        <Star className="w-3 h-3 fill-amber-400" />
+                        <span>{product.rating || "5.0"}</span>
+                      </div>
+                    </div>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          )}
+        </section>
+
+        {/* =========================================================
+            4. ĐIỀU HƯỚNG PHÂN TRANG (PAGINATION)
+            ========================================================= */}
+        {totalPages > 1 && (
+          <div className="flex items-center justify-center gap-2 mt-4">
+            {/* Nút Trang trước */}
+            <button
+              type="button"
+              onClick={() => handlePageChange(page - 1)}
+              disabled={page <= 1}
+              aria-label="Trang trước"
+              className="w-10 h-10 rounded-xl bg-surfaceDark border border-[var(--header-border)] flex items-center justify-center text-textPrimary hover:border-brandSage hover:text-brandSage disabled:opacity-30 disabled:cursor-not-allowed transition-all shadow-sm cursor-pointer"
+            >
+              <ChevronLeft className="w-4 h-4" />
+            </button>
+
+            {/* Các nút số trang */}
+            {Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => (
+              <button
+                key={p}
+                type="button"
+                onClick={() => handlePageChange(p)}
+                className={`w-10 h-10 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                  p === page
+                    ? "bg-brandSage text-white shadow-md shadow-brandSage/25 border border-brandSage"
+                    : "bg-surfaceDark border border-[var(--header-border)] text-textPrimary hover:border-brandSage hover:text-brandSage shadow-sm"
+                }`}
+              >
+                {p}
+              </button>
+            ))}
+
+            {/* Nút Trang sau */}
+            <button
+              type="button"
+              onClick={() => handlePageChange(page + 1)}
+              disabled={page >= totalPages}
+              aria-label="Trang sau"
+              className="w-10 h-10 rounded-xl bg-surfaceDark border border-[var(--header-border)] flex items-center justify-center text-textPrimary hover:border-brandSage hover:text-brandSage disabled:opacity-30 disabled:cursor-not-allowed transition-all shadow-sm cursor-pointer"
+            >
+              <ChevronRight className="w-4 h-4" />
+            </button>
+          </div>
+        )}
       </main>
 
-      {/* 3. Footer dùng chung của trang web */}
+      {/* Footer dùng chung */}
       <Footer />
 
-      {/* 4. Các nút hành động nổi (Zalo, Hotline, Lên đầu trang) */}
+      {/* Các nút hành động nổi */}
       <FloatingActions />
     </div>
   );

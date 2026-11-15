@@ -1,10 +1,11 @@
-import { Request, Response } from "express";
+import { Request, Response, NextFunction } from "express";
 import * as productService from "../services/product.service.js";
 
 /**
  * ========================================================================
  * PRODUCT CONTROLLER — Điều hướng và phản hồi API Sản phẩm
- * Logic chuẩn 3 bước: Nhận Request -> Gọi Service truy vấn -> Trả về JSON
+ * Chuẩn luồng: Nhận Request -> Gọi Service truy vấn -> Trả JSON
+ * Nếu có lỗi -> Đẩy sang error.middleware.ts qua hàm next(error)
  * ========================================================================
  */
 
@@ -12,7 +13,7 @@ import * as productService from "../services/product.service.js";
  * 1. LẤY TẤT CẢ SẢN PHẨM
  * Route: GET /api/products
  */
-export const getProducts = async (_req: Request, res: Response) => {
+export const getProducts = async (_req: Request, res: Response, next: NextFunction) => {
   try {
     const products = await productService.getAllProducts();
 
@@ -22,11 +23,8 @@ export const getProducts = async (_req: Request, res: Response) => {
       data: products,
     });
   } catch (error) {
-    console.error("Lỗi getProducts:", error);
-    return res.status(500).json({
-      success: false,
-      message: "Lỗi hệ thống khi tải danh sách sản phẩm",
-    });
+    // Đẩy lỗi sang error.middleware.ts xử lý tập trung
+    next(error);
   }
 };
 
@@ -34,7 +32,7 @@ export const getProducts = async (_req: Request, res: Response) => {
  * 2. LẤY SẢN PHẨM NỔI BẬT (FEATURED)
  * Route: GET /api/products/featured
  */
-export const getFeaturedProducts = async (_req: Request, res: Response) => {
+export const getFeaturedProducts = async (_req: Request, res: Response, next: NextFunction) => {
   try {
     const products = await productService.getFeaturedProducts();
 
@@ -44,11 +42,7 @@ export const getFeaturedProducts = async (_req: Request, res: Response) => {
       data: products,
     });
   } catch (error) {
-    console.error("Lỗi getFeaturedProducts:", error);
-    return res.status(500).json({
-      success: false,
-      message: "Lỗi hệ thống khi tải sản phẩm nổi bật",
-    });
+    next(error);
   }
 };
 
@@ -56,7 +50,7 @@ export const getFeaturedProducts = async (_req: Request, res: Response) => {
  * 3. LẤY SẢN PHẨM FLASH SALE (GIẢM GIÁ)
  * Route: GET /api/products/flash-sale
  */
-export const getFlashSaleProducts = async (_req: Request, res: Response) => {
+export const getFlashSaleProducts = async (_req: Request, res: Response, next: NextFunction) => {
   try {
     const products = await productService.getFlashSaleProducts();
 
@@ -66,11 +60,7 @@ export const getFlashSaleProducts = async (_req: Request, res: Response) => {
       data: products,
     });
   } catch (error) {
-    console.error("Lỗi getFlashSaleProducts:", error);
-    return res.status(500).json({
-      success: false,
-      message: "Lỗi hệ thống khi tải sản phẩm Flash Sale",
-    });
+    next(error);
   }
 };
 
@@ -78,7 +68,7 @@ export const getFlashSaleProducts = async (_req: Request, res: Response) => {
  * 4. LẤY CHI TIẾT SẢN PHẨM THEO SLUG
  * Route: GET /api/products/:slug
  */
-export const getProductBySlug = async (req: Request, res: Response) => {
+export const getProductBySlug = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { slug } = req.params;
 
@@ -103,10 +93,6 @@ export const getProductBySlug = async (req: Request, res: Response) => {
       data: product,
     });
   } catch (error) {
-    console.error("Lỗi getProductBySlug:", error);
-    return res.status(500).json({
-      success: false,
-      message: "Lỗi hệ thống khi tải thông tin chi tiết sản phẩm",
-    });
+    next(error);
   }
 };
