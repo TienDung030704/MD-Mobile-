@@ -196,14 +196,14 @@ export default function ProductsPage() {
             4. ĐIỀU HƯỚNG PHÂN TRANG (PAGINATION)
             ========================================================= */}
         {totalPages > 1 && (
-          <div className="flex items-center justify-center gap-2 mt-4">
+          <div className="flex items-center justify-center gap-2 mt-6 flex-wrap">
             {/* Nút Trang trước */}
             <button
               type="button"
               onClick={() => handlePageChange(page - 1)}
               disabled={page <= 1}
               aria-label="Trang trước"
-              className="w-10 h-10 rounded-xl bg-surfaceDark border border-[var(--header-border)] flex items-center justify-center text-textPrimary hover:border-brandSage hover:text-brandSage disabled:opacity-30 disabled:cursor-not-allowed transition-all shadow-sm cursor-pointer"
+              className="w-10 h-10 shrink-0 rounded-xl bg-surfaceDark border border-[var(--header-border)] flex items-center justify-center text-textPrimary hover:border-brandSage hover:text-brandSage disabled:opacity-30 disabled:cursor-not-allowed transition-all shadow-sm cursor-pointer"
             >
               <ChevronLeft className="w-4 h-4" />
             </button>
@@ -214,7 +214,7 @@ export default function ProductsPage() {
                 key={p}
                 type="button"
                 onClick={() => handlePageChange(p)}
-                className={`w-10 h-10 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                className={`w-10 h-10 shrink-0 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center justify-center ${
                   p === page
                     ? "bg-brandSage text-white shadow-md shadow-brandSage/25 border border-brandSage"
                     : "bg-surfaceDark border border-[var(--header-border)] text-textPrimary hover:border-brandSage hover:text-brandSage shadow-sm"
@@ -230,7 +230,7 @@ export default function ProductsPage() {
               onClick={() => handlePageChange(page + 1)}
               disabled={page >= totalPages}
               aria-label="Trang sau"
-              className="w-10 h-10 rounded-xl bg-surfaceDark border border-[var(--header-border)] flex items-center justify-center text-textPrimary hover:border-brandSage hover:text-brandSage disabled:opacity-30 disabled:cursor-not-allowed transition-all shadow-sm cursor-pointer"
+              className="w-10 h-10 shrink-0 rounded-xl bg-surfaceDark border border-[var(--header-border)] flex items-center justify-center text-textPrimary hover:border-brandSage hover:text-brandSage disabled:opacity-30 disabled:cursor-not-allowed transition-all shadow-sm cursor-pointer"
             >
               <ChevronRight className="w-4 h-4" />
             </button>
