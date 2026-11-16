@@ -20,39 +20,8 @@ export function usePagination<T>(items: T[] = [], limit: number = 9) {
     return items.slice(start, start + limit);
   }, [items, page, limit]);
 
-  // 4. Tạo danh sách các số trang hiển thị rút gọn thông minh (tối đa 7 nút, có dấu '...')
-  const paginationRange = useMemo(() => {
-    // Nếu tổng số trang ít hơn hoặc bằng 7 thì hiển thị tất cả: [1, 2, 3, 4, 5, 6, 7]
-    if (totalPages <= 7) {
-      return Array.from({ length: totalPages }, (_, i) => i + 1);
-    }
-
-    // Khi đang ở các trang đầu: [1, 2, 3, 4, 5, "...", totalPages]
-    if (page <= 4) {
-      return [1, 2, 3, 4, 5, "...", totalPages];
-    }
-
-    // Khi đang ở các trang cuối: [1, "...", totalPages - 4, totalPages - 3, totalPages - 2, totalPages - 1, totalPages]
-    if (page >= totalPages - 3) {
-      return [
-        1,
-        "...",
-        totalPages - 4,
-        totalPages - 3,
-        totalPages - 2,
-        totalPages - 1,
-        totalPages,
-      ];
-    }
-
-    // Khi đang ở giữa: [1, "...", page - 1, page, page + 1, "...", totalPages]
-    return [1, "...", page - 1, page, page + 1, "...", totalPages];
-  }, [page, totalPages]);
-
-  // 5. Hàm chuyển trang: cập nhật URL và cuộn mượt lên đầu
+  // 4. Hàm chuyển trang: cập nhật URL và cuộn mượt lên đầu
   const handlePageChange = (newPage: number) => {
-    if (newPage < 1 || newPage > totalPages || newPage === page) return;
-
     const params = new URLSearchParams(searchParams.toString());
     params.set("page", String(newPage));
 
@@ -60,7 +29,7 @@ export function usePagination<T>(items: T[] = [], limit: number = 9) {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  return { page, totalPages, currentItems, paginationRange, handlePageChange };
+  return { page, totalPages, currentItems, handlePageChange };
 }
 
 export default usePagination;
