@@ -48,11 +48,6 @@ const initialState: ProductState = {
   error: null,
 };
 
-/**
- * ========================================================================
- * PRODUCT SLICE DEFINITION
- * ========================================================================
- */
 export const productSlice = createSlice({
   name: "product",
   initialState,
@@ -152,7 +147,8 @@ export const productSlice = createSlice({
       })
       .addCase(fetchBrands.rejected, (state, action) => {
         state.loading = false;
-        state.error = (action.payload as string) || "Lỗi tải danh sách thương hiệu";
+        state.error =
+          (action.payload as string) || "Lỗi tải danh sách thương hiệu";
       });
   },
 });

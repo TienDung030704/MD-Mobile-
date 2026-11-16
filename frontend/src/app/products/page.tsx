@@ -62,10 +62,8 @@ export default function ProductsPage() {
   }, [products, selectedBrands]);
 
   // 4. Phân trang 10 sản phẩm mỗi trang theo danh sách đã lọc
-  const { page, totalPages, currentItems, handlePageChange } = usePagination(
-    filteredProducts,
-    10,
-  );
+  const { page, totalPages, currentItems, paginationRange, handlePageChange } =
+    usePagination(filteredProducts, 10);
 
   return (
     <div className="min-h-screen bg-bgDark text-textPrimary flex flex-col justify-between selection:bg-brandSage selection:text-white transition-colors duration-300">
@@ -196,33 +194,49 @@ export default function ProductsPage() {
             4. ĐIỀU HƯỚNG PHÂN TRANG (PAGINATION)
             ========================================================= */}
         {totalPages > 1 && (
-          <div className="flex items-center justify-center gap-2 mt-4">
+          <div className="flex items-center justify-center gap-1.5 sm:gap-2 mt-8">
             {/* Nút Trang trước */}
             <button
               type="button"
               onClick={() => handlePageChange(page - 1)}
               disabled={page <= 1}
               aria-label="Trang trước"
-              className="w-10 h-10 rounded-xl bg-surfaceDark border border-[var(--header-border)] flex items-center justify-center text-textPrimary hover:border-brandSage hover:text-brandSage disabled:opacity-30 disabled:cursor-not-allowed transition-all shadow-sm cursor-pointer"
+              className="w-10 h-10 shrink-0 rounded-xl bg-surfaceDark border border-[var(--header-border)] flex items-center justify-center text-textPrimary hover:border-brandSage hover:text-brandSage disabled:opacity-30 disabled:cursor-not-allowed transition-all shadow-sm cursor-pointer"
             >
               <ChevronLeft className="w-4 h-4" />
             </button>
 
-            {/* Các nút số trang */}
-            {Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => (
-              <button
-                key={p}
-                type="button"
-                onClick={() => handlePageChange(p)}
-                className={`w-10 h-10 rounded-xl text-xs font-bold transition-all cursor-pointer ${
-                  p === page
-                    ? "bg-brandSage text-white shadow-md shadow-brandSage/25 border border-brandSage"
-                    : "bg-surfaceDark border border-[var(--header-border)] text-textPrimary hover:border-brandSage hover:text-brandSage shadow-sm"
-                }`}
-              >
-                {p}
-              </button>
-            ))}
+            {/* Các nút số trang hiển thị rút gọn thông minh */}
+            {paginationRange.map((p, idx) => {
+              if (p === "...") {
+                return (
+                  <span
+                    key={`ellipsis-${idx}`}
+                    className="w-8 sm:w-10 h-10 shrink-0 flex items-center justify-center text-textSecondary text-xs font-bold select-none"
+                  >
+                    ...
+                  </span>
+                );
+              }
+
+              const pageNum = Number(p);
+              const isSelected = pageNum === page;
+
+              return (
+                <button
+                  key={pageNum}
+                  type="button"
+                  onClick={() => handlePageChange(pageNum)}
+                  className={`w-10 h-10 shrink-0 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center justify-center ${
+                    isSelected
+                      ? "bg-brandSage text-white shadow-md shadow-brandSage/25 border border-brandSage"
+                      : "bg-surfaceDark border border-[var(--header-border)] text-textPrimary hover:border-brandSage hover:text-brandSage shadow-sm"
+                  }`}
+                >
+                  {pageNum}
+                </button>
+              );
+            })}
 
             {/* Nút Trang sau */}
             <button
@@ -230,7 +244,7 @@ export default function ProductsPage() {
               onClick={() => handlePageChange(page + 1)}
               disabled={page >= totalPages}
               aria-label="Trang sau"
-              className="w-10 h-10 rounded-xl bg-surfaceDark border border-[var(--header-border)] flex items-center justify-center text-textPrimary hover:border-brandSage hover:text-brandSage disabled:opacity-30 disabled:cursor-not-allowed transition-all shadow-sm cursor-pointer"
+              className="w-10 h-10 shrink-0 rounded-xl bg-surfaceDark border border-[var(--header-border)] flex items-center justify-center text-textPrimary hover:border-brandSage hover:text-brandSage disabled:opacity-30 disabled:cursor-not-allowed transition-all shadow-sm cursor-pointer"
             >
               <ChevronRight className="w-4 h-4" />
             </button>
