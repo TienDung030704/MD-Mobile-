@@ -61,10 +61,10 @@ export default function ProductsPage() {
     );
   }, [products, selectedBrands]);
 
-  // 4. Phân trang 10 sản phẩm mỗi trang theo danh sách đã lọc
+  // 4. Phân trang 40 sản phẩm mỗi trang (5 cột x 8 hàng = 40 sản phẩm)
   const { page, totalPages, currentItems, handlePageChange } = usePagination(
     filteredProducts,
-    10,
+    40,
   );
 
   return (
@@ -123,7 +123,7 @@ export default function ProductsPage() {
           {/* Trạng thái đang tải dữ liệu (Skeleton) */}
           {loading && products.length === 0 ? (
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 divide-x divide-y divide-[var(--header-border)]">
-              {Array.from({ length: 10 }).map((_, i) => (
+              {Array.from({ length: 40 }).map((_, i) => (
                 <div
                   key={i}
                   className="p-4 sm:p-5 animate-pulse flex flex-col justify-between h-72"
